@@ -9,11 +9,7 @@
 #'
 #'
 entropy_bivar <- function(dat) {
-
-  # save original varibale names in data
   varname.orig <- colnames(dat)
-
-  # create new column names for data
   varname.new <- sprintf("V%d", 1:length(dat))
   names(dat) <- varname.new
 
