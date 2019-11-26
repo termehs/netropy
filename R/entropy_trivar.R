@@ -9,13 +9,11 @@
 #'
 
 entropy_trivar <- function(dat) {
-  # save original varibale names in data
   varname.orig <- colnames(dat)
-  # create new column names for data
   varname.new <- sprintf("V%d", 1:length(dat))
   names(dat) <- varname.new
 
-  # calll to get bivariate entropies, univariate given in digonal
+  # calll to get bivariate entropies
   H2 <- entropy_bivar(dat)
   colnames(H2) <- varname.new
   rownames(H2) <- varname.new
@@ -34,7 +32,7 @@ entropy_trivar <- function(dat) {
     for(y in (x+1):(ncol(dat)-1)){
       for(z in (y+1):ncol(dat)){
         k=k+1
-        #create outcome space for triples of variables in R
+        #create outcome space for triples of variables
         unq.x <- sort(unique(dat[,x]))
         unq.y <- sort((unique(dat[,y])))
         unq.z <- sort((unique(dat[,z])))
@@ -42,7 +40,6 @@ entropy_trivar <- function(dat) {
         frq <- table(dat[,x], dat[,y], dat[,z]) #frequencies of observations of x and y and z
         #frequencies of observations in outcome space
         frq.os <- as.data.frame(frq)
-        #calculate bivariate entropies
         Hpos <- ifelse(frq.os$Freq > 0, frq.os$Freq * log2(frq.os$Freq),0)
         Htmp <- (log2(nrow(dat)) - (1 / nrow(dat)) * (sum(Hpos)))
         H3[k, ] <-  c(colnames(dat)[x],  colnames(dat)[y], colnames(dat)[z], round(Htmp,3))

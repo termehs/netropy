@@ -11,17 +11,11 @@
 #'
 
 joint_entropy <- function(dat, dec = 3) {
-
-  # save original varibale names in data
    varname.orig <- colnames(dat)
-  # create new column names for data
    varname.new <- sprintf("V%d", 1:length(dat))
    names(dat) <- varname.new
 
-  # than pairs of variables joint entropy matrix
   J <- matrix(0, nrow = ncol(dat), ncol = ncol(dat))
-  # rename columnns and rows to match variable names in
-  # data frame
   colnames(J) = colnames(dat)
   rownames(J) = colnames(dat)
 
@@ -51,6 +45,6 @@ joint_entropy <- function(dat, dec = 3) {
 
   listout <- list("matrix" = J, "freq" = FrqJ)
 
-  joint <- return(listout)
+  return(listout)
 
 }
