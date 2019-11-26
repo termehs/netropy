@@ -1,5 +1,5 @@
 Package: netropy
-Title: What the Package Does (One Line, Title Case)
+Title: Statistical entropy analysis of network data.
 Version: 0.0.0.9000
 Authors@R: 
     person(given = "Termeh",
@@ -14,7 +14,4 @@ Imports:
     ggraph,
     igraph
 RoxygenNote: 6.1.1
-Suggests: 
-    testthat,
-    spelling
 Language: en-US
