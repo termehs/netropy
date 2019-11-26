@@ -44,7 +44,5 @@ joint_entropy <- function(dat, dec = 3) {
   row.names(FrqJ) <- NULL
 
   listout <- list("matrix" = J, "freq" = FrqJ)
-
   return(listout)
-
 }
