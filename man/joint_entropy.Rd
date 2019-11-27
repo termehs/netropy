@@ -7,7 +7,7 @@
 joint_entropy(dat, dec = 3)
 }
 \arguments{
-\item{dat}{Dataframe with rows as observations and columns as variables. Variables must all be observed or transformed categorical variables.}
+\item{dat}{Dataframe with rows as observations and columns as variables. Variables must all be observed or transformed categorical with finite range spaces.}
 
 \item{dec}{The precision given in number of decimals for which
 the frequency distribution of unique entropy values is created. Default is 3.}

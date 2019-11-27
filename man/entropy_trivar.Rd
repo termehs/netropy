@@ -7,7 +7,7 @@
 entropy_trivar(dat)
 }
 \arguments{
-\item{dat}{Dataframe with rows as observations and columns as variables. Variables must all be observed or transformed categorical variables.}
+\item{dat}{Dataframe with rows as observations and columns as variables. Variables must all be observed or transformed categorical with finite range spaces.}
 }
 \value{
 Dataframe containing all possible triples of variables and their entropies

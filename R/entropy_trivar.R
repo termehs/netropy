@@ -1,6 +1,6 @@
 #' @title Trivariate Entropies
 #' @description Calculates the bivariate entropies
-#' @param dat Dataframe with rows as observations and columns as variables. Variables must all be observed or transformed categorical variables.
+#' @param dat Dataframe with rows as observations and columns as variables. Variables must all be observed or transformed categorical with finite range spaces.
 #' @return Dataframe containing all possible triples of variables and their entropies
 #' @details  To be completed
 #' @author Termeh Shafie
