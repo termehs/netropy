@@ -35,7 +35,6 @@ entropy_bivar <- function(dat) {
     }
   }
 
-  H2out <- H2
   colnames(H2) <- varname.orig
   rownames(H2) <- varname.orig
 
