@@ -11,9 +11,9 @@
 #'
 
 joint_entropy <- function(dat, dec = 3) {
-   varname.orig <- colnames(dat)
-   varname.new <- sprintf("V%d", 1:length(dat))
-   names(dat) <- varname.new
+  varname.orig <- colnames(dat)
+  varname.new <- sprintf("V%d", 1:length(dat))
+  names(dat) <- varname.new
 
   J <- matrix(0, nrow = ncol(dat), ncol = ncol(dat))
   colnames(J) = colnames(dat)
@@ -35,8 +35,9 @@ joint_entropy <- function(dat, dec = 3) {
   rownames(J) <- varname.orig
 
   # freqeuncy distribution of the joint entropy values
-  FrqJ <- as.data.frame(table(round(J[upper.tri(J, diag = FALSE)], dec)))
-  FrqJ <- FrqJ[order(FrqJ$Var1, decreasing = TRUE), ]
+  FrqJ <-
+    as.data.frame(table(round(J[upper.tri(J, diag = FALSE)], dec)))
+  FrqJ <- FrqJ[order(FrqJ$Var1, decreasing = TRUE),]
   FrqJ$CumFreq <- cumsum(FrqJ$Freq)
   names(FrqJ)[names(FrqJ) == "Var1"] <- "j"
   names(FrqJ)[names(FrqJ) == "Freq"] <- " #(J = j)"

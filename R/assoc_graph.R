@@ -13,22 +13,23 @@ assoc_graph <- function(dat, cutoff = 0) {
   adj <- J$matrix
   diag(adj) <- 0
 
-  plot_title <- paste("J", ">",  cutoff, sep=" ")
+  plot_title <- paste("J", ">",  cutoff, sep = " ")
   adj[adj < cutoff] <-  0
-  ag <- igraph::graph_from_adjacency_matrix(adj, mode = 'undirected', weighted = TRUE)
+  ag <-
+    igraph::graph_from_adjacency_matrix(adj, mode = 'undirected', weighted = TRUE)
   ag.p <- ggraph::ggraph(ag, layout = 'stress') +
-      geom_edge_link0(edge_colour = "grey40", edge_width = E(ag)$weight) +
-      geom_node_point(shape = 21, size = 20, fill = 'white', stroke = 1) +
-      geom_node_text(aes(label = V(ag)$name), size = 3.5) +
-      ggtitle(plot_title) +
-      theme_graph() +
-      theme(legend.position = 'none') +
-      coord_cartesian(clip = 'off')
+    geom_edge_link0(edge_colour = "grey40", edge_width = E(ag)$weight) +
+    geom_node_point(
+      shape = 21,
+      size = 20,
+      fill = 'white',
+      stroke = 1
+    ) +
+    geom_node_text(aes(label = V(ag)$name), size = 3.5) +
+    ggtitle(plot_title) +
+    theme_graph() +
+    theme(legend.position = 'none') +
+    coord_cartesian(clip = 'off')
 
   return(ag.p)
 }
-
-
-
-
-
