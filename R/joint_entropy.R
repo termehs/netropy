@@ -8,7 +8,6 @@
 #' @author Termeh Shafie
 #' @references Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data. *Bulletin of Sociological Methodology/Bulletin de Méthodologie Sociologique*, 129(1), 45-63.
 #'
-#'
 
 joint_entropy <- function(dat, dec = 3) {
   varname.orig <- colnames(dat)
@@ -37,7 +36,7 @@ joint_entropy <- function(dat, dec = 3) {
   # freqeuncy distribution of the joint entropy values
   FrqJ <-
     as.data.frame(table(round(J[upper.tri(J, diag = FALSE)], dec)))
-  FrqJ <- FrqJ[order(FrqJ$Var1, decreasing = TRUE),]
+  FrqJ <- FrqJ[order(FrqJ$Var1, decreasing = TRUE), ]
   FrqJ$CumFreq <- cumsum(FrqJ$Freq)
   names(FrqJ)[names(FrqJ) == "Var1"] <- "j"
   names(FrqJ)[names(FrqJ) == "Freq"] <- " #(J = j)"
