@@ -37,7 +37,6 @@ entropy_bivar <- function(dat) {
 
   colnames(H2) <- varname.orig
   rownames(H2) <- varname.orig
-
   H2[lower.tri(H2)] <- NA
   H2 <-  as.matrix(H2)
   H2 <- round(H2, 3)
