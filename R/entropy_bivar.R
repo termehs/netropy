@@ -6,6 +6,8 @@
 #' @details  To be completed
 #' @author Termeh Shafie
 #' @references Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data. *Bulletin of Sociological Methodology/Bulletin de Méthodologie Sociologique*, 129(1), 45-63.
+#' @examples
+#' @export
 #'
 entropy_bivar <- function(dat) {
   varname.orig <- colnames(dat)
