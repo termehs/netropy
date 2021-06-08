@@ -13,7 +13,7 @@ entropy_trivar <- function(dat) {
   varname.new <- sprintf("V%d", 1:ncol(dat))
   names(dat) <- varname.new
 
-  # calll to get bivariate entropies
+  # call to get bivariate entropies
   H2 <- entropy_bivar(dat)
   colnames(H2) <- varname.new
   rownames(H2) <- varname.new
