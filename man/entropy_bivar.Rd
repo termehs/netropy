@@ -14,7 +14,7 @@ Upper triangular matrix giving bivariate entropies between pairs of variables wh
 The univariate entropies are given in the diagonal.
 }
 \description{
-Calculates the bivariate entropies
+Calculates the bivariate entropies between all pairs of variables in a multivariate data set.
 }
 \details{
 To be completed
