@@ -1,5 +1,5 @@
 #' @title Joint Entropies
-#' @description Computes the joint entropies between pairwise variables in a multivariate data set.
+#' @description Computes the joint entropies between all pairs of variables in a multivariate data set.
 #' @param dat Dataframe with rows as observations and columns as variables.
 #' Variables must all be observed or transformed categorical with finite range spaces.
 #' @param dec The precision given in number of decimals for which

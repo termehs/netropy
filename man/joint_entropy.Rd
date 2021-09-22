@@ -17,7 +17,7 @@ the frequency distribution of unique entropy values is created. Default is 3.}
 List with the upper triangular joint entropy matrix (univariate entropy in diagonal) and the frequency distribution of unique joint entropy values,
 }
 \description{
-Computes the joint entropies between pairwise variables in a multivariate data set.
+Computes the joint entropies between all pairs of variables in a multivariate data set.
 }
 \details{
 To be completed
