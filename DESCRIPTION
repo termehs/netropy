@@ -13,5 +13,5 @@ LazyData: true
 Imports: 
     ggraph,
     igraph
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.2
 Language: en-US
