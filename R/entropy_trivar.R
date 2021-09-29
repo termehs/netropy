@@ -1,5 +1,5 @@
 #' @title Trivariate Entropies
-#' @description Calculates the bivariate entropies
+#' @description Computes the trivariate entropies of all triples f variables in a multivariate data set.
 #' @param dat Dataframe with rows as observations and columns as variables. Variables must all be observed or transformed categorical with finite range spaces.
 #' @return Dataframe containing all possible triples of variables and their entropies
 #' @details  To be completed

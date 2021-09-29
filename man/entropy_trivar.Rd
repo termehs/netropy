@@ -13,7 +13,7 @@ entropy_trivar(dat)
 Dataframe containing all possible triples of variables and their entropies
 }
 \description{
-Calculates the bivariate entropies
+Computes the trivariate entropies of all triples f variables in a multivariate data set.
 }
 \details{
 To be completed
