@@ -1,4 +1,4 @@
-#' @title Redundant Variables
+#' @title Redundant Variables/Dimensionality Reduction
 #' @description Finds redundant variables in a dataframe. Redundancy is defined as two variables holding the same information (measured by bivariate entropies).
 #' @param dat Dataframe with rows as observations and columns as variables. Variables must all be observed or transformed categorical with finite range spaces.
 #' @param dec  The precision given as number of decimals used to round bivariate entropies in order to find redundant variables (the more decimals, the harder to find redundancy). Default is 3.

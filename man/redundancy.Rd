@@ -2,7 +2,7 @@
 % Please edit documentation in R/redundancy.R
 \name{redundancy}
 \alias{redundancy}
-\title{Redundant Variables}
+\title{Redundant Variables/Dimensionality Reduction}
 \usage{
 redundancy(dat, dec = 3)
 }
