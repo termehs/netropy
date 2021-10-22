@@ -15,7 +15,7 @@ assoc_graph(dat, cutoff = 0)
 A ggraph object.
 }
 \description{
-Draws the association graphs based on given thresholds of joint entropy values between pairs of variables.
+Draws association graphs based on given thresholds of joint entropy values between pairs of variables.
 }
 \details{
 To be completed
