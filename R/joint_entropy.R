@@ -11,6 +11,7 @@
 #' @examples
 #' @export
 #'
+#'
 
 joint_entropy <- function(dat, dec = 3) {
   varname.orig <- colnames(dat)
