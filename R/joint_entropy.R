@@ -3,7 +3,7 @@
 #' @param dat Dataframe with rows as observations and columns as variables.
 #' Variables must all be observed or transformed categorical with finite range spaces.
 #' @param dec The precision given in number of decimals for which
-#' the frequency distribution of unique entropy values is created. Default is 3. This may affect which variables are considered redundant.
+#' the frequency distribution of unique entropy values is created. Default is 3.
 #' @return List with the upper triangular joint entropy matrix (univariate entropy in diagonal) and the frequency distribution of unique joint entropy values,
 #' @details  To be completed
 #' @author Termeh Shafie
