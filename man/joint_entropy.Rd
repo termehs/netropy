@@ -22,6 +22,9 @@ Computes the joint entropies between all pairs of variables in a multivariate da
 \details{
 To be completed
 }
+\examples{
+# to be added
+}
 \references{
 Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data. *Bulletin of Sociological Methodology/Bulletin de Méthodologie Sociologique*, 129(1), 45-63.
 }
