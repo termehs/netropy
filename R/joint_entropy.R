@@ -7,6 +7,7 @@
 #' @return List with the upper triangular joint entropy matrix (univariate entropy in diagonal) and the frequency distribution of unique joint entropy values,
 #' @details  To be completed
 #' @author Termeh Shafie
+#' @seealso \code{\link{assoc_graph}}
 #' @references Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data. *Bulletin of Sociological Methodology/Bulletin de Méthodologie Sociologique*, 129(1), 45-63.
 #' @examples
 #' # to be added
