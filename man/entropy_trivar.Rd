@@ -21,6 +21,9 @@ To be completed
 \references{
 Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data. *Bulletin of Sociological Methodology/Bulletin de Méthodologie Sociologique*, 129(1), 45-63.
 }
+\seealso{
+\code{\link{joint_entrorpy}}
+}
 \author{
 Termeh Shafie
 }
