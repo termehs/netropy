@@ -18,6 +18,9 @@ Computes the trivariate entropies of all triples of variables in a multivariate 
 \details{
 To be completed
 }
+\examples{
+To be added
+}
 \references{
 Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data. *Bulletin of Sociological Methodology/Bulletin de Méthodologie Sociologique*, 129(1), 45-63.
 }
