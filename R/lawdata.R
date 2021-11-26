@@ -8,7 +8,7 @@
 #' 71 attorneys (partners and associates) of this firm,
 #' i.e. their strong-coworker network, advice network, friendship network,
 #' and indirect control networks.
-#' Various members' attributes are also part of the dataset,
+#' Various members' attributes are also part of the data set,
 #' including seniority, formal status, office in which they work, gender,
 #' law school attended. The ethnography, organizational and network analyses
 #' of this case are available in Lazega (2001).
@@ -27,7 +27,7 @@
 #'   \item{adjacency matrix for advice seeking (directed)}
 #'   \item{adjacency matrix for friendship (directed)}
 #'   \item{adjacency matrix for cowork (undirected)}
-#'   \item{dataframe with the following attributes on each lawyer:}
+#'   \item{data frame with the following attributes on each lawyer:}
 #' \itemize{
 #' \item{\code{senior}} {seniority (ranked from most to least senior)}
 #' \item{\code{status}} {1=partner; 2=associate}
