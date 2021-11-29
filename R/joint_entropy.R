@@ -46,7 +46,7 @@ joint_entropy <- function(dat, dec = 3) {
   FrqJ$CumFreq <- cumsum(FrqJ$Freq)
   names(FrqJ)[names(FrqJ) == "Var1"] <- "j"
   names(FrqJ)[names(FrqJ) == "Freq"] <- " #(J = j)"
-  names(FrqJ)[names(FrqJ) == "CumFreq"] <- "#(J ≥ j)"
+  names(FrqJ)[names(FrqJ) == "CumFreq"] <- "#(J >= j)"
   row.names(FrqJ) <- NULL
 
   listout <- list("matrix" = J, "freq" = FrqJ)

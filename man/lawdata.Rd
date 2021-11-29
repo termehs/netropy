@@ -37,7 +37,7 @@ law partnership that was carried out in a Northeastern US corporate law firm,
 referred to as SG&R, 1988-1991 in New England.
 It includes (among others) measurements of networks among the
 71 attorneys (partners and associates) of this firm,
-i.e. their strong-coworker network, advice network, friendship network,
+i.e. their strong- co-worker network, advice network, friendship network,
 and indirect control networks.
 Various members' attributes are also part of the data set,
 including seniority, formal status, office in which they work, gender,
