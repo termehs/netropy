@@ -40,6 +40,7 @@ joint_entropy <- function(dat, dec = 3) {
   rownames(J) <- varname.orig
   J[lower.tri(J)] <- NA
 
+
   # frequency distribution of the joint entropy values
   FrqJ <-
     as.data.frame(table(round(J[upper.tri(J, diag = FALSE)], dec)))
