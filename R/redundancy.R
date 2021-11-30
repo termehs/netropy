@@ -25,7 +25,7 @@ redundancy <- function(dat, dec = 3) {
   diag(red) = 0
 
   if (sum(red) == 0) {
-    warning('no redundant variables')
+    message('no redundant variables')
     return()
   }
 
