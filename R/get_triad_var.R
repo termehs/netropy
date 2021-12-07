@@ -1,6 +1,30 @@
-
-
-
+#' @title Get Triad Variables
+#' @description Transforms vertex variables or observed directed/undirected ties
+#' into triad variables.
+#' @param var variable vector (actor attribute) or adjacency matrix (ties)
+#' to be transformed to a triad variable.
+#' @param type either 'att' for actor attribute (default) or 'tie' for relations.
+#' @return Data frame with four columns:
+#' first three columns show the vertex triad \code{u}, \code{v}, \code{w} ,
+#' and the fourth column gives the transformed triadicvariable \code{var}.
+#' @details For actor attributes, unique triples of original attribute values
+#' constitute the outcome space. Note that the actor
+#' attributes need to be categorical and on ordinal scale with finite range spaces.
+#'
+#' For directed relations, a sequence of indicators of length 6 created from the adjacency matrix
+#' constitutes the 64 outcomes representing possible combinations of sending and receiving ties.
+#'
+#' For undirected relations, triples of indicators are created from the adjacency matrix.
+#'
+#' Warning message is shown if actor attribute has too many unique outcomes
+#' as it will yield too many possible outcomes when converted to a triad variable.
+#'
+#' To be completed.
+#' @author Termeh Shafie
+#' @seealso
+#' @references Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data. *Bulletin of Sociological Methodology/Bulletin de Méthodologie Sociologique*, 129(1), 45-63.
+#' @examples To be added
+#' @export
 
 get_triad_var <- function(var, type = 'att') {
   if (type == 'att') {
