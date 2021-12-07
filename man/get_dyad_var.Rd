@@ -7,23 +7,32 @@
 get_dyad_var(var, type = "att")
 }
 \arguments{
-\item{var}{variable vector (actor attribute) or adjacency matrix (ties) to be transformed to dyad variable.}
+\item{var}{variable vector (actor attribute) or adjacency matrix (ties)
+to be transformed to dyad variable.}
 
 \item{type}{either 'att' for actor attribute (default) or 'tie' for relations.}
 }
 \value{
-Data frame with the transformed variable.
+Data frame with three columns:
+first two columns show the vertex pairs \code{u} and \code{v} where \code{u<v} ,
+and the third column gives the transformed dyadic variable \code{var}.
 }
 \description{
-Transforms vertex variables or observed directed/undirected ties into dyad variables.
+Transforms vertex variables or observed directed/undirected ties
+into dyad variables.
 }
 \details{
-For actor attributes, unique pairs of original attribute values constitute the outcome space.
-For directed relations, pairs of indicators from adjacency matrix ties constitute the four outcomes
-representing possible combinations of sending and receiving ties $(0,0), (0,1), (1,0), (1,1)$
-For undirected relations, an indicator variable which is directly read from adjacency matrix represents the dyadic variable.
-Note that for actor  attributes, input variable variable needs to be categorical and on ordinal scale with finite range spaces.
-Warning message is shown if actor attribute has too many unique outcomes as it will yield too many possible outcomes as a dyad variable.
+For actor attributes, unique pairs of original attribute values
+constitute the outcome space.
+For directed relations, pairs of indicators from adjacency matrix ties constitute
+the four outcomes representing possible combinations of sending and receiving ties:
+(0,0), (0,1), (1,0), (1,1).
+For undirected relations, an indicator variable which is directly read from the
+adjacency matrix represents the dyadic variable.
+Note that for actor  attributes, input variable variable
+needs to be categorical and on ordinal scale with finite range spaces.
+Warning message is shown if actor attribute has too many unique outcomes
+as it will yield too many possible outcomes as a dyad variable.
 To be completed.
 }
 \examples{

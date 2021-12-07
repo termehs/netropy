@@ -4,7 +4,9 @@
 #' @param var variable vector (actor attribute) or adjacency matrix (ties)
 #' to be transformed to dyad variable.
 #' @param type either 'att' for actor attribute (default) or 'tie' for relations.
-#' @return Data frame with the transformed variable.
+#' @return Data frame with three columns:
+#' first two columns show the vertex pairs \code{u} and \code{v} where \code{u<v} ,
+#' and the third column gives the transformed dyadic variable \code{var}.
 #' @details For actor attributes, unique pairs of original attribute values
 #' constitute the outcome space.
 #' For directed relations, pairs of indicators from adjacency matrix ties constitute
