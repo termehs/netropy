@@ -53,6 +53,8 @@ get_dyad_var <- function(var, type = 'att') {
       message('four outcomes based on pairs of indicators for the directed relation is created')
     }
   }
+
+  return(dyad)
 }
 
 
