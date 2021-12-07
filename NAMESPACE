@@ -3,5 +3,6 @@
 export(assoc_graph)
 export(entropy_bivar)
 export(entropy_trivar)
+export(get_dyad_var)
 export(joint_entropy)
 export(redundancy)
