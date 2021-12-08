@@ -25,16 +25,20 @@ into dyad variables.
 For actor attributes, unique pairs of original attribute values
 constitute the outcome space. Note that the actor  attributes need
 to be categorical and on ordinal scale with finite range spaces.
+\cr
 
 For directed relations, pairs of indicators from the adjacency matrix constitute
 the four outcomes representing possible combinations of sending and receiving ties:
 (0,0), (0,1), (1,0), (1,1).
+\cr
 
 For undirected relations, an indicator variable which is directly read from the
 adjacency matrix represents the dyadic variable.
+\cr
 
 Warning message is shown if actor attribute has too many unique outcomes
 as it will yield too many possible outcomes when converted in to a dyad variable.
+\cr
 
 To be completed.
 }
@@ -42,7 +46,8 @@ To be completed.
 To be added
 }
 \references{
-Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data. *Bulletin of Sociological Methodology/Bulletin de Méthodologie Sociologique*, 129(1), 45-63.
+Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data.
+\emph{Bulletin of Sociological Methodology/Bulletin de Méthodologie Sociologique}, 129(1), 45-63.
 }
 \seealso{
 
