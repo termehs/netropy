@@ -10,19 +10,24 @@
 #' @details For actor attributes, unique triples of original attribute values
 #' constitute the outcome space. Note that the actor
 #' attributes need to be categorical and on ordinal scale with finite range spaces.
+#' \cr
 #'
 #' For directed relations, a sequence of indicators of length 6 created from the adjacency matrix
 #' constitutes the 64 outcomes representing possible combinations of sending and receiving ties.
+#' \cr
 #'
 #' For undirected relations, triples of indicators are created from the adjacency matrix.
+#' \cr
 #'
 #' Warning message is shown if actor attribute has too many unique outcomes
 #' as it will yield too many possible outcomes when converted to a triad variable.
+#' \cr
 #'
 #' To be completed.
 #' @author Termeh Shafie
 #' @seealso
-#' @references Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data. *Bulletin of Sociological Methodology/Bulletin de Méthodologie Sociologique*, 129(1), 45-63.
+#' @references Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data.
+#' \emph{Bulletin of Sociological Methodology/Bulletin de Méthodologie Sociologique}, 129(1), 45-63.
 #' @examples To be added
 #' @export
 
