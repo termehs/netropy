@@ -50,7 +50,7 @@ get_triad_var <- function(var, type = 'att') {
     }
   }
   else if (type == 'tie') {
- n <- dim(var)[1]
+    n <- dim(var)[1]
     if (isSymmetric(var) == TRUE) {
       triads <- t(combn(1:n,3))
       triads <- cbind(triads,
@@ -67,7 +67,7 @@ get_triad_var <- function(var, type = 'att') {
       var.matching <- apply(grid,1,
                             function(x) paste(x,collapse=" "))
       triad.var$var <- match(triad.var$uv.uw.vw,var.matching)-1
-      message('8 outcomes based on triples of indicators for the undirected relation is created')
+      message('8 outcomes based on triples of indicators for the undirected relation are created')
     }
     else if (isSymmetric(var) == FALSE) {
       triads <- t(combn(1:n,3))
@@ -86,11 +86,11 @@ get_triad_var <- function(var, type = 'att') {
       var.matching <- apply(grid,1,
                             function(x) paste(x,collapse=" "))
       triad.var$var <- match(triad.var$seq,var.matching)-1
-      message('64 outcomes based on a sequence of 6 indicators for the directed relation is created')
+      message('64 outcomes based on a sequence of 6 indicators for the directed relation are created')
     }
   }
 
   out.var <- as.data.frame(cbind(triad.var$u, triad.var$v, triad.var$w, triad.var$var))
-  colnames(out.var) <- c("u","v","w","var")
+  names(out.var) <- c("u","v","w","var")
   return(out.var)
 }
