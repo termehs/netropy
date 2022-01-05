@@ -2,12 +2,12 @@
 % Please edit documentation in R/redundancy.R
 \name{redundancy}
 \alias{redundancy}
-\title{Redundant Variables/Dimensionality Reduction}
+\title{Redundant Variables & Dimensionality Reduction}
 \usage{
 redundancy(dat, dec = 3)
 }
 \arguments{
-\item{dat}{Dataframe with rows as observations and columns as variables. Variables must all be observed or transformed categorical with finite range spaces.}
+\item{dat}{Data frame with rows as observations and columns as variables. Variables must all be observed or transformed categorical with finite range spaces.}
 
 \item{dec}{The precision given as number of decimals used to round bivariate entropies in order to find redundant variables (the more decimals, the harder to find redundancy). Default is 3.}
 }
@@ -15,7 +15,7 @@ redundancy(dat, dec = 3)
 Matrix indicating which row and column variables are hold the same information. Consider removing one of these for further analysis.
 }
 \description{
-Finds redundant variables in a dataframe. Redundancy is defined as two variables holding the same information (measured by bivariate entropies).
+Finds redundant variables in a data frame. Redundancy is defined as two variables holding the same information (measured by bivariate entropies).
 }
 \details{
 To be completed
