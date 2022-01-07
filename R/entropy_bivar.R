@@ -17,7 +17,7 @@ entropy_bivar <- function(dat) {
 
   H2 <- matrix(0, nrow = ncol(dat), ncol = ncol(dat))
 
-  # rename columnns and rows to match variable names in data frame
+  # rename columns and rows to match variable names in data frame
   colnames(H2) <- colnames(dat)
   rownames(H2) <- colnames(dat)
 
