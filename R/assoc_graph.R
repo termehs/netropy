@@ -1,5 +1,6 @@
 #' @title Association graphs
-#' @description Draws association graphs based on given thresholds of joint entropy values between pairs of variables.
+#' @description Draws association graphs based on given thresholds of joint entropy values between pairs of variables represented as nodes.
+#' Thickness of edges between pairs of nodes in the association graphs indicates strength of dependence between variables.
 #' @param dat Dataframe with rows as observations and columns as variables. Variables must all be observed or transformed categorical with finite range spaces.
 #' @param cutoff The cutoff point for the edges to be drawn based on joint entropies. Default is 0 and draws all edges.
 #' @return A ggraph object.
