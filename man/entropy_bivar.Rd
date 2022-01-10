@@ -2,7 +2,7 @@
 % Please edit documentation in R/entropy_bivar.R
 \name{entropy_bivar}
 \alias{entropy_bivar}
-\title{Bivariate Entropies}
+\title{Bivariate Entropy}
 \usage{
 entropy_bivar(dat)
 }
@@ -14,7 +14,7 @@ Upper triangular matrix giving bivariate entropies between pairs of variables wh
 The univariate entropies are given in the diagonal.
 }
 \description{
-Calculates the bivariate entropies between all pairs of (discrete) variables in a multivariate data set.
+Computes the bivariate entropies between all pairs of (discrete) variables in a multivariate data set.
 }
 \details{
 The bivariate entropy \emph{H(X,Y)} of two discrete random variables \emph{X} and \emph{Y} allows oe to check
@@ -26,10 +26,10 @@ The bivariate entropy is bounded according to \emph{H(X)≤H(X,Y)≤H(X)+H(Y)} w
 # use internal data set and the attribute dataframe with 71 observations
 data(lawdata)
 df.att <- lawdata[[4]]
-# calculate bivariate entropies between pairs of varibales in this dataframe
-h.biv <- entropy_bivar(df.att)
+# calculate bivariate entropies between pairs of variables in this dataframe
+H.biv <- entropy_bivar(df.att)
 # univariate entropies are then given as
-diag(h.biv)
+diag(H.biv)
 }
 \references{
 Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data.

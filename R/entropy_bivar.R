@@ -1,5 +1,5 @@
-#' @title Bivariate Entropies
-#' @description Calculates the bivariate entropies between all pairs of (discrete) variables in a multivariate data set.
+#' @title Bivariate Entropy
+#' @description Computes the bivariate entropies between all pairs of (discrete) variables in a multivariate data set.
 #' @param dat Dataframe with rows as observations and columns as variables. Variables must all be observed or transformed categorical with finite range spaces.
 #' @return Upper triangular matrix giving bivariate entropies between pairs of variables which are given as rows and columns of the matrix.
 #' The univariate entropies are given in the diagonal.
@@ -17,10 +17,10 @@
 #' # use internal data set and the attribute dataframe with 71 observations
 #' data(lawdata)
 #' df.att <- lawdata[[4]]
-#' # calculate bivariate entropies between pairs of varibales in this dataframe
-#' h.biv <- entropy_bivar(df.att)
+#' # calculate bivariate entropies between pairs of variables in this dataframe
+#' H.biv <- entropy_bivar(df.att)
 #' # univariate entropies are then given as
-#' diag(h.biv)
+#' diag(H.biv)
 #' @export
 #'
 entropy_bivar <- function(dat) {
