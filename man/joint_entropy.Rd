@@ -2,7 +2,7 @@
 % Please edit documentation in R/joint_entropy.R
 \name{joint_entropy}
 \alias{joint_entropy}
-\title{Joint Entropies}
+\title{Joint Entropy}
 \usage{
 joint_entropy(dat, dec = 3)
 }
@@ -14,22 +14,36 @@ Variables must all be observed or transformed categorical with finite range spac
 the frequency distribution of unique entropy values is created. Default is 3.}
 }
 \value{
-List with the upper triangular joint entropy matrix (univariate entropy in diagonal) and the frequency distribution of unique joint entropy values,
+List with the upper triangular joint entropy matrix (univariate entropy in diagonal)
+and the frequency distribution of unique joint entropy values.
 }
 \description{
-Computes the joint entropies between all pairs of variables in a multivariate data set.
+Computes the joint entropies between all pairs of (discrete)
+variables in a multivariate data set.
 }
 \details{
-To be completed
+The joint entropy \emph{J(X,Y)} of discrete variables \emph{X} and \emph{Y}
+is a measure of dependence or association between them. Two variables are independent if joint entropy,
+i.e. their mutual information, is equal to zero.
 }
 \examples{
-# to be added
+data(lawdata)
+df.att <- lawdata[[4]]
+# calculate joint entropies between pairs of variables in this dataframe
+J <- joint_entropy(df.att)
+# joint entropy matrix
+J$matrix
+# frequency distribution of computed joint entropy values
+J$freq
 }
 \references{
-Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data. *Bulletin of Sociological Methodology/Bulletin de Méthodologie Sociologique*, 129(1), 45-63.
+Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data.
+\emph{Bulletin of Sociological Methodology/Bulletin de Méthodologie Sociologique}, 129(1), 45-63.
+\cr
+Nowicki, K., Shafie, T., & Frank, O. (Forthcoming 2022). \emph{Statistical Entropy Analysis of Network Data}.
 }
 \seealso{
-\code{\link{assoc_graph}}
+\code{\link{assoc_graph}}, \code{\link{entropy_bivar}}
 }
 \author{
 Termeh Shafie
