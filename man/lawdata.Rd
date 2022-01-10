@@ -10,7 +10,7 @@ List containing the following objects as numbered
   \item{adjacency matrix for advice seeking (directed)}
   \item{adjacency matrix for friendship (directed)}
   \item{adjacency matrix for cowork (undirected)}
-  \item{data frame with the following attributes on each lawyer:}
+  \item{dataframe with the following attributes on each lawyer:}
 \itemize{
 \item{\code{senior}} {seniority (ranked from most to least senior)}
 \item{\code{status}} {1=partner; 2=associate}
@@ -19,7 +19,7 @@ List containing the following objects as numbered
 \item{\code{years}} {years with the firm}
 \item{\code{age}} {age of attorney}
 \item{\code{practice}} {1=litigation; 2=corporate}
-\item{\code{lawschool}} {1: harvard, yale; 2: ucon; 3: other}
+\item{\code{lawschool}} {1=harvard/yale; 2=ucon; 3= other}
 
 }
 Note: the first 36 out of 71 respondents are the partners in the firm.
