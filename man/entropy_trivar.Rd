@@ -11,22 +11,40 @@ entropy_trivar(dat)
 Variables must all be observed or transformed categorical with finite range spaces.}
 }
 \value{
-Dataframe containing all possible triples of variables and their entropies.
+Dataframe with the first three columns representing possible triples of variables (\code{V1,V2,V3})
+and the fourth column gives entropies \code{H(V1,V2,V3)}.
 }
 \description{
-Computes trivariate entropies of all triples of (discrete) variables in a multivariate data set.
+Computes trivariate entropies of all triples of (discrete)
+variables in a multivariate data set.
 }
 \details{
-To be completed
+Trivariate entropies can be used to check for functional relationships and
+stochastic independence between triples of variables.
+The trivariate entropy \emph{H(X,Y,Z)} of three discrete random variables \emph{X, Y} and \emph{Z}
+is bounded according to \cr
+
+\emph{H(X,Y) ≤ H(X,Y,Z) ≤ H(X,Z) + H(Y,Z) - H(Z)}.
+\cr
+
+The increment between the trivariate entropy and its lower bound is equal to the expected conditional entropy.
 }
 \examples{
-To be added
+# use internal data set and the attribute dataframe with 71 observations
+data(lawdata)
+df.att <- lawdata[[4]]
+# calculate trivariate entropies
+H.triv <- entropy_trivar(df.att)
 }
 \references{
-Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data. *Bulletin of Sociological Methodology/Bulletin de Méthodologie Sociologique*, 129(1), 45-63.
+Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data.
+\emph{Bulletin of Sociological Methodology/Bulletin de Méthodologie Sociologique}, 129(1), 45-63.
+\cr
+
+Nowicki, K., Shafie, T., & Frank, O. (Forthcoming 2022). \emph{Statistical Entropy Analysis of Network Data}.
 }
 \seealso{
-\code{\link{joint_entrorpy}}
+\code{\link{entropy_bivar}}, entropy_Econd
 }
 \author{
 Termeh Shafie

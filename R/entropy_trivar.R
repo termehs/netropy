@@ -1,13 +1,32 @@
 #' @title Trivariate Entropy
-#' @description Computes trivariate entropies of all triples of (discrete) variables in a multivariate data set.
+#' @description Computes trivariate entropies of all triples of (discrete)
+#' variables in a multivariate data set.
 #' @param dat Dataframe with rows as observations and columns as variables.
 #' Variables must all be observed or transformed categorical with finite range spaces.
-#' @return Dataframe containing all possible triples of variables and their entropies.
-#' @details  To be completed
+#' @return Dataframe with the first three columns representing possible triples of variables (\code{V1,V2,V3})
+#' and the fourth column gives entropies \code{H(V1,V2,V3)}.
+#' @details  Trivariate entropies can be used to check for functional relationships and
+#' stochastic independence between triples of variables.
+#' The trivariate entropy \emph{H(X,Y,Z)} of three discrete random variables \emph{X, Y} and \emph{Z}
+#' is bounded according to \cr
+#'
+#' \emph{H(X,Y) ≤ H(X,Y,Z) ≤ H(X,Z) + H(Y,Z) - H(Z)}.
+#' \cr
+#'
+#' The increment between the trivariate entropy and its lower bound is equal to the expected conditional entropy.
 #' @author Termeh Shafie
-#' @seealso \code{\link{joint_entrorpy}}
-#' @references Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data. *Bulletin of Sociological Methodology/Bulletin de Méthodologie Sociologique*, 129(1), 45-63.
-#' @examples To be added
+#' @seealso \code{\link{entropy_bivar}}, entropy_Econd
+#' @references Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data.
+#' \emph{Bulletin of Sociological Methodology/Bulletin de Méthodologie Sociologique}, 129(1), 45-63.
+#' \cr
+#'
+#' Nowicki, K., Shafie, T., & Frank, O. (Forthcoming 2022). \emph{Statistical Entropy Analysis of Network Data}.
+#' @examples
+#' # use internal data set and the attribute dataframe with 71 observations
+#' data(lawdata)
+#' df.att <- lawdata[[4]]
+#' # calculate trivariate entropies
+#' H.triv <- entropy_trivar(df.att)
 #' @export
 
 entropy_trivar <- function(dat) {
