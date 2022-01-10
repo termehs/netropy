@@ -2,7 +2,7 @@
 % Please edit documentation in R/entropy_trivar.R
 \name{entropy_trivar}
 \alias{entropy_trivar}
-\title{Trivariate Entropies}
+\title{Trivariate Entropy}
 \usage{
 entropy_trivar(dat)
 }
