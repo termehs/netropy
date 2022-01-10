@@ -7,13 +7,14 @@
 entropy_trivar(dat)
 }
 \arguments{
-\item{dat}{Dataframe with rows as observations and columns as variables. Variables must all be observed or transformed categorical with finite range spaces.}
+\item{dat}{Dataframe with rows as observations and columns as variables.
+Variables must all be observed or transformed categorical with finite range spaces.}
 }
 \value{
-Dataframe containing all possible triples of variables and their entropies
+Dataframe containing all possible triples of variables and their entropies.
 }
 \description{
-Computes the trivariate entropies of all triples of variables in a multivariate data set.
+Computes the trivariate entropies of all triples of (discrete) variables in a multivariate data set.
 }
 \details{
 To be completed
