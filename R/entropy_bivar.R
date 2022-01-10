@@ -6,7 +6,7 @@
 #' @details The bivariate entropy \emph{H(X,Y)} of two discrete random variables \emph{X} and \emph{Y} allows oe to check
 #' for functional relationships and stochastic independence between pairs of variables.
 #' The bivariate entropy is bounded according to \emph{H(X)≤H(X,Y)≤H(X)+H(Y)} where \emph{H(X)} and
-#' \emph{H(Y)} are the univariate entropies given as the diagonal of the output matrix.
+#' \emph{H(Y)} are the univariate entropies.
 #' @author Termeh Shafie
 #' @seealso \code{\link{joint_entropy}},  \code{\link{entropy_trivar}}, \code{\link{redundancy}}
 #' @references Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data.
@@ -14,7 +14,13 @@
 #' \cr
 #' Nowicki, K., Shafie, T., & Frank, O. (Forthcoming 2022). \emph{Statistical Entropy Analysis of Network Data}.
 #' @examples
-#' # to be added
+#' # use internal data set and the attribute dataframe with 71 observations
+#' data(lawdata)
+#' df.att <- lawdata[[4]]
+#' # calculate bivariate entropies between pairs of varibales in this dataframe
+#' h.biv <- entropy_bivar(df.att)
+#' # univariate entropies are then given as
+#' diag(h.biv)
 #' @export
 #'
 entropy_bivar <- function(dat) {
