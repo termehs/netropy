@@ -14,7 +14,7 @@ Variables must all be observed or transformed categorical with finite range spac
 Dataframe containing all possible triples of variables and their entropies.
 }
 \description{
-Computes the trivariate entropies of all triples of (discrete) variables in a multivariate data set.
+Computes trivariate entropies of all triples of (discrete) variables in a multivariate data set.
 }
 \details{
 To be completed
