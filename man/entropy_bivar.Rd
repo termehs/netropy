@@ -14,16 +14,25 @@ Upper triangular matrix giving bivariate entropies between pairs of variables wh
 The univariate entropies are given in the diagonal.
 }
 \description{
-Calculates the bivariate entropies between all pairs of variables in a multivariate data set.
+Calculates the bivariate entropies between all pairs of (discrete) variables in a multivariate data set.
 }
 \details{
-To be completed
+The bivariate entropy \emph{H(X,Y)} of two discrete random variables \emph{X} and \emph{Y} allows oe to check
+for functional relationships and stochastic independence between pairs of variables.
+The bivariate entropy is bounded according to \emph{H(X)≤H(X,Y)≤H(X)+H(Y)} where \emph{H(X)} and
+\emph{H(Y)} are the univariate entropies given as the diagonal of the output matrix.
 }
 \examples{
 # to be added
 }
 \references{
-Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data. *Bulletin of Sociological Methodology/Bulletin de Méthodologie Sociologique*, 129(1), 45-63.
+Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data.
+\emph{Bulletin of Sociological Methodology/Bulletin de Méthodologie Sociologique}, 129(1), 45-63.
+\cr
+Nowicki, K., Shafie, T., & Frank, O. (Forthcoming 2022). \emph{Statistical Entropy Analysis of Network Data}.
+}
+\seealso{
+\code{\link{joint_entropy}},  \code{\link{entropy_trivar}}, \code{\link{redundancy}}
 }
 \author{
 Termeh Shafie

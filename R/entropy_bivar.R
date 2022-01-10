@@ -1,11 +1,18 @@
 #' @title Bivariate Entropies
-#' @description Calculates the bivariate entropies between all pairs of variables in a multivariate data set.
+#' @description Calculates the bivariate entropies between all pairs of (discrete) variables in a multivariate data set.
 #' @param dat Dataframe with rows as observations and columns as variables. Variables must all be observed or transformed categorical with finite range spaces.
 #' @return Upper triangular matrix giving bivariate entropies between pairs of variables which are given as rows and columns of the matrix.
 #' The univariate entropies are given in the diagonal.
-#' @details  To be completed
+#' @details The bivariate entropy \emph{H(X,Y)} of two discrete random variables \emph{X} and \emph{Y} allows oe to check
+#' for functional relationships and stochastic independence between pairs of variables.
+#' The bivariate entropy is bounded according to \emph{H(X)≤H(X,Y)≤H(X)+H(Y)} where \emph{H(X)} and
+#' \emph{H(Y)} are the univariate entropies given as the diagonal of the output matrix.
 #' @author Termeh Shafie
-#' @references Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data. *Bulletin of Sociological Methodology/Bulletin de Méthodologie Sociologique*, 129(1), 45-63.
+#' @seealso \code{\link{joint_entropy}},  \code{\link{entropy_trivar}}, \code{\link{redundancy}}
+#' @references Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data.
+#' \emph{Bulletin of Sociological Methodology/Bulletin de Méthodologie Sociologique}, 129(1), 45-63.
+#' \cr
+#' Nowicki, K., Shafie, T., & Frank, O. (Forthcoming 2022). \emph{Statistical Entropy Analysis of Network Data}.
 #' @examples
 #' # to be added
 #' @export
