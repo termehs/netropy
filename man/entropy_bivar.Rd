@@ -19,14 +19,19 @@ Computes the bivariate entropies between all pairs of (discrete) variables in a 
 \details{
 The bivariate entropy \emph{H(X,Y)} of two discrete random variables \emph{X} and \emph{Y} allows oe to check
 for functional relationships and stochastic independence between pairs of variables.
-The bivariate entropy is bounded according to \emph{H(X)≤H(X,Y)≤H(X)+H(Y)} where \emph{H(X)} and
+The bivariate entropy is bounded according to \cr
+
+\emph{H(X) ≤ H(X,Y) ≤ H(X) + H(Y)}
+\cr
+
+where \emph{H(X)} and
 \emph{H(Y)} are the univariate entropies.
 }
 \examples{
 # use internal data set and the attribute dataframe with 71 observations
 data(lawdata)
 df.att <- lawdata[[4]]
-# calculate bivariate entropies between pairs of variables in this dataframe
+# calculate bivariate entropies
 H.biv <- entropy_bivar(df.att)
 # univariate entropies are then given as
 diag(H.biv)
@@ -35,6 +40,7 @@ diag(H.biv)
 Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data.
 \emph{Bulletin of Sociological Methodology/Bulletin de Méthodologie Sociologique}, 129(1), 45-63.
 \cr
+
 Nowicki, K., Shafie, T., & Frank, O. (Forthcoming 2022). \emph{Statistical Entropy Analysis of Network Data}.
 }
 \seealso{
