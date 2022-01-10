@@ -5,25 +5,35 @@
 #' Variables must all be observed or transformed categorical with finite range spaces.
 #' @param dec The precision given in number of decimals for which
 #' the frequency distribution of unique entropy values is created. Default is 3.
-#' @return List with the upper triangular joint entropy matrix (univariate entropy in diagonal)
-#' and the frequency distribution of unique joint entropy values.
+#' @return List with the upper triangular joint entropy matrix (univariate entropies in the diagonal)
+#' and a dataframe giving the frequency distributions of unique joint entropy values.
 #' @details The joint entropy \emph{J(X,Y)} of discrete variables \emph{X} and \emph{Y}
-#' is a measure of dependence or association between them. Two variables are independent if joint entropy,
+#' is a measure of dependence or association between them, defined as
+#' \cr
+#'
+#' \emph{J(X,Y) = H(X) + H(Y) - H(X,Y)}.
+#' \cr
+#'
+#' Two variables are independent if their joint entropy,
 #' i.e. their mutual information, is equal to zero.
+#' The frequency distributions can be used to decide upon convenient thresholds for
+#' constructing association graphs.
 #' @author Termeh Shafie
 #' @seealso \code{\link{assoc_graph}}, \code{\link{entropy_bivar}}
 #' @references Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data.
 #' \emph{Bulletin of Sociological Methodology/Bulletin de Méthodologie Sociologique}, 129(1), 45-63.
 #' \cr
+#'
 #' Nowicki, K., Shafie, T., & Frank, O. (Forthcoming 2022). \emph{Statistical Entropy Analysis of Network Data}.
 #' @examples
+#' # use internal data set and the attribute dataframe with 71 observations
 #' data(lawdata)
 #' df.att <- lawdata[[4]]
-#' # calculate joint entropies between pairs of variables in this dataframe
+#' # calculate joint entropies
 #' J <- joint_entropy(df.att)
 #' # joint entropy matrix
 #' J$matrix
-#' # frequency distribution of computed joint entropy values
+#' # frequency distribution of joint entropy values
 #' J$freq
 #' @export
 #'

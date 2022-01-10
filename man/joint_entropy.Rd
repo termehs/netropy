@@ -14,8 +14,8 @@ Variables must all be observed or transformed categorical with finite range spac
 the frequency distribution of unique entropy values is created. Default is 3.}
 }
 \value{
-List with the upper triangular joint entropy matrix (univariate entropy in diagonal)
-and the frequency distribution of unique joint entropy values.
+List with the upper triangular joint entropy matrix (univariate entropies in the diagonal)
+and a dataframe giving the frequency distributions of unique joint entropy values.
 }
 \description{
 Computes the joint entropies between all pairs of (discrete)
@@ -23,23 +23,33 @@ variables in a multivariate data set.
 }
 \details{
 The joint entropy \emph{J(X,Y)} of discrete variables \emph{X} and \emph{Y}
-is a measure of dependence or association between them. Two variables are independent if joint entropy,
+is a measure of dependence or association between them, defined as
+\cr
+
+\emph{J(X,Y) = H(X) + H(Y) - H(X,Y)}.
+\cr
+
+Two variables are independent if their joint entropy,
 i.e. their mutual information, is equal to zero.
+The frequency distributions can be used to decide upon convenient thresholds for
+constructing association graphs.
 }
 \examples{
+# use internal data set and the attribute dataframe with 71 observations
 data(lawdata)
 df.att <- lawdata[[4]]
-# calculate joint entropies between pairs of variables in this dataframe
+# calculate joint entropies
 J <- joint_entropy(df.att)
 # joint entropy matrix
 J$matrix
-# frequency distribution of computed joint entropy values
+# frequency distribution of joint entropy values
 J$freq
 }
 \references{
 Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data.
 \emph{Bulletin of Sociological Methodology/Bulletin de Méthodologie Sociologique}, 129(1), 45-63.
 \cr
+
 Nowicki, K., Shafie, T., & Frank, O. (Forthcoming 2022). \emph{Statistical Entropy Analysis of Network Data}.
 }
 \seealso{
