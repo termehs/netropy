@@ -2,7 +2,7 @@
 % Please edit documentation in R/assoc_graph.R
 \name{assoc_graph}
 \alias{assoc_graph}
-\title{Association graphs}
+\title{Association Graphs}
 \usage{
 assoc_graph(dat, cutoff = 0)
 }
@@ -15,17 +15,32 @@ assoc_graph(dat, cutoff = 0)
 A ggraph object.
 }
 \description{
-Draws association graphs based on given thresholds of joint entropy values between pairs of variables represented as nodes.
-Thickness of edges between pairs of nodes in the association graphs indicates strength of dependence between variables.
+Draws association graphs/graphical models based on joint entropy values
+to detect and visualize different dependence structures among the variables in the dataframe.
 }
 \details{
-To be completed
+Draws association graphs based on given thresholds of joint entropy values
+between pairs of variables represented as nodes. Thickness of edges between pairs of nodes/variables
+indicates strength of dependence between variables. Isolated nodes are completely
+independent and paths through certain nodes/variables indicate conditional dependencies.
 }
 \examples{
-# to be added
+library(ggraph)
+# use internal data set and the attribute dataframe with 71 observations
+data(lawdata)
+df.att <- lawdata[[4]]
+remove variable 'senior' as it is redundant
+redundancy(df.att)
+df.att <- df.att[,-1]
+# association graph based on cutoff 0.3
+assoc_graph(df.att, 0.3)
 }
 \references{
-Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data. *Bulletin of Sociological Methodology/Bulletin de Méthodologie Sociologique*, 129(1), 45-63.
+Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data.
+\emph{Bulletin of Sociological Methodology/Bulletin de Méthodologie Sociologique}, 129(1), 45-63.
+\cr
+
+Nowicki, K., Shafie, T., & Frank, O. (Forthcoming 2022). \emph{Statistical Entropy Analysis of Network Data}.
 }
 \seealso{
 \code{\link{joint_entropy}}
