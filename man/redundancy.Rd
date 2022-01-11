@@ -7,24 +7,39 @@
 redundancy(dat, dec = 3)
 }
 \arguments{
-\item{dat}{Dataframe with rows as observations and columns as variables. Variables must all be observed or transformed categorical with finite range spaces.}
+\item{dat}{Dataframe with rows as observations and columns as variables.
+Variables must all be observed or transformed categorical with finite range spaces.}
 
-\item{dec}{The precision given as number of decimals used to round bivariate entropies in order to find redundant variables (the more decimals, the harder to find redundancy). Default is 3.}
+\item{dec}{The precision given as number of decimals used to round bivariate entropies
+in order to find redundant variables (the more decimals, the harder to detect redundancy). Default is 3.}
 }
 \value{
-Matrix indicating which row and column variables are hold the same information. Consider removing one of these for further analysis.
+Matrix indicating which row and column variables are hold the same information.
 }
 \description{
-Finds redundant variables in a dataframe. Redundancy is defined as two variables holding the same information (measured by bivariate entropies).
+Finds redundant variables in a dataframe consisting of discrete variables.
 }
 \details{
-To be completed
+Redundancy is defined as two variables holding the same information (bivariate entropies)
+as at least one of the variable alone (univariate entropies).
+Consider removing one of these two variable from the dataframe for further analysis.
 }
 \examples{
-# to be added.
+# use internal data set and the attribute dataframe with 71 observations
+data(lawdata)
+df.att <- lawdata[[4]]
+# find redundant variables in dataframe
+redundancy(df.att) # variable 'senior' should be omitted
 }
 \references{
-Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data. *Bulletin of Sociological Methodology/Bulletin de Méthodologie Sociologique*, 129(1), 45-63.
+Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data.
+\emph{Bulletin of Sociological Methodology/Bulletin de Méthodologie Sociologique}, 129(1), 45-63.
+\cr
+
+Nowicki, K., Shafie, T., & Frank, O. (Forthcoming 2022). \emph{Statistical Entropy Analysis of Network Data}.
+}
+\seealso{
+\code{\link{entropy_bivar}},
 }
 \author{
 Termeh Shafie
