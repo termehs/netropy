@@ -15,7 +15,7 @@ to be transformed to a triad variable.}
 \value{
 Data frame with four columns:
 first three columns show the vertex triad \code{u}, \code{v}, \code{w} ,
-and the fourth column gives the transformed triadicvariable \code{var}.
+and the fourth column gives the value of the transformed triadic variable \code{var}.
 }
 \description{
 Transforms vertex variables or observed directed/undirected ties
@@ -25,6 +25,11 @@ into triad variables.
 For actor attributes, unique triples of original attribute values
 constitute the outcome space. Note that the actor
 attributes need to be categorical and on ordinal scale with finite range spaces.
+For example, binary attributes have 8 possible triadic outcomes
+(0,0,0),(1,0,0),(0,1,0),(1,1,0),(0,0,1),(1,0,1),(0,1,1),(1,1,1)
+which are coded 0-7.
+Warning message is shown if actor attribute has too many unique outcomes
+as it will yield too many possible outcomes once converted in to a triad variable.
 \cr
 
 For directed relations, a sequence of indicators of length 6 created from the adjacency matrix
@@ -33,22 +38,29 @@ constitutes the 64 outcomes representing possible combinations of sending and re
 
 For undirected relations, triples of indicators are created from the adjacency matrix.
 \cr
-
-Warning message is shown if actor attribute has too many unique outcomes
-as it will yield too many possible outcomes when converted to a triad variable.
-\cr
-
-To be completed.
 }
 \examples{
-To be added
+# use internal data set
+data(lawdata)
+adj.advice <- lawdata[[1]]
+adj.cowork <-lawdata[[3]]
+df.att <- lawdata[[4]]
+# actor attribute converted to triad variable
+triad.gend <- get_triad_var(df.att$gender, 'att')
+# directed tie converted to triad variable
+triad.adv <- get_triad_var(adj.advice, type = 'tie')
+# undirected tie converted to triad variable
+triad.cwk <- get_triad_var(adj.cowork, type = 'tie')
 }
 \references{
 Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data.
 \emph{Bulletin of Sociological Methodology/Bulletin de Méthodologie Sociologique}, 129(1), 45-63.
+\cr
+
+Nowicki, K., Shafie, T., & Frank, O. (Forthcoming 2022). \emph{Statistical Entropy Analysis of Network Data}.
 }
 \seealso{
-
+\code{\link{get_dyad_var}}
 }
 \author{
 Termeh Shafie
