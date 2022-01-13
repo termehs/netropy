@@ -11,14 +11,14 @@
 #' or actor attributes. Here, unique pairs of original attribute values
 #' constitute the outcome space. Note that the actor  attributes need
 #' to be categorical and on ordinal scale with finite range spaces. For example, binary
-#' attribute yields outcome space (0,0), (0,1), (1,0), (1,1) coded as (0,1,2,3).
+#' attribute yields outcome space (0,0), (0,1), (1,0), (1,1) coded as (0),(1),(2),(3).
 #' Warning message is shown if actor attribute has too many unique outcomes
 #' as it will yield too many possible outcomes once converted in to a dyad variable.
 #' \cr
 #'
 #' For directed relations, pairs of indicators from the adjacency matrix constitute
 #' the four outcomes representing possible combinations of sending and receiving ties:
-#' (0,0), (0,1), (1,0), (1,1) coded as (0,1,2,3)
+#' (0,0), (0,1), (1,0), (1,1) coded as (0),(1),(2),(3).
 #' \cr
 #'
 #' For undirected relations, an indicator variable which is directly read from the
@@ -33,7 +33,7 @@
 #'
 #' Nowicki, K., Shafie, T., & Frank, O. (Forthcoming 2022). \emph{Statistical Entropy Analysis of Network Data}.
 #' @examples
-#' # use internal data set and the attribute dataframe with 71 observations
+#' # use internal data set
 #' data(lawdata)
 #' adj.advice <- lawdata[[1]]
 #' adj.cowork <-lawdata[[3]]
