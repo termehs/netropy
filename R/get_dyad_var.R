@@ -7,33 +7,43 @@
 #' @return Data frame with three columns:
 #' first two columns show the vertex pairs \code{u} and \code{v} where \code{u<v} ,
 #' and the third column gives the transformed dyadic variable \code{var}.
-#' @details For actor attributes, unique pairs of original attribute values
+#' @details Dyad variables are given as pairs of incident vertex variables
+#' or actor attributes. Here, unique pairs of original attribute values
 #' constitute the outcome space. Note that the actor  attributes need
-#' to be categorical and on ordinal scale with finite range spaces.
+#' to be categorical and on ordinal scale with finite range spaces. For example, binary
+#' attribute yields outcome space (0,0), (0,1), (1,0), (1,1) coded as (0,1,2,3).
+#' Warning message is shown if actor attribute has too many unique outcomes
+#' as it will yield too many possible outcomes once converted in to a dyad variable.
 #' \cr
 #'
 #' For directed relations, pairs of indicators from the adjacency matrix constitute
 #' the four outcomes representing possible combinations of sending and receiving ties:
-#' (0,0), (0,1), (1,0), (1,1).
+#' (0,0), (0,1), (1,0), (1,1) coded as (0,1,2,3)
 #' \cr
 #'
 #' For undirected relations, an indicator variable which is directly read from the
 #' adjacency matrix represents the dyadic variable.
 #' \cr
 #'
-#' Warning message is shown if actor attribute has too many unique outcomes
-#' as it will yield too many possible outcomes when converted in to a dyad variable.
-#' \cr
-#'
-#' To be completed.
 #' @author Termeh Shafie
-#' @seealso \code{\link{joint_entropy}}
+#' @seealso \code{\link{get_triad_var}}
 #' @references Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data.
 #' \emph{Bulletin of Sociological Methodology/Bulletin de Méthodologie Sociologique}, 129(1), 45-63.
 #' \cr
 #'
 #' Nowicki, K., Shafie, T., & Frank, O. (Forthcoming 2022). \emph{Statistical Entropy Analysis of Network Data}.
 #' @examples
+#' # use internal data set and the attribute dataframe with 71 observations
+#' data(lawdata)
+#' adj.advice <- lawdata[[1]]
+#' adj.cowork <-lawdata[[3]]
+#' df.att <- lawdata[[4]]
+#' # actor attribute converted to dyad variable
+#' dyad.gend <- get_dyad_var(df.att$gender, 'att')
+#' # directed tie converted to dyad variable
+#' dyad.adv <- get_dyad_var(adj.advice, 'tie')
+#' # undirected tie converted to dyad variable
+#' dyad.cwk <- get_dyad_var(adj.cowork, 'tie')
 #' @export
 
 get_dyad_var <- function(var, type = 'att') {

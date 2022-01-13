@@ -22,9 +22,12 @@ Transforms vertex variables or observed directed/undirected ties
 into dyad variables.
 }
 \details{
-For actor attributes, unique pairs of original attribute values
+Dyad variables are given as pairs of incident vertex variables
+or actor attributes. Here, unique pairs of original attribute values
 constitute the outcome space. Note that the actor  attributes need
 to be categorical and on ordinal scale with finite range spaces.
+Warning message is shown if actor attribute has too many unique outcomes
+as it will yield too many possible outcomes once converted in to a dyad variable.
 \cr
 
 For directed relations, pairs of indicators from the adjacency matrix constitute
@@ -35,12 +38,19 @@ the four outcomes representing possible combinations of sending and receiving ti
 For undirected relations, an indicator variable which is directly read from the
 adjacency matrix represents the dyadic variable.
 \cr
-
-Warning message is shown if actor attribute has too many unique outcomes
-as it will yield too many possible outcomes when converted in to a dyad variable.
-\cr
-
-To be completed.
+}
+\examples{
+# use internal data set and the attribute dataframe with 71 observations
+data(lawdata)
+adj.advice <- lawdata[[1]]
+adj.cowork <-lawdata[[3]]
+df.att <- lawdata[[4]]
+# actor attribute converted to dyad variable
+get_dyad_var(df.att$gender, 'att')
+# directed tie converted to dyad variable
+ get_dyad_var(adj.advice, 'tie')
+# undirected tie converted to dyad variable
+ get_dyad_var(adj.cowork, 'tie')
 }
 \references{
 Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data.
@@ -50,7 +60,7 @@ Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data.
 Nowicki, K., Shafie, T., & Frank, O. (Forthcoming 2022). \emph{Statistical Entropy Analysis of Network Data}.
 }
 \seealso{
-\code{\link{joint_entropy}}
+\code{\link{get_triad_var}}
 }
 \author{
 Termeh Shafie
