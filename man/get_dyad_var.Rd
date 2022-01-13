@@ -15,7 +15,7 @@ to be transformed to a dyad variable.}
 \value{
 Data frame with three columns:
 first two columns show the vertex pairs \code{u} and \code{v} where \code{u<v} ,
-and the third column gives the transformed dyadic variable \code{var}.
+and the third column gives the value of the transformed dyadic variable \code{var}.
 }
 \description{
 Transforms vertex variables or observed directed/undirected ties

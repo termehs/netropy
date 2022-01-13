@@ -6,7 +6,7 @@
 #' @param type either 'att' for actor attribute (default) or 'tie' for relations.
 #' @return Data frame with three columns:
 #' first two columns show the vertex pairs \code{u} and \code{v} where \code{u<v} ,
-#' and the third column gives the transformed dyadic variable \code{var}.
+#' and the third column gives the value of the transformed dyadic variable \code{var}.
 #' @details Dyad variables are given as pairs of incident vertex variables
 #' or actor attributes. Here, unique pairs of original attribute values
 #' constitute the outcome space. Note that the actor  attributes need
