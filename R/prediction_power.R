@@ -1,4 +1,4 @@
-#' @title Prediction Power  based on expected Conditional Entropies
+#' @title Prediction Power Based 
 #' @description 
 #' Computes prediction power when pairs of variables in a given dataframe are used 
 #' to predict a third variable from the same dataframe. The prediction strength is measured by
@@ -8,7 +8,14 @@
 #' @param dat Dataframe with rows as observations and columns as variables. 
 #' Variables must all be observed or transformed categorical with finite range spaces.
 #' @return 
-#' @details 
+#' @details The expected conditional entropy given by\cr
+#' 
+#' \emph{EH(Z|X,Y)= H(X,Y,Z) - H(X, Y) \cr
+#' 
+#' measures the prediction uncertainty when  pairs of variables \emph{X} and \emph{Y}
+#' are used to predict variable \emph{Z}.
+#' The lower the value of \emph{EH} given various pairs of variables \emph{X} and \emph{Y}, 
+#' the stronger is the prediction of \emph{Z}.
 #' @author Termeh Shafie
 #' @seealso \code{\link{entropy_trivar}}
 #' @references Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data.
