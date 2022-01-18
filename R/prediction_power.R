@@ -1,31 +1,25 @@
 #' @title Prediction Power  based on expected Conditional Entropies
 #' @description 
+#' Computes prediction power when pairs of variables in a given dataframe are used 
+#' to predict a third variable from the same dataframe. The prediction strength is measured by
+#' expected conditional entropies.
 #' @param formula An object of class "formula": a symbolic description of the variable
 #' being predicted using pairs of other variables. The details of its specification are given under ‘Details’.
-#' @param dat Dataframe with rows as observations and columns as variables. Variables must all be observed or transformed categorical with finite range spaces.
-#' @param cutoff The cutoff point for the edges to be drawn based on joint entropies. Default is 0 and draws all edges.
-#' @return A ggraph object.
-#' @details Draws association graphs based on given thresholds of joint entropy values
-#' between pairs of variables represented as nodes. Thickness of edges between pairs of nodes/variables
-#' indicates strength of dependence between variables. Isolated nodes are completely
-#' independent and paths through certain nodes/variables indicate conditional dependencies.
+#' @param dat Dataframe with rows as observations and columns as variables. 
+#' Variables must all be observed or transformed categorical with finite range spaces.
+#' @return 
+#' @details 
 #' @author Termeh Shafie
-#' @seealso \code{\link{joint_entropy}}
+#' @seealso \code{\link{entropy_trivar}}
 #' @references Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data.
 #' \emph{Bulletin of Sociological Methodology/Bulletin de Méthodologie Sociologique}, 129(1), 45-63.
 #' \cr
 #'
 #' Nowicki, K., Shafie, T., & Frank, O. (Forthcoming 2022). \emph{Statistical Entropy Analysis of Network Data}.
 #' @examples
-#' library(ggraph)
 #' # use internal data set and the attribute dataframe with 71 observations
 #' data(lawdata)
-#' df.att <- lawdata[[4]]
-#' remove variable 'senior' as it is redundant
-#' redundancy(df.att)
-#' df.att <- df.att[,-1]
-#' # association graph based on cutoff 0.3
-#' assoc_graph(df.att, 0.3)
+
 #' @export
 
 prediction_power <- function(formula, dat) {
