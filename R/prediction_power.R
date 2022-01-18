@@ -17,7 +17,7 @@
 #' The lower the value of \emph{EH} given various pairs of variables \emph{X} and \emph{Y}, 
 #' the stronger is the prediction of \emph{Z}.
 #' @author Termeh Shafie
-#' @seealso \code{\link{entropy_trivar}}
+#' @seealso \code{\link{entropy_trivar}}, \code{\link{entropy_bivar}}
 #' @references Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data.
 #' \emph{Bulletin of Sociological Methodology/Bulletin de Méthodologie Sociologique}, 129(1), 45-63.
 #' \cr
