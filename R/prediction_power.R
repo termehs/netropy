@@ -1,4 +1,4 @@
-#' @title Prediction Power Based 
+#' @title Prediction Power
 #' @description 
 #' Computes prediction power when pairs of variables in a given dataframe are used 
 #' to predict a third variable from the same dataframe. The prediction strength is measured by
