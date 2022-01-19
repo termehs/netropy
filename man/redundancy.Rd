@@ -7,10 +7,10 @@
 redundancy(dat, dec = 3)
 }
 \arguments{
-\item{dat}{Dataframe with rows as observations and columns as variables.
+\item{dat}{dataframe with rows as observations and columns as variables.
 Variables must all be observed or transformed categorical with finite range spaces.}
 
-\item{dec}{The precision given as number of decimals used to round bivariate entropies
+\item{dec}{the precision given as number of decimals used to round bivariate entropies
 in order to find redundant variables (the more decimals, the harder to detect redundancy). Default is 3.}
 }
 \value{
