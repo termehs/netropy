@@ -1,8 +1,8 @@
 #' @title Bivariate Entropy
 #' @description Computes the bivariate entropies between all pairs of (discrete) variables in a multivariate data set.
-#' @param dat Dataframe with rows as observations and columns as variables. Variables must all be observed or transformed categorical with finite range spaces.
-#' @return Upper triangular matrix giving bivariate entropies between pairs of variables which are given as rows and columns of the matrix.
-#' The univariate entropies are given in the diagonal.
+#' @param dat dataframe with rows as observations and columns as variables. Variables must all be observed or transformed categorical with finite range spaces.
+#' @return Upper triangular matrix giving bivariate entropies between pairs of variables given as
+#' rows and columns of the matrix. The univariate entropies are given in the diagonal.
 #' @details The bivariate entropy \emph{H(X,Y)} of two discrete random variables \emph{X} and \emph{Y} allows oe to check
 #' for functional relationships and stochastic independence between pairs of variables.
 #' The bivariate entropy is bounded according to \cr
