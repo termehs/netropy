@@ -1,9 +1,9 @@
 #' @title Joint Entropy
 #' @description Computes the joint entropies between all pairs of (discrete)
 #' variables in a multivariate data set.
-#' @param dat Dataframe with rows as observations and columns as variables.
+#' @param dat dataframe with rows as observations and columns as variables.
 #' Variables must all be observed or transformed categorical with finite range spaces.
-#' @param dec The precision given in number of decimals for which
+#' @param dec the precision given in number of decimals for which
 #' the frequency distribution of unique entropy values is created. Default is 3.
 #' @return List with the upper triangular joint entropy matrix (univariate entropies in the diagonal)
 #' and a dataframe giving the frequency distributions of unique joint entropy values.
