@@ -1,7 +1,7 @@
 #' @title Trivariate Entropy
 #' @description Computes trivariate entropies of all triples of (discrete)
 #' variables in a multivariate data set.
-#' @param dat Dataframe with rows as observations and columns as variables.
+#' @param dat dataframe with rows as observations and columns as variables.
 #' Variables must all be observed or transformed categorical with finite range spaces.
 #' @return Dataframe with the first three columns representing possible triples of variables (\code{V1,V2,V3})
 #' and the fourth column gives entropies \code{H(V1,V2,V3)}.
