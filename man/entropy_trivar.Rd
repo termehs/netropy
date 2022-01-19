@@ -30,11 +30,28 @@ is bounded according to \cr
 The increment between the trivariate entropy and its lower bound is equal to the expected conditional entropy.
 }
 \examples{
-# use internal data set and the attribute dataframe with 71 observations
+# use internal data set
 data(lawdata)
 df.att <- lawdata[[4]]
+
+#' # three steps of data editing:
+# 1. categorize variables 'years' and 'age' based on
+# approximately three equally size groups (values based on cdf)
+# 2. make sure all outcomes start from the value 0 (optional)
+# 3. remove variable 'senior' as it consists of only unique values (thus redundant)
+df.att.ed <- data.frame(
+   status   = df.att$status,
+   gender   = df.att$gender,
+   office   = df.att$office-1,
+   years    = ifelse(df.att$years<=3,0,
+              ifelse(df.att$years<=13,1,2)),
+   age      = ifelse(df.att$age<=35,0,
+                ifelse(df.att$age<=45,1,2)),
+   practice = df.att$practice,
+   lawschool= df.att$lawschool-1)
+
 # calculate trivariate entropies
-H.triv <- entropy_trivar(df.att)
+H.triv <- entropy_trivar(df.att.ed)
 }
 \references{
 Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data.

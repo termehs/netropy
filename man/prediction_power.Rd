@@ -7,19 +7,19 @@
 prediction_power(var, dat)
 }
 \arguments{
-\item{var}{character string representing the variable in 
+\item{var}{character string representing the variable in
 dataframe \code{dat} to be predicted by pairs of other variables in the dataframe \code{dat}.}
 
-\item{dat}{dataframe with rows as observations and columns as variables. 
+\item{dat}{dataframe with rows as observations and columns as variables.
 Variables must all be observed or transformed categorical with finite range spaces.}
 }
 \value{
-Upper triangular matrix giving the expected conditional entropies of pairs of variables 
+Upper triangular matrix giving the expected conditional entropies of pairs of variables
 given as rows and columns of the matrix. The diagonal gives \emph{EH(X|Z) = H(X,Z) - H(Z)} , that is
 when only one variable is used to predict \code{var}.
 }
 \description{
-Computes prediction power when pairs of variables in a given dataframe are used 
+Computes prediction power when pairs of variables in a given dataframe are used
 to predict a third variable from the same dataframe. The prediction strength is measured by
 expected conditional entropies.
 }
@@ -30,12 +30,32 @@ The expected conditional entropy given by\cr
 
 measures the prediction uncertainty when pairs of variables \emph{X} and \emph{Y}
 are used to predict variable \emph{Z}.
-The lower the value of \emph{EH} given different pairs of variables \emph{X} and \emph{Y}, 
+The lower the value of \emph{EH} given different pairs of variables \emph{X} and \emph{Y},
 the stronger is the prediction of \emph{Z}.
 }
 \examples{
-# use internal data set and the attribute dataframe with 71 observations
+# use internal data set
 data(lawdata)
+df.att <- lawdata[[4]]
+
+#' # three steps of data editing:
+# 1. categorize variables 'years' and 'age' based on
+# approximately three equally size groups (values based on cdf)
+# 2. make sure all outcomes start from the value 0 (optional)
+# 3. remove variable 'senior' as it consists of only unique values (thus redundant)
+df.att.ed <- data.frame(
+   status   = df.att$status,
+   gender   = df.att$gender,
+   office   = df.att$office-1,
+   years    = ifelse(df.att$years<=3,0,
+              ifelse(df.att$years<=13,1,2)),
+   age      = ifelse(df.att$age<=35,0,
+                ifelse(df.att$age<=45,1,2)),
+   practice = df.att$practice,
+   lawschool= df.att$lawschool-1)
+
+# power of predicting 'status' using pairs of other variables
+prediction_power('status', df.att.ed)
 }
 \references{
 Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data.

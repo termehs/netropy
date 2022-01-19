@@ -17,14 +17,28 @@
 #' Nowicki, K., Shafie, T., & Frank, O. (Forthcoming 2022). \emph{Statistical Entropy Analysis of Network Data}.
 #' @examples
 #' library(ggraph)
-#' # use internal data set and the attribute dataframe with 71 observations
+#' # use internal data set
 #' data(lawdata)
 #' df.att <- lawdata[[4]]
-#' remove variable 'senior' as it is redundant
-#' redundancy(df.att)
-#' df.att <- df.att[,-1]
-#' # association graph based on cutoff 0.3
-#' assoc_graph(df.att, 0.3)
+#'
+#' # three steps of data editing:
+#' # 1. categorize variables 'years' and 'age' based on
+#' # approximately three equally size groups (values based on cdf)
+#' # 2. make sure all outcomes start from the value 0 (optional)
+#' # 3. remove variable 'senior' as it consists of only unique values (thus redundant)
+#' df.att.ed <- data.frame(
+#'    status   = df.att$status,
+#'    gender   = df.att$gender,
+#'    office   = df.att$office-1,
+#'    years    = ifelse(df.att$years<=3,0,
+#'               ifelse(df.att$years<=13,1,2)),
+#'    age      = ifelse(df.att$age<=35,0,
+#'                 ifelse(df.att$age<=45,1,2)),
+#'    practice = df.att$practice,
+#'    lawschool= df.att$lawschool-1)
+#'
+#' # association graph based on cutoff 0.15
+#' assoc_graph(df.att.ed, 0.15)
 #' @export
 assoc_graph <- function(dat, cutoff = 0) {
   J <- joint_entropy(dat)

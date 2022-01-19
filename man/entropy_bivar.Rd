@@ -10,8 +10,8 @@ entropy_bivar(dat)
 \item{dat}{dataframe with rows as observations and columns as variables. Variables must all be observed or transformed categorical with finite range spaces.}
 }
 \value{
-upper triangular matrix giving bivariate entropies between pairs of variables which are given as rows and columns of the matrix.
-The univariate entropies are given in the diagonal.
+Upper triangular matrix giving bivariate entropies between pairs of variables given as
+rows and columns of the matrix. The univariate entropies are given in the diagonal.
 }
 \description{
 Computes the bivariate entropies between all pairs of (discrete) variables in a multivariate data set.
@@ -28,11 +28,28 @@ where \emph{H(X)} and
 \emph{H(Y)} are the univariate entropies.
 }
 \examples{
-# use internal data set and the attribute dataframe with 71 observations
+# use internal data set
 data(lawdata)
 df.att <- lawdata[[4]]
+
+three steps of data editing:
+# 1. categorize variables 'years' and 'age' based on
+# approximately three equally size groups (values based on cdf)
+# 2. make sure all outcomes start from the value 0 (optional)
+# 3. remove variable 'senior' as it consists of only unique values (thus redundant)
+df.att.ed <- data.frame(
+   status   = df.att$status,
+   gender   = df.att$gender,
+   office   = df.att$office-1,
+   years    = ifelse(df.att$years<=3,0,
+              ifelse(df.att$years<=13,1,2)),
+   age      = ifelse(df.att$age<=35,0,
+                ifelse(df.att$age<=45,1,2)),
+   practice = df.att$practice,
+   lawschool= df.att$lawschool-1)
+
 # calculate bivariate entropies
-H.biv <- entropy_bivar(df.att)
+H.biv <- entropy_bivar(df.att.ed)
 # univariate entropies are then given as
 diag(H.biv)
 }

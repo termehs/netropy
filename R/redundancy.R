@@ -16,11 +16,28 @@
 #'
 #' Nowicki, K., Shafie, T., & Frank, O. (Forthcoming 2022). \emph{Statistical Entropy Analysis of Network Data}.
 #' @examples
-#' # use internal data set and the attribute dataframe with 71 observations
+#' # use internal data set
 #' data(lawdata)
 #' df.att <- lawdata[[4]]
+#'
+#' #' # two steps of data editing:
+#' # 1. categorize variables 'years' and 'age' based on
+#' # approximately three equally size groups (values based on cdf)
+#' # 2. make sure all outcomes start from the value 0 (optional)
+#' df.att.ed <- data.frame(
+#'    senior   = df.att$senior,
+#'    status   = df.att$status,
+#'    gender   = df.att$gender,
+#'    office   = df.att$office-1,
+#'    years    = ifelse(df.att$years<=3,0,
+#'               ifelse(df.att$years<=13,1,2)),
+#'    age      = ifelse(df.att$age<=35,0,
+#'                 ifelse(df.att$age<=45,1,2)),
+#'    practice = df.att$practice,
+#'    lawschool= df.att$lawschool-1)
+#'
 #' # find redundant variables in dataframe
-#' redundancy(df.att) # variable 'senior' should be omitted
+#' redundancy(df.att.ed) # variable 'senior' should be omitted
 #' @export
 #'
 redundancy <- function(dat, dec = 3) {

@@ -38,10 +38,29 @@
 #' adj.advice <- lawdata[[1]]
 #' adj.cowork <-lawdata[[3]]
 #' df.att <- lawdata[[4]]
+#'
+#' #' # three steps of data editing:
+#' # 1. categorize variables 'years' and 'age' based on
+#' # approximately three equally size groups (values based on cdf)
+#' # 2. make sure all outcomes start from the value 0 (optional)
+#' # 3. remove variable 'senior' as it consists of only unique values (thus redundant)
+#' df.att.ed <- data.frame(
+#'    status   = df.att$status,
+#'    gender   = df.att$gender,
+#'    office   = df.att$office-1,
+#'    years    = ifelse(df.att$years<=3,0,
+#'               ifelse(df.att$years<=13,1,2)),
+#'    age      = ifelse(df.att$age<=35,0,
+#'                 ifelse(df.att$age<=45,1,2)),
+#'    practice = df.att$practice,
+#'    lawschool= df.att$lawschool-1)
+#'
 #' # actor attribute converted to triad variable
-#' triad.gend <- get_triad_var(df.att$gender, 'att')
+#' triad.gend <- get_triad_var(df.att.ed$gender, 'att')
+#'
 #' # directed tie converted to triad variable
 #' triad.adv <- get_triad_var(adj.advice, type = 'tie')
+#'
 #' # undirected tie converted to triad variable
 #' triad.cwk <- get_triad_var(adj.cowork, type = 'tie')
 #' @export
