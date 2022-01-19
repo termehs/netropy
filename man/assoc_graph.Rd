@@ -7,9 +7,9 @@
 assoc_graph(dat, cutoff = 0)
 }
 \arguments{
-\item{dat}{Dataframe with rows as observations and columns as variables. Variables must all be observed or transformed categorical with finite range spaces.}
+\item{dat}{dataframe with rows as observations and columns as variables. Variables must all be observed or transformed categorical with finite range spaces.}
 
-\item{cutoff}{The cutoff point for the edges to be drawn based on joint entropies. Default is 0 and draws all edges.}
+\item{cutoff}{the cutoff point for the edges to be drawn based on joint entropies. Default is 0 and draws all edges.}
 }
 \value{
 A ggraph object.

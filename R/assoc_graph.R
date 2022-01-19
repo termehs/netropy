@@ -1,8 +1,8 @@
 #' @title Association Graphs
 #' @description Draws association graphs/graphical models based on joint entropy values
 #' to detect and visualize different dependence structures among the variables in the dataframe.
-#' @param dat Dataframe with rows as observations and columns as variables. Variables must all be observed or transformed categorical with finite range spaces.
-#' @param cutoff The cutoff point for the edges to be drawn based on joint entropies. Default is 0 and draws all edges.
+#' @param dat dataframe with rows as observations and columns as variables. Variables must all be observed or transformed categorical with finite range spaces.
+#' @param cutoff the cutoff point for the edges to be drawn based on joint entropies. Default is 0 and draws all edges.
 #' @return A ggraph object.
 #' @details Draws association graphs based on given thresholds of joint entropy values
 #' between pairs of variables represented as nodes. Thickness of edges between pairs of nodes/variables
