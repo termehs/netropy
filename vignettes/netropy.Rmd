@@ -1,0 +1,44 @@
+---
+title: "Statistical Entropy Analysis of Network Data"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Statistical Entropy Analysis of Network Data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(out.width = "100%",
+  cache = FALSE
+)
+```
+
+
+This vignette serves as an introduction to the package `netropy`. Parts of the theoretical background is provided but for more details, consult the following literature which the package is based on:
+
+> Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data.
+*Bulletin of Sociological Methodology/Bulletin de Méthodologie Sociologique*, 129(1), 45-63.
+
+>  Nowicki, K., Shafie, T., & Frank, O. (Forthcoming 2022). *Statistical Entropy Analysis of Network Data*.
+
+Make sure the library is loaded
+```{r eval=TRUE}
+library('netropy')
+```
+
+
+## Introduction
+
+
+### Loading Internal Data
+
+### Variable Domains and Data Editing
+
+## Univariate, Bivariate and Trivariate Entropies
+
+## Joint Entropies and Association Graphs
+
+
+
+## Prediction Powers Based on Expected Conditional Entropies
+
