@@ -12,8 +12,8 @@ knitr::opts_chunk$set(
   out.width = "100%"
 )
 ```
-# netropy
-Description coming soon...
+
+# Package overview: `netropy` <img src="man/figures/hex_netropy.png" align="right" width="130px"/>
 
 ## Installation
 
@@ -29,3 +29,5 @@ The development version from [GitHub](https://github.com/) with:
 # install.packages("devtools")
 devtools::install_github("termehs/netropy")
 ```
+
+## Statistical Entropy Analysis of Network Data
