@@ -27,13 +27,129 @@ library('netropy')
 ```
 
 
-## Introduction
+
+## Loading Internal Data
+The different entropy tools are explained and illustrated by exploring data from a network study of a corporate law firm, which has previously been analysed by several authors 
+([link](https://www.stats.ox.ac.uk/~snijders/siena/Lazega_lawyers_data.htm)).
+The data set is included in the package as a list with objects representing adjacency matrices for each of the three networks advice (directed), friendship (directed) and co-work (undirected), together with a data frame comprising 8 attributes on each of the 71 lawyers.
+To load the data, extract each object and assign the correct names to them we run the following syntax
+```{r load_data, eval=TRUE}
+data(lawdata) 
+adj.advice <- lawdata[[1]]
+adj.friend <- lawdata[[2]]
+adj.cowork <-lawdata[[3]]
+df.att <- lawdata[[4]]
+```
+
+## Variable Domains and Data Editing
+Data editing should guarantee that all variables are carefully defined with specified domains where they are observed or measured and with specified range spaces where their possible values are given. A usual set-up is that all variables have the same domain, for instance a set of individuals for which several attributes are registered. If a binary relationship like friendship or not friendship is registered for all pairs of individuals, then the domain for this relationship is the set of dyads (pairs without regard to order) of individuals.
+
+Variables with different domains can sometimes be combined. For instance, node or vertex variable $X$ with value $X_u$ for node $u$ can be extended to the domain of dyads by defining it as the pair $X_{uv} = (X_u,X_v)$ for dyad $(u,v)$. Examples of such variable transformations are given in Frank & Shafie (2016). 
+
+Note that is also possible to create a new variable on units from a tie variable $Y$ with values $Y_{uv}$ on dyads by aggregating in some way the values on dyads incident to a node $u$ to get a value $Y_u$ at that node. For instance, the edge indicators in a graph can be aggregated to degrees or other centrality measures at the vertices.
+
+The package allows the consideration of three variable domains: vertex, dyad and triad variables.
+
+### Example: observed and transformed vertex variables
+Observed node variables are the attributes in the data frame `df.att` with 71 observations. All variables, except `years` and `age`, are categorical with finite range spaces and therefore kept in their original form. The variable `years` and `age` need to be categorized using their cumulative distribution functions and creating approximately equally sized categories. Below shows an example of using three approximately equally sized categories where each of the categories represents  approximately 30% of the cumulative frequency distribution:
+
+```{r edit_data1, eval=TRUE, include=TRUE, results ='markup'}
+att.var <-
+  data.frame(
+    status   = df.att$status-1,
+    gender   = df.att$gender,
+    office   = df.att$office-1,
+    years    = ifelse(df.att$years<=3,0,
+                      ifelse(df.att$years<=13,1,2)),
+    age      = ifelse(df.att$age<=35,0,
+                      ifelse(df.att$age<=45,1,2)),
+    practice = df.att$practice,
+    lawschool= df.att$lawschool-1
+    )
+head(att.var)
+```
+Note that we for the sake of consistency, we also edit all variables except `senior` such that their outcomes start from the value 0. The variable `senior` only has unique values, thus it is redundant and omitted (later we illustrate how such redundant variables can be detected using bivariate entropies).
+
+To transform observed dyad variables into node variables, node degrees of each network (in- and out-degree for directed advice and friendship) can be computed and categorized as shown above for `years` and `age`. 
+
+### Example: observed and transformed dyad variables
+Dyad variables are given as pairs of incident vertex variables with $\binom{71}{2}=2485$ observations (number of rows in the dataframes created in the following). Observed node attribute in the dataframe `att_var` are thus given by pairs of individual attributes. For example,  `status` with binary outcomes  is transformed into dyads having 4 possible outcomes $(0,0), (0,1), (1,0), (1,1)$ and `office` with three categorical outcomes gives dyads with 9 possible outcome $(0,0), (0,1), (0,2), (1,0), (1,1), (1,2),(2,0),(2,1),(2,2)$. 
+These transformations can be done using the function  `get_dyad_variables()` for each vertex variable using the argument `type = att` which specifies that we are using vertex attributes as input variable:
+```{r edit_data2, eval=TRUE, include=TRUE, results ='markup'}
+dyad.status    <- get_dyad_var(att.var$status, type = 'att')
+dyad.gender    <- get_dyad_var(att.var$gender, type = 'att')
+dyad.office    <- get_dyad_var(att.var$office, type = 'att')
+dyad.years     <- get_dyad_var(att.var$years, type = 'att')
+dyad.age       <- get_dyad_var(att.var$age, type = 'att')
+dyad.practice  <- get_dyad_var(att.var$practice, type = 'att')
+dyad.lawschool <- get_dyad_var(att.var$lawschool, type = 'att')
+```
+Note that the outcomes are recoded to numerical values to avoid character objects when performing the entropy analysis (in practice though, the actual values of variables are irrelevant for the entropy analysis as we only care about frequencies of occurrence). Thus, `status` has outcomes  0-3 and  `office` has 0-8.
+
+Similarly, dyad variables can be created based on observed ties.
+For the undirected edges, we use indicator variables read directly from the adjacency matrix for the dyad in question, while for the directed ones we have pairs of indicators representing sending and receiving ties with 4 possible outcomes (`advice` and `friendship`):
+```{r edit_data3, eval=TRUE, include=TRUE, message = FALSE, results ='markup'}
+dyad.cwk    <- get_dyad_var(adj.cowork, type = 'tie')
+dyad.adv    <- get_dyad_var(adj.advice, type = 'tie')
+dyad.frn    <- get_dyad_var(adj.friend, type = 'tie')
+```
+All 10 dyad variables are merged into one data frame for subsequent entropy analysis:
+```{r edit_data4, eval=TRUE, include=TRUE, results ='markup'}
+dyad.var <-
+  data.frame(cbind(status    = dyad.status$var,
+                  gender    = dyad.gender$var,
+                  office    = dyad.office$var,
+                  years     = dyad.years$var,
+                  age       = dyad.age$var,
+                  practice  = dyad.practice$var,
+                  lawschool = dyad.lawschool$var,
+                  cowork    = dyad.cwk$var,
+                  advice    = dyad.adv$var,
+                  friend    = dyad.frn$var)
+                  )
+head(dyad.var)
+```
+
+### Example: transformed triad variables
+A similar function  `get_triad_variables()` is implemented for transforming vertex variables and different relation types into triad variables.
+These triad variables have $\binom{71}{3}=57155$ observations in the law data set and are given as triples of individual attributes or by the relations among the three nodes. Similarly as for dyad variables, we call the function and specify argument for type of variable (a column vector as input when considering vertex attributes and an adjacency matrix when considering ties). For the vertex variables we thus obtain the triad variables using te follow syntax:
+```{r edit_data5, eval=TRUE, include=TRUE, results ='markup'}
+triad.status    <- get_triad_var(att.var$status, type = 'att')
+triad.gender    <- get_triad_var(att.var$gender, type = 'att')
+triad.office    <- get_triad_var(att.var$office, type = 'att')
+triad.years     <- get_triad_var(att.var$years, type = 'att')
+triad.age       <- get_triad_var(att.var$age, type = 'att')
+triad.practice  <- get_triad_var(att.var$practice, type = 'att')
+triad.lawschool <- get_triad_var(att.var$lawschool,type = 'att')
+```
+Note that binary attributes have 8 possible triadic outcomes 
+$$ (0, 0, 0), (1, 0, 0), (0, 1, 0), (1, 1, 0), (0, 0, 1), (1, 0, 1), (0, 1, 1), (1, 1, 1)$$
+coded 0-7 and attributes with three possible outcomes will yield triads with 27 possible outcomes coded 0-26. 
 
 
-### Loading Internal Data
+The undirected ties are transformed from having binary outcomes into triad variables with 8 possible outcomes, and directed ties are transformed from having 4 possible outcomes into triad variables with 64 possible outcome representing possible triadic combinations of sending and receiving ties.
+```{r edit_data6, eval=TRUE, include=TRUE, message = FALSE, results ='markup'}
+triad.cwk    <- get_triad_var(adj.cowork, type = 'tie')
+triad.adv    <- get_triad_var(adj.advice, type = 'tie')
+triad.frn    <- get_triad_var(adj.friend, type = 'tie')
+```
 
-### Variable Domains and Data Editing
-
+All triad variables are then merged into one data frame for subsequent entropy analysis.
+```{r edit_data7, eval=TRUE, include=TRUE, results ='markup'}
+triad.var <- data.frame(cbind(
+             status    = triad.status$var,
+             gender    = triad.gender$var,
+             office    = triad.office$var,
+             years     = triad.years$var,
+             age       = triad.age$var,
+             practice  = triad.practice$var,
+             lawschool = triad.lawschool$var,
+             cowork    = triad.cwk$var,
+             advice    = triad.adv$var,
+             friend    = triad.frn$var)
+             )
+head(triad.var, 5)
+```
 ## Univariate, Bivariate and Trivariate Entropies
 
 ## Joint Entropies and Association Graphs
