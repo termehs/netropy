@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# Package overview: `netropy` <img src="man/figures/hex_netropy.png" align="right" width="300px"/>
+# Package overview: `netropy` <img src="man/figures/hex_netropy.png" align="right" width="340px"/>
 
 ## Installation
 
