@@ -1,8 +1,8 @@
 ---
-title: "Statistical Entropy Analysis of Network Data"
+title: "Variable Domains and Data Editing"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Statistical Entropy Analysis of Network Data}
+  %\VignetteIndexEntry{Variable Domains and Data Editing}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -14,25 +14,38 @@ knitr::opts_chunk$set(out.width = "100%",
 ```
 
 
-This vignette serves as an introduction to the package `netropy`. Parts of the theoretical background is provided but for more details, consult the following literature which the package is based on:
+<!-- This vignette serves as an introduction to the package `netropy`. Parts of the theoretical background is provided but for more details, consult the following literature which the package is based on: -->
 
-> Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data.
-*Bulletin of Sociological Methodology/Bulletin de Méthodologie Sociologique*, 129(1), 45-63.
+<!-- > Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data. -->
+<!-- *Bulletin of Sociological Methodology/Bulletin de Méthodologie Sociologique*, 129(1), 45-63. -->
 
->  Nowicki, K., Shafie, T., & Frank, O. (Forthcoming 2022). *Statistical Entropy Analysis of Network Data*.
+<!-- >  Nowicki, K., Shafie, T., & Frank, O. (Forthcoming 2022). *Statistical Entropy Analysis of Network Data*. -->
 
-Make sure the library is loaded
+<!-- Make sure the library is loaded -->
+
+
+
+
+<!-- ## Loading Internal Data -->
+<!-- The different entropy tools are explained and illustrated by exploring data from a network study of a corporate law firm, which has previously been analysed by several authors  -->
+<!-- ([link](https://www.stats.ox.ac.uk/~snijders/siena/Lazega_lawyers_data.htm)). -->
+<!-- The data set is included in the package as a list with objects representing adjacency matrices for each of the three networks advice (directed), friendship (directed) and co-work (undirected), together with a data frame comprising 8 attributes on each of the 71 lawyers. -->
+
+
+
+Data editing should guarantee that all variables are carefully defined with specified domains where they are observed or measured and with specified range spaces where their possible values are given. A usual set-up is that all variables have the same domain, for instance a set of individuals for which several attributes are registered. If a binary relationship like friendship or not friendship is registered for all pairs of individuals, then the domain for this relationship is the set of dyads (pairs without regard to order) of individuals.
+
+Variables with different domains can sometimes be combined. For instance, node or vertex variable $X$ with value $X_u$ for node $u$ can be extended to the domain of dyads by defining it as the pair $X_{uv} = (X_u,X_v)$ for dyad $(u,v)$. Examples of such variable transformations are given in Frank & Shafie (2016) ([link](https://doi.org/10.1177%2F0759106315615511)). 
+
+Note that is also possible to create a new variable on units from a tie variable $Y$ with values $Y_{uv}$ on dyads by aggregating in some way the values on dyads incident to a node $u$ to get a value $Y_u$ at that node. For instance, the edge indicators in a graph can be aggregated to degrees or other centrality measures at the vertices.
+
+The package allows the consideration of three variable domains: vertex, dyad and triad variables.
+
 ```{r eval=TRUE}
 library('netropy')
 ```
 
-
-
-## Loading Internal Data
-The different entropy tools are explained and illustrated by exploring data from a network study of a corporate law firm, which has previously been analysed by several authors 
-([link](https://www.stats.ox.ac.uk/~snijders/siena/Lazega_lawyers_data.htm)).
-The data set is included in the package as a list with objects representing adjacency matrices for each of the three networks advice (directed), friendship (directed) and co-work (undirected), together with a data frame comprising 8 attributes on each of the 71 lawyers.
-To load the data, extract each object and assign the correct names to them we run the following syntax
+To load the internal data set ([link](https://www.stats.ox.ac.uk/~snijders/siena/Lazega_lawyers_data.htm)), extract each object and assign the correct names to them we run the following syntax
 ```{r load_data, eval=TRUE}
 data(lawdata) 
 adj.advice <- lawdata[[1]]
@@ -41,16 +54,10 @@ adj.cowork <-lawdata[[3]]
 df.att <- lawdata[[4]]
 ```
 
-## Variable Domains and Data Editing
-Data editing should guarantee that all variables are carefully defined with specified domains where they are observed or measured and with specified range spaces where their possible values are given. A usual set-up is that all variables have the same domain, for instance a set of individuals for which several attributes are registered. If a binary relationship like friendship or not friendship is registered for all pairs of individuals, then the domain for this relationship is the set of dyads (pairs without regard to order) of individuals.
+________________________________________________________________________________
 
-Variables with different domains can sometimes be combined. For instance, node or vertex variable $X$ with value $X_u$ for node $u$ can be extended to the domain of dyads by defining it as the pair $X_{uv} = (X_u,X_v)$ for dyad $(u,v)$. Examples of such variable transformations are given in Frank & Shafie (2016). 
 
-Note that is also possible to create a new variable on units from a tie variable $Y$ with values $Y_{uv}$ on dyads by aggregating in some way the values on dyads incident to a node $u$ to get a value $Y_u$ at that node. For instance, the edge indicators in a graph can be aggregated to degrees or other centrality measures at the vertices.
-
-The package allows the consideration of three variable domains: vertex, dyad and triad variables.
-
-### Example: observed and transformed vertex variables
+## Example: observed and transformed vertex variables
 Observed node variables are the attributes in the data frame `df.att` with 71 observations. All variables, except `years` and `age`, are categorical with finite range spaces and therefore kept in their original form. The variable `years` and `age` need to be categorized using their cumulative distribution functions and creating approximately equally sized categories. Below shows an example of using three approximately equally sized categories where each of the categories represents  approximately 30% of the cumulative frequency distribution:
 
 ```{r edit_data1, eval=TRUE, include=TRUE, results ='markup'}
@@ -72,7 +79,7 @@ Note that we for the sake of consistency, we also edit all variables except `sen
 
 To transform observed dyad variables into node variables, node degrees of each network (in- and out-degree for directed advice and friendship) can be computed and categorized as shown above for `years` and `age`. 
 
-### Example: observed and transformed dyad variables
+## Example: observed and transformed dyad variables
 Dyad variables are given as pairs of incident vertex variables with $\binom{71}{2}=2485$ observations (number of rows in the dataframes created in the following). Observed node attribute in the dataframe `att_var` are thus given by pairs of individual attributes. For example,  `status` with binary outcomes  is transformed into dyads having 4 possible outcomes $(0,0), (0,1), (1,0), (1,1)$ and `office` with three categorical outcomes gives dyads with 9 possible outcome $(0,0), (0,1), (0,2), (1,0), (1,1), (1,2),(2,0),(2,1),(2,2)$. 
 These transformations can be done using the function  `get_dyad_variables()` for each vertex variable using the argument `type = att` which specifies that we are using vertex attributes as input variable:
 ```{r edit_data2, eval=TRUE, include=TRUE, results ='markup'}
@@ -110,7 +117,7 @@ dyad.var <-
 head(dyad.var)
 ```
 
-### Example: transformed triad variables
+## Example: transformed triad variables
 A similar function  `get_triad_variables()` is implemented for transforming vertex variables and different relation types into triad variables.
 These triad variables have $\binom{71}{3}=57155$ observations in the law data set and are given as triples of individual attributes or by the relations among the three nodes. Similarly as for dyad variables, we call the function and specify argument for type of variable (a column vector as input when considering vertex attributes and an adjacency matrix when considering ties). For the vertex variables we thus obtain the triad variables using te follow syntax:
 ```{r edit_data5, eval=TRUE, include=TRUE, results ='markup'}
@@ -150,11 +157,11 @@ triad.var <- data.frame(cbind(
              )
 head(triad.var, 5)
 ```
-## Univariate, Bivariate and Trivariate Entropies
+<!-- ## Univariate, Bivariate and Trivariate Entropies -->
 
-## Joint Entropies and Association Graphs
+<!-- ## Joint Entropies and Association Graphs -->
 
 
 
-## Prediction Powers Based on Expected Conditional Entropies
+<!-- ## Prediction Powers Based on Expected Conditional Entropies -->
 
