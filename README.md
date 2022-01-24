@@ -17,7 +17,7 @@ The development version from [GitHub](https://github.com/) with:
 devtools::install_github("termehs/netropy")
 ```
 
-## Introduction
+## Statistical Entropy Analysis of Network Data
 
 Multivariate entropy analysis is a general statistical method for
 analyzing and finding dependence structure in data consisting of
