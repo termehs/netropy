@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# Package overview: `netropy` <img src="man/figures/hex_netropy.png" align="right" width="430px"/>
+# Package overview: `netropy` <img src="man/figures/hex_netropy.png" align="right" width="300px"/>
 
 ## Installation
 
