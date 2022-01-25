@@ -1,0 +1,18 @@
+---
+title: "Joint Entropies and Association Graphs"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Joint Entropies and Association Graphs}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(out.width = "100%",
+  cache = FALSE
+)
+```
+In the section on [univariate, bivariate and trivariate entropies](univariate_bivariate_trivariate.html),
+we saw that the bivariate entropy of two variables $X$ and $Y$ is bounded according to 
+$$H(X) \leq H(X,Y) \leq H(X)+H(Y) \ .$$
+

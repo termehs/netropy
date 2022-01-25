@@ -41,6 +41,10 @@ Note that is also possible to create a new variable on units from a tie variable
 
 The package creates variables on three variable domains: vertex, dyad and triad variables. This is exemplified in the following.
 
+________________________________________________________________________________
+
+## Load internal data set
+
 ```{r eval=TRUE}
 library('netropy')
 ```
@@ -53,9 +57,6 @@ adj.friend <- lawdata[[2]]
 adj.cowork <-lawdata[[3]]
 df.att <- lawdata[[4]]
 ```
-
-________________________________________________________________________________
-
 
 ## Example: observed and transformed vertex variables
 Observed node variables are the attributes in the data frame `df.att` with 71 observations. All variables, except `years` and `age`, are categorical with finite range spaces and therefore kept in their original form. The variable `years` and `age` need to be categorized using their cumulative distribution functions and creating approximately equally sized categories. Below shows an example of using three approximately equally sized categories where each of the categories represents  approximately 30% of the cumulative frequency distribution:
@@ -75,7 +76,7 @@ att.var <-
     )
 head(att.var)
 ```
-Note that we for the sake of consistency, we also edit all variables except `senior` such that their outcomes start from the value 0. The variable `senior` only has unique values, thus it is redundant and omitted (later we illustrate how such redundant variables can be detected using bivariate entropies).
+Note that we for the sake of consistency, we also edit all variables such that their outcomes start from the value 0. The variable `senior` only has unique values, thus it is redundant and omitted (later we illustrate how such redundant variables can be detected using bivariate entropies).
 
 To transform observed dyad variables into node variables, node degrees of each network (in- and out-degree for directed advice and friendship) can be computed and categorized as shown above for `years` and `age`. 
 
@@ -157,10 +158,6 @@ triad.var <- data.frame(cbind(
              )
 head(triad.var, 5)
 ```
-
-<!-- ## Joint Entropies and Association Graphs -->
-
-
 
 <!-- ## Prediction Powers Based on Expected Conditional Entropies -->
 

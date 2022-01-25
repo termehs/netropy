@@ -24,23 +24,117 @@ where we have
 
 - equality to the left iff there is a functional relationship $Y = f(X)$ such that each unique outcome of $X$ yields a unique outcome of $Y$
 
-- equality to the right iff $X$ and $Y$ are stochastically independent  $X\bot Y$ such that the probability of any bivariate outcome is the product of the probabilities of the univariate outcomes. 
+- equality to the right iff $X$ and $Y$ are stochastically independent  $X\bot Y$ such that the probability of any bivariate outcome is the product of the probabilities of the univariate outcomes.
 
-Similarly, trivariate entropies (and higher order entropies) allows us to check for functional relationships and stochastic independence between three (or more) variables. The trivariate entropy of three variables $X$, $Y$ and $Z$ is bounded by
-$$ H(X,Y) \leq H(X,Y,Z) \leq H(X,Z) + H(Y,Z) - H(Z)$$
+Note that when the bivariate entropy of two variables is equal to the univariate entropy of either one alone, then one of these variables should be omitted as they are redundant providing no additional information.
+
+These results on bivariate entropies are directly linked to [joint entropies and association graphs](joint_entropies.html). 
+
+Similarly, trivariate entropies (and higher order entropies) allows us to check for functional relationships and stochastic independence between three (or more) variables. The trivariate entropy of three variables $X$, $Y$ and $Z$ is defined by
+$$H(X,Y,Z) = \sum_x \sum_y \sum_z p(x,y,z) \log_2\frac{1}{p(x,y,z)}$$
+
+and bounded by
+$$ H(X,Y) \leq H(X,Y,Z) \leq H(X,Z) + H(Y,Z) - H(Z). $$
+
+The results on bivariate and trivariate entropies are directly linked to [prediction power and expected conditional entropies](prediction_power.html).
+
 Examples of computing univariate, bivariate and trivariate entropies are given in the following. 
-```{r eval=TRUE}
-library('netropy')
+
+________________________________________________________________________________
+
+## Example: univariate and bivariate entropies
+```{r load_library, eval=TRUE}
+library(netropy)
 ```
 
-To load the internal data set ([link](https://www.stats.ox.ac.uk/~snijders/siena/Lazega_lawyers_data.htm)), extract each object and assign the correct names to them we run the following syntax
-```{r load_data, eval=TRUE}
-data(lawdata)
+We create a dataframe `dyad.var` consisting of dyad variables as described and created in [variable domains and data editing](variable domains.html).
+
+```{r load_data, eval=TRUE, include=FALSE}
+data(lawdata) 
 adj.advice <- lawdata[[1]]
 adj.friend <- lawdata[[2]]
 adj.cowork <-lawdata[[3]]
 df.att <- lawdata[[4]]
 ```
-________________________________________________________________________________
+```{r edit_data, eval=TRUE, include=FALSE, results ='hide'}
+att.var <-
+  data.frame(
+    status   = df.att$status-1,
+    gender   = df.att$gender,
+    office   = df.att$office-1,
+    years    = ifelse(df.att$years<=3,0,
+                      ifelse(df.att$years<=13,1,2)),
+    age      = ifelse(df.att$age<=35,0,
+                      ifelse(df.att$age<=45,1,2)),
+    practice = df.att$practice,
+    lawschool= df.att$lawschool-1
+    )
+dyad.status    <- get_dyad_var(att.var$status, type = 'att')
+dyad.gender    <- get_dyad_var(att.var$gender, type = 'att')
+dyad.office    <- get_dyad_var(att.var$office, type = 'att')
+dyad.years     <- get_dyad_var(att.var$years, type = 'att')
+dyad.age       <- get_dyad_var(att.var$age, type = 'att')
+dyad.practice  <- get_dyad_var(att.var$practice, type = 'att')
+dyad.lawschool <- get_dyad_var(att.var$lawschool, type = 'att')
+dyad.cwk    <- get_dyad_var(adj.cowork, type = 'tie')
+dyad.adv    <- get_dyad_var(adj.advice, type = 'tie')
+dyad.frn    <- get_dyad_var(adj.friend, type = 'tie')
+dyad.var <-
+  data.frame(cbind(status    = dyad.status$var,
+                  gender    = dyad.gender$var,
+                  office    = dyad.office$var,
+                  years     = dyad.years$var,
+                  age       = dyad.age$var,
+                  practice  = dyad.practice$var,
+                  lawschool = dyad.lawschool$var,
+                  cowork    = dyad.cwk$var,
+                  advice    = dyad.adv$var,
+                  friend    = dyad.frn$var)
+                  )
+```
+```{r show_data, eval=TRUE, include=TRUE, results ='markup'}
+head(dyad.var)
+```
 
-## Example: univariate and bivariate entropies
+The function `entropy_bivar()` computes the bivariate entropies of all pairs of variables in the dataframe. The output is given as an upper triangular matrix with cells giving the bivariate entropies of row and column variables. The diagonal thus gives the univariate entropies for each variable in the dataframe:
+```{r biv_ent, eval=TRUE, include=TRUE, results ='markup'}
+entropy_bivar(dyad.var)
+```
+## Example: redundant variables
+Bivariate entropies can be used to detect redundant variables that should be omitted from the dataframe for further analysis. When calculating bivariate entropies, one can check of whether the diagonal values are equal to any of the other values in the rows an columns. As seen above, the dataframe `dyad.var`  has no redundant variables. This can also be checked using the function `redundancy()` which yields  a binary matrix as output indicating which row and column variables are hold the same information:
+```{r red, eval=TRUE, include=TRUE, results ='markup'}
+redundancy(dyad.var)
+```
+To illustrate an example with redundancy, we use the dataframe `att.var` with node attributes as described and created in [variable domains and data editing](variable domains.html). Note however that we here keep the variable `senior` in this dataframe:
+
+ ```{r edit_data2, eval=TRUE, include=FALSE, results ='hide'}
+att.var <-
+  data.frame(
+    senior   = df.att$senior,
+    status   = df.att$status-1,
+    gender   = df.att$gender,
+    office   = df.att$office-1,
+    years    = ifelse(df.att$years<=3,0,
+                      ifelse(df.att$years<=13,1,2)),
+    age      = ifelse(df.att$age<=35,0,
+                      ifelse(df.att$age<=45,1,2)),
+    practice = df.att$practice,
+    lawschool= df.att$lawschool-1
+    )
+```
+```{r show_data2, eval=TRUE, include=TRUE, results ='markup'}
+head(att.var)
+```
+Checking redundancy on this dataframe yields the following output:
+```{r red2, eval=TRUE, include=TRUE, results ='markup'}
+redundancy(att.var)
+```
+As seen,  `senior` has been flagged as a redundant variable which is not surprising since it only consists of unique values. This redudancy can also be noted by computing the bivariate entropies and noting that the univariate entropy for this variable is equal to the bivariate entropies of pairs including this variable:
+```{r biv_ent2, eval=TRUE, include=TRUE, results ='markup'}
+entropy_bivar(att.var)
+```
+## Example: trivariate entropies
+Trivariate entropies can be computed using the function `entropy_trivar()` which returns a dataframe with the first three columns representing possible triples of variables `V1`,`V2`, and `V3` from the dataframe in question, and their entropies `H(V1,V2,V3)` as the fourth column. We illustrated this on the dataframe `dyad.var`:
+```{r triv_ent, eval=TRUE, include=TRUE, results ='markup'}
+entropy_trivar(dyad.var)
+```
