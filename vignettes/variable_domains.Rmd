@@ -39,7 +39,7 @@ Variables with different domains can sometimes be combined. For instance, node o
 
 Note that is also possible to create a new variable on units from a tie variable $Y$ with values $Y_{uv}$ on dyads by aggregating in some way the values on dyads incident to a node $u$ to get a value $Y_u$ at that node. For instance, the edge indicators in a graph can be aggregated to degrees or other centrality measures at the vertices.
 
-The package allows the consideration of three variable domains: vertex, dyad and triad variables.
+The package creates variables on three variable domains: vertex, dyad and triad variables. This is exemplified in the following.
 
 ```{r eval=TRUE}
 library('netropy')
@@ -157,7 +157,6 @@ triad.var <- data.frame(cbind(
              )
 head(triad.var, 5)
 ```
-<!-- ## Univariate, Bivariate and Trivariate Entropies -->
 
 <!-- ## Joint Entropies and Association Graphs -->
 

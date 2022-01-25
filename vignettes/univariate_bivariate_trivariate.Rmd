@@ -1,0 +1,46 @@
+---
+title: "Univariate, Bivariate and Trivariate Entropies"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Univariate, Bivariate and Trivariate Entropies}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(out.width = "100%",
+  cache = FALSE
+)
+```
+The univariate entropy for discrete variable $X$ with $r$ outcomes is defined by
+$$H(X) = \sum_x p(x) \log_2\frac{1}{p(x)} $$
+with which we can check for redundancy and uniformity: a discrete random variable with minimal zero entropy has no uncertainty and is always equal to the same single outcome. Thus, it is a constant that contributes nothing to further analysis and can be omitted. Maximum entropy is l$\log_2r$ and it corresponds to a uniform probability distribution over the outcomes (complete randomness). 
+
+The bivariate entropy for discrete variable $X$ and $Y$ is defined by
+$$H(X,Y) = \sum_x \sum_y p(x,y) \log_2\frac{1}{p(x,y)}$$
+with which we can check for we can check for redundancy, functional relationships and stochastic independence between pairs of variables. It is bounded according to 
+$$H(X) \leq H(X,Y) \leq H(X)+H(Y)$$
+where we have 
+
+- equality to the left iff there is a functional relationship $Y = f(X)$ such that each unique outcome of $X$ yields a unique outcome of $Y$
+
+- equality to the right iff $X$ and $Y$ are stochastically independent  $X\bot Y$ such that the probability of any bivariate outcome is the product of the probabilities of the univariate outcomes. 
+
+Similarly, trivariate entropies (and higher order entropies) allows us to check for functional relationships and stochastic independence between three (or more) variables. The trivariate entropy of three variables $X$, $Y$ and $Z$ is bounded by
+$$ H(X,Y) \leq H(X,Y,Z) \leq H(X,Z) + H(Y,Z) - H(Z)$$
+Examples of computing univariate, bivariate and trivariate entropies are given in the following. 
+```{r eval=TRUE}
+library('netropy')
+```
+
+To load the internal data set ([link](https://www.stats.ox.ac.uk/~snijders/siena/Lazega_lawyers_data.htm)), extract each object and assign the correct names to them we run the following syntax
+```{r load_data, eval=TRUE}
+data(lawdata)
+adj.advice <- lawdata[[1]]
+adj.friend <- lawdata[[2]]
+adj.cowork <-lawdata[[3]]
+df.att <- lawdata[[4]]
+```
+________________________________________________________________________________
+
+## Example: univariate and bivariate entropies
