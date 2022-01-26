@@ -16,7 +16,8 @@ Variables must all be observed or transformed categorical with finite range spac
 \value{
 Upper triangular matrix giving the expected conditional entropies of pairs of variables
 given as rows and columns of the matrix. The diagonal gives \emph{EH(X|Z) = H(X,Z) - H(Z)} , that is
-when only one variable is used to predict \code{var}.
+when only one variable is used to predict \code{var}. Note that \code{NA}'s are in the
+row and column representing the variable being predicted.
 }
 \description{
 Computes prediction power when pairs of variables in a given dataframe are used
