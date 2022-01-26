@@ -81,7 +81,7 @@ get_dyad_var <- function(var, type = 'att') {
     if (isSymmetric(var) == TRUE) {
       dyad <- data.frame(
         u=rep(1:n,n),v=rep(1:n,each=n),
-        dyad.var = c(var)
+        dyad = c(var)
       )
       dyad <- dyad[dyad$u<dyad$v,]
       message('two outcomes based on an indicator variable for the undirected relation is created')
