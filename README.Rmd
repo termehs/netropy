@@ -14,6 +14,9 @@ knitr::opts_chunk$set(
 ```
 
 # Package overview: `netropy` <img src="man/figures/hex_netropy.png" align="right" width="340px"/>
+<!-- badges: start -->
+[![CRAN status](https://www.r-pkg.org/badges/version/netropy)](https://cran.r-project.org/package=netropy)
+<!-- badges: end -->
 
 ## Installation
 
@@ -34,11 +37,16 @@ devtools::install_github("termehs/netropy")
 ## Statistical Entropy Analysis of Network Data
 Multivariate entropy analysis is a general statistical method for analyzing and finding dependence structure in data consisting of repeated observations of variables with a common domain and with discrete finite range spaces. Only nominal scale is required for each variable, so only the size of the variable's range space is important but not its actual values. Variables on ordinal or numerical scales, even continuous numerical scales, can be used, but they should be aggregated so that their ranges match the number of available repeated observations. By investigating the frequencies of occurrences of joint variable outcomes, complicated dependence structures, partial independence and conditional independence as well as redundancies and functional dependence can be found.
 
+This package introduces these entropy tools in the context of network data. Brief description of various functions implemented in the package are given in the following but more details are provided in the package vignettes and the references listed.
+```{r eval=TRUE}
+library('netropy')
+```
 
 ## Loading Internal Data
 The different entropy tools are explained and illustrated by exploring data from a network study of a corporate law firm, which has previously been analysed by several authors 
 ([link](https://www.stats.ox.ac.uk/~snijders/siena/Lazega_lawyers_data.htm)).
 The data set is included in the package as a list with objects representing adjacency matrices for each of the three networks advice (directed), friendship (directed) and co-work (undirected), together with a data frame comprising 8 attributes on each of the 71 lawyers.
+
 To load the data, extract each object and assign the correct names to them we run the following syntax
 ```{r load_data, eval=TRUE}
 data(lawdata) 
@@ -47,3 +55,125 @@ adj.friend <- lawdata[[2]]
 adj.cowork <-lawdata[[3]]
 df.att <- lawdata[[4]]
 ```
+
+## Variable Domains and Data Editing
+A requirement for the applicability of entropy tools is the specification of a discrete variables with finite range spaces on the same domain: either node attributes/vertex variables, edges/dyad variables or triad variables. These can be either observed or transformed as shown in the following using the above example data set.
+
+We have 8 vertex variables with 71 observations, two of which (`years` and `age`) are numerical and needs categorization based on their cumulative distributions. This categorization is in details described in the vignette  [variable domains and data editing](variable domains.html). Here we just show the new dataframe created (note that variable `senior` is omitted as it only comprises unique values and that we edit all variable to start from 0):
+```{r edit_data1, eval=TRUE, include=TRUE, results ='markup'}
+att.var <-
+  data.frame(
+    status   = df.att$status-1,
+    gender   = df.att$gender,
+    office   = df.att$office-1,
+    years    = ifelse(df.att$years <= 3,0,
+                      ifelse(df.att$years <= 13,1,2)),
+    age      = ifelse(df.att$age <= 35,0,
+                      ifelse(df.att$age <= 45,1,2)),
+    practice = df.att$practice,
+    lawschool= df.att$lawschool-1
+    )
+head(att.var)
+```
+These vertex variables can be transformed into dyad variables by using the function `get_dyad_var()`. Observed node attribute in the dataframe `att_var` are then transformed into pairs of individual attributes. For example,  `status` with binary outcomes  is transformed into dyads having 4 possible outcomes $(0,0), (0,1), (1,0), (1,1)$:
+```{r edit_data2, eval=TRUE, include=TRUE, results ='markup'}
+dyad.status    <- get_dyad_var(att.var$status, type = 'att')
+dyad.gender    <- get_dyad_var(att.var$gender, type = 'att')
+dyad.office    <- get_dyad_var(att.var$office, type = 'att')
+dyad.years     <- get_dyad_var(att.var$years, type = 'att')
+dyad.age       <- get_dyad_var(att.var$age, type = 'att')
+dyad.practice  <- get_dyad_var(att.var$practice, type = 'att')
+dyad.lawschool <- get_dyad_var(att.var$lawschool, type = 'att')
+```
+Similarly, dyad variables can be created based on observed ties.
+For the undirected edges, we use indicator variables read directly from the adjacency matrix for the dyad in question, while for the directed ones we have pairs of indicators representing sending and receiving ties with 4 possible outcomes (`advice` and `friendship`):
+```{r edit_data3, eval=TRUE, include=TRUE, message = FALSE, results ='markup'}
+dyad.cwk    <- get_dyad_var(adj.cowork, type = 'tie')
+dyad.adv    <- get_dyad_var(adj.advice, type = 'tie')
+dyad.frn    <- get_dyad_var(adj.friend, type = 'tie')
+```
+All 10 dyad variables are merged into one data frame for subsequent entropy analysis:
+```{r edit_data4, eval=TRUE, include=TRUE, results ='markup'}
+dyad.var <-
+  data.frame(cbind(status   = dyad.status$var,
+                  gender    = dyad.gender$var,
+                  office    = dyad.office$var,
+                  years     = dyad.years$var,
+                  age       = dyad.age$var,
+                  practice  = dyad.practice$var,
+                  lawschool = dyad.lawschool$var,
+                  cowork    = dyad.cwk$var,
+                  advice    = dyad.adv$var,
+                  friend    = dyad.frn$var)
+                  )
+head(dyad.var)
+```
+
+A similar function  `get_triad_var()` is implemented for transforming vertex variables and different relation types into triad variables. This is described in more detail in the vignette  [variable domains and data editing](variable domains.html). 
+
+## Univariate, Bivariate and Trivariate Entropies
+The function `entropy_bivar()` computes the bivariate entropies of all pairs of variables in the dataframe. The output is given as an upper triangular matrix with cells giving the bivariate entropies of row and column variables. The diagonal thus gives the univariate entropies for each variable in the dataframe:
+```{r biv_ent, eval=TRUE, include=TRUE, results ='markup'}
+H2 <- entropy_bivar(dyad.var)
+H2
+```
+Bivariate entropies can be used to detect redundant variables that should be omitted from the dataframe for further analysis. This occurs when the univariate entropy for a variable is equal to the bivariate entropies of pairs including that variable. 
+As seen above, the dataframe `dyad.var`  has no redundant variables. This can also be checked using the function `redundancy()` which yields  a binary matrix as output indicating which row and column variables are hold the same information:
+```{r red, eval=TRUE, include=TRUE, results ='markup'}
+redundancy(dyad.var)
+```
+More examples of using the function `redundancy()` is given in the vignette  [univariate_bivariate_trivariate](univariate_bivariate_trivariate.html). 
+
+Trivariate entropies can be computed using the function `entropy_trivar()` which returns a dataframe with the first three columns representing possible triples of variables `V1`,`V2`, and `V3` from the dataframe in question, and their entropies `H(V1,V2,V3)` as the fourth column. We illustrated this on the dataframe `dyad.var`:
+```{r triv_ent, eval=TRUE, include=TRUE, results ='markup'}
+H3 <- entropy_trivar(dyad.var)
+head(H3, 10) # view first 10 rows of dataframe
+```
+
+## Joint Entropy and Association Graphs
+Joint entropies is a non-negative measure of association among pairs of variables. It is equal to 0 if and only if two variables are completely independent of each other.
+
+The function `joint_entropy()` computes the joint entropies between all pairs of variables in a given dataframe and returns a list consisting of the upper triangular joint entropy matrix (univariate entropies in the diagonal) and a dataframe giving the frequency distributions of unique joint entropy values. A function argument specifies the precision given in number of decimals for which the frequency distribution of unique entropy values is created (default is 3). Applying the function on the  dataframe `dyad.var` with two decimals:
+```{r joint_ent, eval=TRUE, include=TRUE, results ='markup'}
+J <- joint_entropy(dyad.var, 2)
+J$matrix
+J$freq
+```
+As seen, the strongest association is between the variables `status` and `years` with joint entropy values of 0.794. We have independence (joint entropy value of 0) between two pairs of variables: `status` and ` practice`, and `status` and `gender`.
+
+These results can be illustrated in a association graph using the function `assoc_graph()` which returns a `ggraph` object in which nodes represent variables and links represent strength of association (thicker links indicate stronger dependence). To use the function we need to load the `ggraph` library and to determine a threshold which the graph drawn is based on. We set it to 0.15 so that we only visualize the strongest associations
+```{r assoc_g, eval=TRUE, fig.align='center',fig.width=14, message =FALSE}
+library(ggraph)
+assoc_graph(dyad.var, 0.15)
+```
+
+Given this threshold, we see isolated nodes representing independent variables. 
+We note strong dependence between the three dyadic variables `status`,`years` and `age`, but also a somewhat strong dependence among the three variables  `lawschool`, `years` and `age`, and the three variables `status`, `years` and `gender`. The association graph can also be interpreted as a tendency for  relations `cowork` and `friend` to be independent conditionally on relation `advice`, that is, any dependence between dyad variables `cowork` and `friend` is explained by `advice`.
+
+A threshold that gives a graph with reasonably many small independent or conditionally independent subsets of variables can be considered to represent a multivariate model for further testing.
+
+More details and examples of joint entropies and association graphs are given in the vignette  [joint_entropies](joint_entropies.html). 
+
+## Prediction Power Based on Expected Conditional Entropies
+The function `prediction_power()` computes prediction power when pairs of variables in a given dataframe are used to predict a third variable from the same dataframe. The variable to be predicted and the dataframe in which this variable also is part of is given as input arguments, and the output is an upper triangular matrix giving the expected conditional entropies of pairs of row and column variables of the matrix, i.e. *EH(Z|X,Y)*. The diagonal gives *EH(X|Z)* , that is when only one variable as a predictor. Note that `NA`'s are in the row and column representing the variable being predicted.
+
+Assume we are interested in predicting variable `status` (that is whether a lawyer in the data set is an associate or partner). This is done by running the following syntax
+```{r predpow1, eval=TRUE, include=TRUE, results ='markup'}
+prediction_power('status', dyad.var)
+```
+For better readability, the powers of different predictors can be conveniently compared by using prediction plots that display a color matrix with rows for $X$ and columns for $Y$ with darker colors in the cells when we have higher prediction power for $Z$. This is shown for the prediction of `status`:
+
+<img src="man/figures/predplot-status.png" align="center"/>
+
+Obviously, the darkest color is obtained when the variable to be predicted is included among the predictors, and the cells exhibit prediction power for a single predictor on the diagonal and for two predictors symmetrically outside the diagonal. Some findings are as follows: good predictors for `status` are given by `years` in combination with any other variable, and `age` in combination with any other variable. The best sole predictor is `gender`.
+
+More details and examples of expected conditional entropies and prediction power  are given in the vignette  [prediction_power](prediction_power.html). 
+
+## References
+
+Parts of the theoretical background is provided in the package vignettes, but for more details, consult the following literature:
+
+> Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data.
+*Bulletin of Sociological Methodology/Bulletin de Méthodologie Sociologique*, 129(1), 45-63. [link](https://doi.org/10.1177%2F0759106315615511)
+
+>  Nowicki, K., Shafie, T., & Frank, O. (Forthcoming 2022). *Statistical Entropy Analysis of Network Data*.
