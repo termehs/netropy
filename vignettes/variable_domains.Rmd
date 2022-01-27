@@ -33,7 +33,7 @@ ________________________________________________________________________________
 library('netropy')
 ```
 
-To load the internal data set ([link](https://www.stats.ox.ac.uk/~snijders/siena/Lazega_lawyers_data.htm)), extract each object and assign the correct names to them we run the following syntax
+To load the internal data set ([link](https://www.stats.ox.ac.uk/~snijders/siena/Lazega_lawyers_data.htm)), extract each object and assign the correct names to them:
 ```{r load_data, eval=TRUE}
 data(lawdata) 
 adj.advice <- lawdata[[1]]
@@ -44,7 +44,7 @@ df.att <- lawdata[[4]]
 
 ## Example: observed and transformed vertex variables
 Observed node variables are the attributes in the data frame `df.att` with 71 observations. All variables, except `years` and `age`, are categorical with finite range spaces and therefore kept in their original form. The variable `years` and `age` need to be categorized using their cumulative distribution functions (cdf) and creating approximately equally sized categories. 
-These cdf's can be obtained by the following syntax
+These cdf's can be obtained by
 ```{r cdf, eval=TRUE, include=TRUE, results ='markup'}
 # for years:
 x <- table(df.att$years) 
@@ -129,7 +129,7 @@ head(dyad.var)
 
 ## Example: transformed triad variables
 A similar function  `get_triad_var()` is implemented for transforming vertex variables and different relation types into triad variables.
-These triad variables have $\binom{71}{3}=57155$ observations in the law data set and are given as triples of individual attributes or by the relations among the three nodes. Similarly as for dyad variables, we call the function and specify argument for type of variable (a column vector as input when considering vertex attributes and an adjacency matrix when considering ties). For the vertex variables we thus obtain the triad variables using te follow syntax:
+These triad variables have $\binom{71}{3}=57155$ observations in the law data set and are given as triples of individual attributes or by the relations among the three nodes. Similarly as for dyad variables, we call the function and specify argument for type of variable (a column vector as input when considering vertex attributes and an adjacency matrix when considering ties). For the vertex variables we thus obtain the triad variables by:
 ```{r edit_data5, eval=TRUE, include=TRUE, results ='markup'}
 triad.status    <- get_triad_var(att.var$status, type = 'att')
 triad.gender    <- get_triad_var(att.var$gender, type = 'att')

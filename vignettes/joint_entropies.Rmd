@@ -89,7 +89,7 @@ J <- joint_entropy(dyad.var, 2)
 J$matrix
 J$freq
 ```
-As seen, the strongest association is between the variables `status` and `years` with joint entropy values of 0.794. We have independence (joint entropy value of 0) between two pairs of variables: `status` and ` practice`, and `status` and `gender`.
+As seen, the strongest association is between the variables `status` and `years` with joint entropy values of 0.79. We have independence (joint entropy value of 0) between two pairs of variables: (`status`,`practice`), (`practise`,`gender`), (`cowork`,`gender`),and  (`cowork`,`lawschool`).
 
 These results can be illustrated in a association graph using the function `assoc_graph()` which returns a `ggraph` object in which nodes represent variables and links represent strength of association (thicker links indicate stronger dependence). To use the function we need to load the `ggraph` library and to determine a threshold which the graph drawn is based on. We set it to 0.15 so that we only visualize the strongest associations
 ```{r assoc_g, eval=TRUE, fig.align='center',fig.width=9, message =FALSE}

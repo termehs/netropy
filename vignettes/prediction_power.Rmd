@@ -81,9 +81,9 @@ dyad.var <-
 ```{r show_data, eval=TRUE, include=TRUE, results ='markup'}
 head(dyad.var)
 ```
-The function `prediction_power()` computes prediction power when pairs of variables in a given dataframe are used to predict a third variable from the same dataframe. The variable to be predicted and the dataframe in which this variable also is part of is given as input arguments, and the output is an upper triangular matrix giving the expected conditional entropies of pairs of row and column variables of the matrix, i.e. $EH(Z|X,Y)$. The diagonal gives $EH(X|Z)$ , that is when only one variable as a predictor. Note that `NA`'s are in the row and column representing the variable being predicted.
+The function `prediction_power()` computes prediction power when pairs of variables in a given dataframe are used to predict a third variable from the same dataframe. The variable to be predicted and the dataframe in which this variable also is part of is given as input arguments, and the output is an upper triangular matrix giving the expected conditional entropies of pairs of row and column variables of the matrix, i.e. $EH(Z|X,Y)$. The diagonal gives $EH(Z|X)$ , that is when only one variable as a predictor. Note that `NA`'s are in the row and column representing the variable being predicted.
 
-Assume we are interested in predicting variable `status` (that is whether a lawyer in the data set is an associate or partner). This is done by running the following syntax
+Assume we are interested in predicting variable `status` (that is whether a lawyer in the data set is an associate or partner). This is done by running the following:
 ```{r predpow1, eval=TRUE, include=TRUE, results ='markup'}
 prediction_power('status', dyad.var)
 ```
