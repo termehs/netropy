@@ -47,7 +47,7 @@ The different entropy tools are explained and illustrated by exploring data from
 ([link](https://www.stats.ox.ac.uk/~snijders/siena/Lazega_lawyers_data.htm)).
 The data set is included in the package as a list with objects representing adjacency matrices for each of the three networks advice (directed), friendship (directed) and co-work (undirected), together with a data frame comprising 8 attributes on each of the 71 lawyers.
 
-To load the data, extract each object and assign the correct names to them we run the following syntax
+To load the data, extract each object and assign the correct names to them:
 ```{r load_data, eval=TRUE}
 data(lawdata) 
 adj.advice <- lawdata[[1]]
@@ -139,7 +139,7 @@ J <- joint_entropy(dyad.var, 2)
 J$matrix
 J$freq
 ```
-As seen, the strongest association is between the variables `status` and `years` with joint entropy values of 0.794. We have independence (joint entropy value of 0) between two pairs of variables: `status` and ` practice`, and `status` and `gender`.
+As seen, the strongest association is between the variables `status` and `years` with joint entropy values of 0.79. We have independence (joint entropy value of 0) between two pairs of variables: (`status`,`practice`), (`practise`,`gender`), (`cowork`,`gender`),and  (`cowork`,`lawschool`).
 
 These results can be illustrated in a association graph using the function `assoc_graph()` which returns a `ggraph` object in which nodes represent variables and links represent strength of association (thicker links indicate stronger dependence). To use the function we need to load the `ggraph` library and to determine a threshold which the graph drawn is based on. We set it to 0.15 so that we only visualize the strongest associations
 ```{r assoc_g, eval=TRUE, fig.align='center',fig.width=14, message =FALSE}
@@ -155,7 +155,7 @@ A threshold that gives a graph with reasonably many small independent or conditi
 More details and examples of joint entropies and association graphs are given in the vignette  [joint_entropies](joint_entropies.html). 
 
 ## Prediction Power Based on Expected Conditional Entropies
-The function `prediction_power()` computes prediction power when pairs of variables in a given dataframe are used to predict a third variable from the same dataframe. The variable to be predicted and the dataframe in which this variable also is part of is given as input arguments, and the output is an upper triangular matrix giving the expected conditional entropies of pairs of row and column variables of the matrix, i.e. *EH(Z|X,Y)*. The diagonal gives *EH(X|Z)* , that is when only one variable as a predictor. Note that `NA`'s are in the row and column representing the variable being predicted.
+The function `prediction_power()` computes prediction power when pairs of variables in a given dataframe are used to predict a third variable from the same dataframe. The variable to be predicted and the dataframe in which this variable also is part of is given as input arguments, and the output is an upper triangular matrix giving the expected conditional entropies of pairs of row and column variables of the matrix, i.e. *EH(Z|X,Y)*. The diagonal gives *EH(Z|X)* , that is when only one variable as a predictor. Note that `NA`'s are in the row and column representing the variable being predicted.
 
 Assume we are interested in predicting variable `status` (that is whether a lawyer in the data set is an associate or partner). This is done by running the following syntax
 ```{r predpow1, eval=TRUE, include=TRUE, results ='markup'}

@@ -59,7 +59,7 @@ representing adjacency matrices for each of the three networks advice
 with a data frame comprising 8 attributes on each of the 71 lawyers.
 
 To load the data, extract each object and assign the correct names to
-them we run the following syntax
+them:
 
 ``` r
 data(lawdata) 
@@ -308,9 +308,10 @@ J$freq
 ```
 
 As seen, the strongest association is between the variables `status` and
-`years` with joint entropy values of 0.794. We have independence (joint
-entropy value of 0) between two pairs of variables: `status` and
-`practice`, and `status` and `gender`.
+`years` with joint entropy values of 0.79. We have independence (joint
+entropy value of 0) between two pairs of variables:
+(`status`,`practice`), (`practise`,`gender`), (`cowork`,`gender`),and
+(`cowork`,`lawschool`).
 
 These results can be illustrated in a association graph using the
 function `assoc_graph()` which returns a `ggraph` object in which nodes
@@ -351,7 +352,7 @@ from the same dataframe. The variable to be predicted and the dataframe
 in which this variable also is part of is given as input arguments, and
 the output is an upper triangular matrix giving the expected conditional
 entropies of pairs of row and column variables of the matrix,
-i.e. *EH(Z\|X,Y)*. The diagonal gives *EH(X\|Z)* , that is when only one
+i.e. *EH(Z\|X,Y)*. The diagonal gives *EH(Z\|X)* , that is when only one
 variable as a predictor. Note that `NA`’s are in the row and column
 representing the variable being predicted.
 
