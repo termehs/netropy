@@ -14,22 +14,6 @@ knitr::opts_chunk$set(out.width = "100%",
 ```
 
 
-<!-- This vignette serves as an introduction to the package `netropy`. Parts of the theoretical background is provided but for more details, consult the following literature which the package is based on: -->
-
-<!-- > Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data. -->
-<!-- *Bulletin of Sociological Methodology/Bulletin de Méthodologie Sociologique*, 129(1), 45-63. -->
-
-<!-- >  Nowicki, K., Shafie, T., & Frank, O. (Forthcoming 2022). *Statistical Entropy Analysis of Network Data*. -->
-
-<!-- Make sure the library is loaded -->
-
-
-
-
-<!-- ## Loading Internal Data -->
-<!-- The different entropy tools are explained and illustrated by exploring data from a network study of a corporate law firm, which has previously been analysed by several authors  -->
-<!-- ([link](https://www.stats.ox.ac.uk/~snijders/siena/Lazega_lawyers_data.htm)). -->
-<!-- The data set is included in the package as a list with objects representing adjacency matrices for each of the three networks advice (directed), friendship (directed) and co-work (undirected), together with a data frame comprising 8 attributes on each of the 71 lawyers. -->
 
 
 
@@ -59,18 +43,43 @@ df.att <- lawdata[[4]]
 ```
 
 ## Example: observed and transformed vertex variables
-Observed node variables are the attributes in the data frame `df.att` with 71 observations. All variables, except `years` and `age`, are categorical with finite range spaces and therefore kept in their original form. The variable `years` and `age` need to be categorized using their cumulative distribution functions and creating approximately equally sized categories. Below shows an example of using three approximately equally sized categories where each of the categories represents  approximately 30% of the cumulative frequency distribution:
+Observed node variables are the attributes in the data frame `df.att` with 71 observations. All variables, except `years` and `age`, are categorical with finite range spaces and therefore kept in their original form. The variable `years` and `age` need to be categorized using their cumulative distribution functions (cdf) and creating approximately equally sized categories. 
+These cdf's can be obtained by the following syntax
+```{r cdf, eval=TRUE, include=TRUE, results ='markup'}
+# for years:
+x <- table(df.att$years) 
+values<-as.numeric(names(x))
+prop.x <- round(prop.table(x),2)
+cum.prop=cumsum(prop.x)
+frq.years = data.frame(value=values,freq=as.vector(x),
+                       rel.freq=as.vector(prop.x), 
+                       cum.rel.freq=as.vector(cum.prop))
 
+# for age:
+x <- table(df.att$age) 
+values<-as.numeric(names(x))
+prop.x <- round(prop.table(x),2)
+cum.prop=cumsum(prop.x)
+frq.age = data.frame(value=values,freq=as.vector(x),
+                       rel.freq=as.vector(prop.x), 
+                       cum.rel.freq=as.vector(cum.prop))
+```
+By looking at these cdf's we can find values with which we based the categories on:
+```{r cdf2, eval=TRUE, include=TRUE, results ='markup'}
+frq.years
+frq.age
+```
+We base the categorization of these two variables variables on values yielding three approximately equally sized categories (i.e. approximately 30% of the cdf) and merge all variables into a new dataframe `att_var`:
 ```{r edit_data1, eval=TRUE, include=TRUE, results ='markup'}
 att.var <-
   data.frame(
     status   = df.att$status-1,
     gender   = df.att$gender,
     office   = df.att$office-1,
-    years    = ifelse(df.att$years<=3,0,
-                      ifelse(df.att$years<=13,1,2)),
-    age      = ifelse(df.att$age<=35,0,
-                      ifelse(df.att$age<=45,1,2)),
+    years    = ifelse(df.att$years <= 3,0,
+                      ifelse(df.att$years <= 13,1,2)),
+    age      = ifelse(df.att$age <= 35,0,
+                      ifelse(df.att$age <= 45,1,2)),
     practice = df.att$practice,
     lawschool= df.att$lawschool-1
     )
@@ -104,7 +113,7 @@ dyad.frn    <- get_dyad_var(adj.friend, type = 'tie')
 All 10 dyad variables are merged into one data frame for subsequent entropy analysis:
 ```{r edit_data4, eval=TRUE, include=TRUE, results ='markup'}
 dyad.var <-
-  data.frame(cbind(status    = dyad.status$var,
+  data.frame(cbind(status   = dyad.status$var,
                   gender    = dyad.gender$var,
                   office    = dyad.office$var,
                   years     = dyad.years$var,
@@ -119,7 +128,7 @@ head(dyad.var)
 ```
 
 ## Example: transformed triad variables
-A similar function  `get_triad_variables()` is implemented for transforming vertex variables and different relation types into triad variables.
+A similar function  `get_triad_var()` is implemented for transforming vertex variables and different relation types into triad variables.
 These triad variables have $\binom{71}{3}=57155$ observations in the law data set and are given as triples of individual attributes or by the relations among the three nodes. Similarly as for dyad variables, we call the function and specify argument for type of variable (a column vector as input when considering vertex attributes and an adjacency matrix when considering ties). For the vertex variables we thus obtain the triad variables using te follow syntax:
 ```{r edit_data5, eval=TRUE, include=TRUE, results ='markup'}
 triad.status    <- get_triad_var(att.var$status, type = 'att')
@@ -159,5 +168,10 @@ triad.var <- data.frame(cbind(
 head(triad.var, 5)
 ```
 
-<!-- ## Prediction Powers Based on Expected Conditional Entropies -->
+## References
+> Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data.
+*Bulletin of Sociological Methodology/Bulletin de Méthodologie Sociologique*, 129(1), 45-63. [link](https://doi.org/10.1177%2F0759106315615511)
+
+>  Nowicki, K., Shafie, T., & Frank, O. (Forthcoming 2022). *Statistical Entropy Analysis of Network Data*.
+
 

@@ -1,0 +1,104 @@
+---
+title: "Prediction Power Based on Expected Conditional Entropies"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Prediction Power Based on Expected Conditional Entropies}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(out.width = "100%",
+  cache = FALSE
+)
+```
+In the section on [univariate, bivariate and trivariate entropies](univariate_bivariate_trivariate.html),
+we saw that the bivariate entropy of two variables $X$ and $Y$ is bounded according to 
+$$H(X) \leq H(X,Y) \leq H(X)+H(Y) \ .$$
+The increment between the lower bound and the bivariate entropy is equal to the expected conditional entropy
+$$EH(Y|X)=H(X,Y)-H(X)$$
+which is a measure of how far from functional dependence $X\rightarrow Y$ (which means that that $X$ uniquely determines $Y$) we are. This measure is equal to 0 iff $p(x,y) = p(x,+)$ meaning $X$ uniquely determines $Y$.
+
+Similarly, trivariate entropies for triples of variables $X,Y,Z$ are bounded by
+$$ H(X,Y) \leq H(X,Y,Z) \leq H(X,Z) + H(Y,Z) - H(Z) $$
+and the increment between the trivariate entropy and its lower bound is equal to the expected conditional entropy given by 
+$$EH(Z|X,Y) = H(X,Y,Z)-H(X,Y)$$
+which is non-negative and equal to 0 if and only if there is functional dependence $(X,Y)\rightarrow Z$. Thus, $EH(Z|X,Y)$ measures the prediction uncertainty when $(X,Y)$ is used to predict $Z$. It is a logarithmic measure of how many outcomes there are of $Z$ on average when the outcomes are given for $X$ and $Y$ . If $EH$ is rounded to its closest integer, we get an unambiguous prediction value for $Z$ based on predictors $X$ and $Y$ when $EH < 0.5$ and two prediction values for $Z$ when $0.5\leq EH < 1.5$ etc. 
+Thus, prediction power is a decreasing function of $EH$. 
+
+________________________________________________________________________________
+
+## Example: prediction power based on expected conditional entropies
+```{r load_library, eval=TRUE}
+library(netropy)
+```
+
+We create a dataframe `dyad.var` consisting of dyad variables as described and created in [variable domains and data editing](variable domains.html). Similar analyses can be perfomed on observed and/or transformed dataframes with vertex or triad variables.
+
+```{r load_data, eval=TRUE, include=FALSE}
+data(lawdata) 
+adj.advice <- lawdata[[1]]
+adj.friend <- lawdata[[2]]
+adj.cowork <-lawdata[[3]]
+df.att <- lawdata[[4]]
+```
+```{r edit_data, eval=TRUE, include=FALSE, results ='hide'}
+att.var <-
+  data.frame(
+    status   = df.att$status-1,
+    gender   = df.att$gender,
+    office   = df.att$office-1,
+    years    = ifelse(df.att$years<=3,0,
+                      ifelse(df.att$years<=13,1,2)),
+    age      = ifelse(df.att$age<=35,0,
+                      ifelse(df.att$age<=45,1,2)),
+    practice = df.att$practice,
+    lawschool= df.att$lawschool-1
+    )
+dyad.status    <- get_dyad_var(att.var$status, type = 'att')
+dyad.gender    <- get_dyad_var(att.var$gender, type = 'att')
+dyad.office    <- get_dyad_var(att.var$office, type = 'att')
+dyad.years     <- get_dyad_var(att.var$years, type = 'att')
+dyad.age       <- get_dyad_var(att.var$age, type = 'att')
+dyad.practice  <- get_dyad_var(att.var$practice, type = 'att')
+dyad.lawschool <- get_dyad_var(att.var$lawschool, type = 'att')
+dyad.cwk    <- get_dyad_var(adj.cowork, type = 'tie')
+dyad.adv    <- get_dyad_var(adj.advice, type = 'tie')
+dyad.frn    <- get_dyad_var(adj.friend, type = 'tie')
+dyad.var <-
+  data.frame(cbind(status    = dyad.status$var,
+                  gender    = dyad.gender$var,
+                  office    = dyad.office$var,
+                  years     = dyad.years$var,
+                  age       = dyad.age$var,
+                  practice  = dyad.practice$var,
+                  lawschool = dyad.lawschool$var,
+                  cowork    = dyad.cwk$var,
+                  advice    = dyad.adv$var,
+                  friend    = dyad.frn$var)
+                  )
+```
+```{r show_data, eval=TRUE, include=TRUE, results ='markup'}
+head(dyad.var)
+```
+The function `prediction_power()` computes prediction power when pairs of variables in a given dataframe are used to predict a third variable from the same dataframe. The variable to be predicted and the dataframe in which this variable also is part of is given as input arguments, and the output is an upper triangular matrix giving the expected conditional entropies of pairs of row and column variables of the matrix, i.e. $EH(Z|X,Y)$. The diagonal gives $EH(X|Z)$ , that is when only one variable as a predictor. Note that `NA`'s are in the row and column representing the variable being predicted.
+
+Assume we are interested in predicting variable `status` (that is whether a lawyer in the data set is an associate or partner). This is done by running the following syntax
+```{r predpow1, eval=TRUE, include=TRUE, results ='markup'}
+prediction_power('status', dyad.var)
+```
+For better readability, the powers of different predictors can be conveniently compared by using prediction plots that display a color matrix with rows for $X$ and columns for $Y$ with darker colors in the cells when we have higher prediction power for $Z$. This is shown for the prediction of `status`:
+```{r predplot, echo=FALSE, fig.align='center', out.width="80%"}
+knitr::include_graphics("predplot-status.png")
+```
+Obviously, the darkest color is obtained when the variable to be predicted is included among the predictors, and the cells exhibit prediction power for a single predictor on the diagonal and for two predictors symmetrically outside the diagonal. Some findings are as follows: good predictors for `status` are given by `years` in combination with any other variable, and `age` in combination with any other variable. The best sole predictor is `gender`.
+
+
+
+## References
+> Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data.
+*Bulletin of Sociological Methodology/Bulletin de Méthodologie Sociologique*, 129(1), 45-63. [link](https://doi.org/10.1177%2F0759106315615511)
+
+>  Nowicki, K., Shafie, T., & Frank, O. (Forthcoming 2022). *Statistical Entropy Analysis of Network Data*.
+
+

@@ -47,7 +47,7 @@ ________________________________________________________________________________
 library(netropy)
 ```
 
-We create a dataframe `dyad.var` consisting of dyad variables as described and created in [variable domains and data editing](variable domains.html).
+We create a dataframe `dyad.var` consisting of dyad variables as described and created in [variable domains and data editing](variable domains.html). Similar analyses can be perfomed on observed and/or transformed dataframes with vertex or triad variables.
 
 ```{r load_data, eval=TRUE, include=FALSE}
 data(lawdata) 
@@ -138,3 +138,12 @@ Trivariate entropies can be computed using the function `entropy_trivar()` which
 ```{r triv_ent, eval=TRUE, include=TRUE, results ='markup'}
 entropy_trivar(dyad.var)
 ```
+
+
+## References
+> Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data.
+*Bulletin of Sociological Methodology/Bulletin de Méthodologie Sociologique*, 129(1), 45-63. [link](https://doi.org/10.1177%2F0759106315615511)
+
+>  Nowicki, K., Shafie, T., & Frank, O. (Forthcoming 2022). *Statistical Entropy Analysis of Network Data*.
+
+
