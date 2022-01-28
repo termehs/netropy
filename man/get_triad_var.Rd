@@ -13,7 +13,7 @@ to be transformed to a triad variable.}
 \item{type}{either 'att' for actor attribute (default) or 'tie' for relations.}
 }
 \value{
-Data frame with four columns:
+Dataframe with four columns:
 first three columns show the vertex triad \code{u}, \code{v}, \code{w} ,
 and the fourth column gives the value of the transformed triadic variable \code{var}.
 }
@@ -24,7 +24,7 @@ into triad variables.
 \details{
 For actor attributes, unique triples of original attribute values
 constitute the outcome space. Note that the actor
-attributes need to be categorical and on ordinal scale with finite range spaces.
+attributes need to be categorical with finite range spaces.
 For example, binary attributes have 8 possible triadic outcomes
 (0,0,0),(1,0,0),(0,1,0),(1,1,0),(0,0,1),(1,0,1),(0,1,1),(1,1,1)
 which are coded 0-7.

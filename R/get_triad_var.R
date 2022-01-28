@@ -4,12 +4,12 @@
 #' @param var variable vector (actor attribute) or adjacency matrix (ties)
 #' to be transformed to a triad variable.
 #' @param type either 'att' for actor attribute (default) or 'tie' for relations.
-#' @return Data frame with four columns:
+#' @return Dataframe with four columns:
 #' first three columns show the vertex triad \code{u}, \code{v}, \code{w} ,
 #' and the fourth column gives the value of the transformed triadic variable \code{var}.
 #' @details For actor attributes, unique triples of original attribute values
 #' constitute the outcome space. Note that the actor
-#' attributes need to be categorical and on ordinal scale with finite range spaces.
+#' attributes need to be categorical with finite range spaces.
 #' For example, binary attributes have 8 possible triadic outcomes
 #' (0,0,0),(1,0,0),(0,1,0),(1,1,0),(0,0,1),(1,0,1),(0,1,1),(1,1,1)
 #' which are coded 0-7.
@@ -68,7 +68,7 @@
 get_triad_var <- function(var, type = 'att') {
   if (type == 'att') {
     n <- length(var)
-    triads <- t(combn(1:n,3))
+    triads <- t(utils::combn(1:n,3))
     triads <- cbind(triads,var[triads[,1]], var[triads[,2]],var[triads[,3]])
     triad.var <- data.frame(u=triads[,1], v=triads[,2], w=triads[,3],
                             u.var=triads[,4], v.var=triads[,5], w.var=triads[,6])
@@ -86,7 +86,7 @@ get_triad_var <- function(var, type = 'att') {
   else if (type == 'tie') {
     n <- dim(var)[1]
     if (isSymmetric(var) == TRUE) {
-      triads <- t(combn(1:n,3))
+      triads <- t(utils::combn(1:n,3))
       triads <- cbind(triads,
                       var[triads[,c(1,2)]],
                       var[triads[,c(1,3)]],
@@ -104,7 +104,7 @@ get_triad_var <- function(var, type = 'att') {
       message('8 outcomes based on triples of indicators for the undirected relation are created')
     }
     else if (isSymmetric(var) == FALSE) {
-      triads <- t(combn(1:n,3))
+      triads <- t(utils::combn(1:n,3))
       triads <- cbind(triads, var[triads[,c(1,2)]],
                               var[triads[,c(2,1)]],
                               var[triads[,c(1,3)]],
