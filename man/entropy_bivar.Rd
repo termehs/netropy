@@ -17,8 +17,8 @@ rows and columns of the matrix. The univariate entropies are given in the diagon
 Computes the bivariate entropies between all pairs of (discrete) variables in a multivariate data set.
 }
 \details{
-The bivariate entropy \emph{H(X,Y)} of two discrete random variables \emph{X} and \emph{Y} allows oe to check
-for functional relationships and stochastic independence between pairs of variables.
+The bivariate entropy \emph{H(X,Y)} of two discrete random variables \emph{X} and \emph{Y}
+can be used to check for functional relationships and stochastic independence between pairs of variables.
 The bivariate entropy is bounded according to \cr
 
 \emph{H(X) ≤ H(X,Y) ≤ H(X) + H(Y)}
@@ -32,7 +32,7 @@ where \emph{H(X)} and
 data(lawdata)
 df.att <- lawdata[[4]]
 
-three steps of data editing:
+# three steps of data editing:
 # 1. categorize variables 'years' and 'age' based on
 # approximately three equally size groups (values based on cdf)
 # 2. make sure all outcomes start from the value 0 (optional)
@@ -61,7 +61,7 @@ Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data.
 Nowicki, K., Shafie, T., & Frank, O. (Forthcoming 2022). \emph{Statistical Entropy Analysis of Network Data}.
 }
 \seealso{
-\code{\link{joint_entropy}},  \code{\link{entropy_trivar}}, \code{\link{redundancy}}
+\code{\link{joint_entropy}},  \code{\link{entropy_trivar}}, \code{\link{redundancy}}, \code{\link{prediction_power}}
 }
 \author{
 Termeh Shafie

@@ -3,8 +3,8 @@
 #' @param dat dataframe with rows as observations and columns as variables. Variables must all be observed or transformed categorical with finite range spaces.
 #' @return Upper triangular matrix giving bivariate entropies between pairs of variables given as
 #' rows and columns of the matrix. The univariate entropies are given in the diagonal.
-#' @details The bivariate entropy \emph{H(X,Y)} of two discrete random variables \emph{X} and \emph{Y} allows oe to check
-#' for functional relationships and stochastic independence between pairs of variables.
+#' @details The bivariate entropy \emph{H(X,Y)} of two discrete random variables \emph{X} and \emph{Y}
+#' can be used to check for functional relationships and stochastic independence between pairs of variables.
 #' The bivariate entropy is bounded according to \cr
 #'
 #' \emph{H(X) ≤ H(X,Y) ≤ H(X) + H(Y)}
@@ -13,7 +13,7 @@
 #' where \emph{H(X)} and
 #' \emph{H(Y)} are the univariate entropies.
 #' @author Termeh Shafie
-#' @seealso \code{\link{joint_entropy}},  \code{\link{entropy_trivar}}, \code{\link{redundancy}}
+#' @seealso \code{\link{joint_entropy}},  \code{\link{entropy_trivar}}, \code{\link{redundancy}}, \code{\link{prediction_power}}
 #' @references Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data.
 #' \emph{Bulletin of Sociological Methodology/Bulletin de Méthodologie Sociologique}, 129(1), 45-63.
 #' \cr
@@ -24,7 +24,7 @@
 #' data(lawdata)
 #' df.att <- lawdata[[4]]
 #'
-#' three steps of data editing:
+#' # three steps of data editing:
 #' # 1. categorize variables 'years' and 'age' based on
 #' # approximately three equally size groups (values based on cdf)
 #' # 2. make sure all outcomes start from the value 0 (optional)
