@@ -5,8 +5,9 @@
 #' Variables must all be observed or transformed categorical with finite range spaces.
 #' @param dec the precision given in number of decimals for which
 #' the frequency distribution of unique entropy values is created. Default is 3.
-#' @return List with the upper triangular joint entropy matrix (univariate entropies in the diagonal)
-#' and a dataframe giving the frequency distributions of unique joint entropy values.
+#' @return List with
+#' \item{matrix}{an upper triangular joint entropy matrix (univariate entropies in the diagonal).}
+#' \item{freq}{a dataframe giving the frequency distributions of unique joint entropy values.}
 #' @details The joint entropy \emph{J(X,Y)} of discrete variables \emph{X} and \emph{Y}
 #' is a measure of dependence or association between them, defined as
 #' \cr

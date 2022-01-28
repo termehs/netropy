@@ -14,8 +14,9 @@ Variables must all be observed or transformed categorical with finite range spac
 the frequency distribution of unique entropy values is created. Default is 3.}
 }
 \value{
-List with the upper triangular joint entropy matrix (univariate entropies in the diagonal)
-and a dataframe giving the frequency distributions of unique joint entropy values.
+List with
+\item{matrix}{an upper triangular joint entropy matrix (univariate entropies in the diagonal).}
+\item{freq}{a dataframe giving the frequency distributions of unique joint entropy values.}
 }
 \description{
 Computes the joint entropies between all pairs of (discrete)
