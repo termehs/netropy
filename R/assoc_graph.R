@@ -1,12 +1,13 @@
 #' @title Association Graphs
-#' @description Draws association graphs/graphical models based on joint entropy values
+#' @description Draws association graphs (graphical models) based on joint entropy values
 #' to detect and visualize different dependence structures among the variables in the dataframe.
 #' @param dat dataframe with rows as observations and columns as variables. Variables must all be observed or transformed categorical with finite range spaces.
 #' @param cutoff the cutoff point for the edges to be drawn based on joint entropies. Default is 0 and draws all edges.
-#' @return A ggraph object.
+#' @return A ggraph object with nodes representing all variables in \code{dat} and edges
+#' representing (the strength of) associations between them based on joint entropies.
 #' @details Draws association graphs based on given thresholds of joint entropy values
 #' between pairs of variables represented as nodes. Thickness of edges between pairs of nodes/variables
-#' indicates strength of dependence between variables. Isolated nodes are completely
+#' indicates the strength of dependence between them. Isolated nodes are completely
 #' independent and paths through certain nodes/variables indicate conditional dependencies.
 #' @author Termeh Shafie
 #' @seealso \code{\link{joint_entropy}}
@@ -50,18 +51,18 @@ assoc_graph <- function(dat, cutoff = 0) {
   ag <-
     igraph::graph_from_adjacency_matrix(adj, mode = 'undirected', weighted = TRUE)
   ag.p <- ggraph::ggraph(ag, layout = 'stress') +
-    geom_edge_link0(edge_colour = "grey40", edge_width = igraph::E(ag)$weight) +
-    geom_node_point(
+    ggraph::geom_edge_link0(edge_colour = "grey40", edge_width = igraph::E(ag)$weight) +
+    ggraph::geom_node_point(
       shape = 21,
       size = 20,
       fill = 'white',
       stroke = 1
     ) +
-    geom_node_text(aes(label = igraph::V(ag)$name), size = 3.5) +
-    ggtitle(plot_title) +
-    theme_graph() +
-    theme(legend.position = 'none') +
-    coord_cartesian(clip = 'off')
+    ggraph::geom_node_text(ggplot2::aes(label = igraph::V(ag)$name), size = 3.5) +
+    ggplot2::ggtitle(plot_title) +
+    ggraph::theme_graph(base_family = "") +
+    ggplot2::theme(legend.position = 'none') +
+    ggplot2::coord_cartesian(clip = 'off')
 
   return(ag.p)
 }
