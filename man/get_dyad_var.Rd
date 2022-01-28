@@ -13,7 +13,7 @@ to be transformed to a dyad variable.}
 \item{type}{either 'att' for actor attribute (default) or 'tie' for relations.}
 }
 \value{
-Data frame with three columns:
+Dataframe with three columns:
 first two columns show the vertex pairs \code{u} and \code{v} where \code{u<v} ,
 and the third column gives the value of the transformed dyadic variable \code{var}.
 }
@@ -25,7 +25,7 @@ into dyad variables.
 Dyad variables are given as pairs of incident vertex variables
 or actor attributes. Here, unique pairs of original attribute values
 constitute the outcome space. Note that the actor  attributes need
-to be categorical and on ordinal scale with finite range spaces. For example, binary
+to be categorical with finite range spaces. For example, binary
 attribute yields outcome space (0,0), (0,1), (1,0), (1,1) coded as (0),(1),(2),(3).
 Warning message is shown if actor attribute has too many unique outcomes
 as it will yield too many possible outcomes once converted in to a dyad variable.
