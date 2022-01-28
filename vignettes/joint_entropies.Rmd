@@ -17,7 +17,7 @@ we saw that the bivariate entropy of two variables $X$ and $Y$ is bounded accord
 $$H(X) \leq H(X,Y) \leq H(X)+H(Y) \ .$$
 The increment between the upper bound and the bivariate entropy is equal to the joint entropy given by
 $$J(X,Y) = H(X)+H(Y)-H(X,Y)$$
-and is a non-negative measure of dependence or association between variable $X$ and $Y$. this values is equal to 0 iff $X$ and $Y$ are stochastically independent  $X\bot Y$ such that the probability of any bivariate outcome is the product of the probabilities of the univariate outcomes, i.e. $p(x,y)=p(x,+)p(+,y)$.
+and is a non-negative measure of dependence or association between variable $X$ and $Y$. It is equal to 0 if and only if $X$ and $Y$ are stochastically independent  $X\bot Y$ such that the probability of any bivariate outcome is the product of the probabilities of the univariate outcomes, i.e. $p(x,y)=p(x,+)p(+,y)$.
 
 Trivariate entropies for triples of variables $X,Y,Z$ are bounded by
 $$ H(X,Y) \leq H(X,Y,Z) \leq H(X,Z) + H(Y,Z) - H(Z) $$
@@ -91,13 +91,13 @@ J$freq
 ```
 As seen, the strongest association is between the variables `status` and `years` with joint entropy values of 0.79. We have independence (joint entropy value of 0) between two pairs of variables: (`status`,`practice`), (`practise`,`gender`), (`cowork`,`gender`),and  (`cowork`,`lawschool`).
 
-These results can be illustrated in a association graph using the function `assoc_graph()` which returns a `ggraph` object in which nodes represent variables and links represent strength of association (thicker links indicate stronger dependence). To use the function we need to load the `ggraph` library and to determine a threshold which the graph drawn is based on. We set it to 0.15 so that we only visualize the strongest associations
+These results can be illustrated in a association graph using the function `assoc_graph()` which returns a `ggraph` object in which nodes represent variables and links represent strength of association (thicker links indicate stronger dependence). To use the function we need to load the `ggraph` library and to determine a threshold which the graph drawn is based on. We set it to 0.15 so that we only visualize the strongest associations:
 ```{r assoc_g, eval=TRUE, fig.align='center',fig.width=9, message =FALSE}
 library(ggraph)
 assoc_graph(dyad.var, 0.15)
 ```
 
-Given this threshold, we see isolated nodes representing independent variables. 
+Given this threshold, we see isolated and disconnected nodes representing independent variables. 
 We note strong dependence between the three dyadic variables `status`,`years` and `age`, but also a somewhat strong dependence among the three variables  `lawschool`, `years` and `age`, and the three variables `status`, `years` and `gender`. The association graph can also be interpreted as a tendency for  relations `cowork` and `friend` to be independent conditionally on relation `advice`, that is, any dependence between dyad variables `cowork` and `friend` is explained by `advice`.
 
 

@@ -23,7 +23,7 @@ Variables with different domains can sometimes be combined. For instance, node o
 
 Note that is also possible to create a new variable on units from a tie variable $Y$ with values $Y_{uv}$ on dyads by aggregating in some way the values on dyads incident to a node $u$ to get a value $Y_u$ at that node. For instance, the edge indicators in a graph can be aggregated to degrees or other centrality measures at the vertices.
 
-The package creates variables on three variable domains: vertex, dyad and triad variables. This is exemplified in the following.
+Thus, variables can be observed and transformed on three variable domains: vertex, dyad and triad variables. This is exemplified in the following.
 
 ________________________________________________________________________________
 
@@ -64,7 +64,7 @@ frq.age = data.frame(value=values,freq=as.vector(x),
                        rel.freq=as.vector(prop.x), 
                        cum.rel.freq=as.vector(cum.prop))
 ```
-By looking at these cdf's we can find values with which we based the categories on:
+By looking at these cdf's we can find values with which we base the categories on:
 ```{r cdf2, eval=TRUE, include=TRUE, results ='markup'}
 frq.years
 frq.age
@@ -85,7 +85,7 @@ att.var <-
     )
 head(att.var)
 ```
-Note that we for the sake of consistency, we also edit all variables such that their outcomes start from the value 0. The variable `senior` only has unique values, thus it is redundant and omitted (later we illustrate how such redundant variables can be detected using bivariate entropies).
+Note that we for sake of consistency also edit all variables such that their outcomes start from the value 0. The variable `senior` only has unique values, thus it is redundant and omitted (later we illustrate how such redundant variables can be detected using bivariate entropies).
 
 To transform observed dyad variables into node variables, node degrees of each network (in- and out-degree for directed advice and friendship) can be computed and categorized as shown above for `years` and `age`. 
 
@@ -104,7 +104,7 @@ dyad.lawschool <- get_dyad_var(att.var$lawschool, type = 'att')
 Note that the outcomes are recoded to numerical values to avoid character objects when performing the entropy analysis (in practice though, the actual values of variables are irrelevant for the entropy analysis as we only care about frequencies of occurrence). Thus, `status` has outcomes  0-3 and  `office` has 0-8.
 
 Similarly, dyad variables can be created based on observed ties.
-For the undirected edges, we use indicator variables read directly from the adjacency matrix for the dyad in question, while for the directed ones we have pairs of indicators representing sending and receiving ties with 4 possible outcomes (`advice` and `friendship`):
+For the undirected edges, we use indicator variables read directly from the adjacency matrix for the dyad in question, while for the directed ones (`advice` and `friendship`) we have pairs of indicators representing sending and receiving ties with 4 possible outcomes:
 ```{r edit_data3, eval=TRUE, include=TRUE, message = FALSE, results ='markup'}
 dyad.cwk    <- get_dyad_var(adj.cowork, type = 'tie')
 dyad.adv    <- get_dyad_var(adj.advice, type = 'tie')

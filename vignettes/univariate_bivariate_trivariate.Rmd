@@ -14,11 +14,11 @@ knitr::opts_chunk$set(out.width = "100%",
 ```
 The univariate entropy for discrete variable $X$ with $r$ outcomes is defined by
 $$H(X) = \sum_x p(x) \log_2\frac{1}{p(x)} $$
-with which we can check for redundancy and uniformity: a discrete random variable with minimal zero entropy has no uncertainty and is always equal to the same single outcome. Thus, it is a constant that contributes nothing to further analysis and can be omitted. Maximum entropy is l$\log_2r$ and it corresponds to a uniform probability distribution over the outcomes (complete randomness). 
+with which we can check for redundancy and uniformity: a discrete random variable with minimal zero entropy has no uncertainty and is always equal to the same single outcome. Thus, it is a constant that contributes nothing to further analysis and can be omitted. Maximum entropy is $\log_2r$ and it corresponds to a uniform probability distribution over the outcomes.
 
 The bivariate entropy for discrete variable $X$ and $Y$ is defined by
 $$H(X,Y) = \sum_x \sum_y p(x,y) \log_2\frac{1}{p(x,y)}$$
-with which we can check for we can check for redundancy, functional relationships and stochastic independence between pairs of variables. It is bounded according to 
+with which we can check for redundancy, functional relationships and stochastic independence between pairs of variables. It is bounded according to 
 $$H(X) \leq H(X,Y) \leq H(X)+H(Y)$$
 where we have 
 
@@ -105,7 +105,7 @@ Bivariate entropies can be used to detect redundant variables that should be omi
 ```{r red, eval=TRUE, include=TRUE, results ='markup'}
 redundancy(dyad.var)
 ```
-To illustrate an example with redundancy, we use the dataframe `att.var` with node attributes as described and created in [variable domains and data editing](variable domains.html). Note however that we here keep the variable `senior` in this dataframe:
+To illustrate an example with redundancy, we use the dataframe `att.var` with node attributes as described and created in [variable domains and data editing](variable domains.html). Note however that we now keep the variable `senior` in this dataframe:
 
  ```{r edit_data2, eval=TRUE, include=FALSE, results ='hide'}
 att.var <-
