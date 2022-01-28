@@ -4,7 +4,7 @@
 #' @param dat dataframe with rows as observations and columns as variables.
 #' Variables must all be observed or transformed categorical with finite range spaces.
 #' @return Dataframe with the first three columns representing possible triples of variables (\code{V1,V2,V3})
-#' and the fourth column gives entropies \code{H(V1,V2,V3)}.
+#' and the fourth column gives trivariate entropies \code{H(V1,V2,V3)}.
 #' @details  Trivariate entropies can be used to check for functional relationships and
 #' stochastic independence between triples of variables.
 #' The trivariate entropy \emph{H(X,Y,Z)} of three discrete random variables \emph{X, Y} and \emph{Z}
@@ -15,7 +15,7 @@
 #'
 #' The increment between the trivariate entropy and its lower bound is equal to the expected conditional entropy.
 #' @author Termeh Shafie
-#' @seealso \code{\link{entropy_bivar}}, entropy_Econd
+#' @seealso \code{\link{entropy_bivar}}, \code{\link{prediction_power}}
 #' @references Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data.
 #' \emph{Bulletin of Sociological Methodology/Bulletin de Méthodologie Sociologique}, 129(1), 45-63.
 #' \cr
@@ -26,7 +26,7 @@
 #' data(lawdata)
 #' df.att <- lawdata[[4]]
 #'
-#' #' # three steps of data editing:
+#' # three steps of data editing:
 #' # 1. categorize variables 'years' and 'age' based on
 #' # approximately three equally size groups (values based on cdf)
 #' # 2. make sure all outcomes start from the value 0 (optional)

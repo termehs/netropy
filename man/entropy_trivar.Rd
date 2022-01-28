@@ -12,7 +12,7 @@ Variables must all be observed or transformed categorical with finite range spac
 }
 \value{
 Dataframe with the first three columns representing possible triples of variables (\code{V1,V2,V3})
-and the fourth column gives entropies \code{H(V1,V2,V3)}.
+and the fourth column gives trivariate entropies \code{H(V1,V2,V3)}.
 }
 \description{
 Computes trivariate entropies of all triples of (discrete)
@@ -34,7 +34,7 @@ The increment between the trivariate entropy and its lower bound is equal to the
 data(lawdata)
 df.att <- lawdata[[4]]
 
-#' # three steps of data editing:
+# three steps of data editing:
 # 1. categorize variables 'years' and 'age' based on
 # approximately three equally size groups (values based on cdf)
 # 2. make sure all outcomes start from the value 0 (optional)
@@ -61,7 +61,7 @@ Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data.
 Nowicki, K., Shafie, T., & Frank, O. (Forthcoming 2022). \emph{Statistical Entropy Analysis of Network Data}.
 }
 \seealso{
-\code{\link{entropy_bivar}}, entropy_Econd
+\code{\link{entropy_bivar}}, \code{\link{prediction_power}}
 }
 \author{
 Termeh Shafie
