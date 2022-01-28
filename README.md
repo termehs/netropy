@@ -71,11 +71,11 @@ df.att <- lawdata[[4]]
 
 ## Variable Domains and Data Editing
 
-A requirement for the applicability of entropy tools is the
-specification of a discrete variables with finite range spaces on the
-same domain: either node attributes/vertex variables, edges/dyad
-variables or triad variables. These can be either observed or
-transformed as shown in the following using the above example data set.
+A requirement for the applicability of these entropy tools is the
+specification of discrete variables with finite range spaces on the same
+domain: either node attributes/vertex variables, edges/dyad variables or
+triad variables. These can be either observed or transformed as shown in
+the following using the above example data set.
 
 We have 8 vertex variables with 71 observations, two of which (`years`
 and `age`) are numerical and needs categorization based on their
@@ -109,7 +109,7 @@ head(att.var)
 ```
 
 These vertex variables can be transformed into dyad variables by using
-the function `get_dyad_var()`. Observed node attribute in the dataframe
+the function `get_dyad_var()`. Observed node attributes in the dataframe
 `att_var` are then transformed into pairs of individual attributes. For
 example, `status` with binary outcomes is transformed into dyads having
 4 possible outcomes (0, 0), (0, 1), (1, 0), (1, 1):
@@ -127,8 +127,8 @@ dyad.lawschool <- get_dyad_var(att.var$lawschool, type = 'att')
 Similarly, dyad variables can be created based on observed ties. For the
 undirected edges, we use indicator variables read directly from the
 adjacency matrix for the dyad in question, while for the directed ones
-we have pairs of indicators representing sending and receiving ties with
-4 possible outcomes (`advice` and `friendship`):
+(`advice` and `friendship`) we have pairs of indicators representing
+sending and receiving ties with 4 possible outcomes :
 
 ``` r
 dyad.cwk    <- get_dyad_var(adj.cowork, type = 'tie')
@@ -205,10 +205,11 @@ H2
 Bivariate entropies can be used to detect redundant variables that
 should be omitted from the dataframe for further analysis. This occurs
 when the univariate entropy for a variable is equal to the bivariate
-entropies of pairs including that variable. As seen above, the dataframe
-`dyad.var` has no redundant variables. This can also be checked using
-the function `redundancy()` which yields a binary matrix as output
-indicating which row and column variables are hold the same information:
+entropies for pairs including that variable. As seen above, the
+dataframe `dyad.var` has no redundant variables. This can also be
+checked using the function `redundancy()` which yields a binary matrix
+as output indicating which row and column variables are hold the same
+information:
 
 ``` r
 redundancy(dyad.var)
@@ -328,14 +329,15 @@ assoc_graph(dyad.var, 0.15)
 
 <img src="man/figures/README-assoc_g-1.png" width="100%" style="display: block; margin: auto;" />
 
-Given this threshold, we see isolated nodes representing independent
-variables. We note strong dependence between the three dyadic variables
-`status`,`years` and `age`, but also a somewhat strong dependence among
-the three variables `lawschool`, `years` and `age`, and the three
-variables `status`, `years` and `gender`. The association graph can also
-be interpreted as a tendency for relations `cowork` and `friend` to be
-independent conditionally on relation `advice`, that is, any dependence
-between dyad variables `cowork` and `friend` is explained by `advice`.
+Given this threshold, we see isolated and disconnected nodes
+representing independent variables. We note strong dependence between
+the three dyadic variables `status`,`years` and `age`, but also a
+somewhat strong dependence among the three variables `lawschool`,
+`years` and `age`, and the three variables `status`, `years` and
+`gender`. The association graph can also be interpreted as a tendency
+for relations `cowork` and `friend` to be independent conditionally on
+relation `advice`, that is, any dependence between dyad variables
+`cowork` and `friend` is explained by `advice`.
 
 A threshold that gives a graph with reasonably many small independent or
 conditionally independent subsets of variables can be considered to
@@ -351,10 +353,11 @@ of variables in a given dataframe are used to predict a third variable
 from the same dataframe. The variable to be predicted and the dataframe
 in which this variable also is part of is given as input arguments, and
 the output is an upper triangular matrix giving the expected conditional
-entropies of pairs of row and column variables of the matrix,
-i.e. *EH(Z\|X,Y)*. The diagonal gives *EH(Z\|X)* , that is when only one
-variable as a predictor. Note that `NA`’s are in the row and column
-representing the variable being predicted.
+entropies of pairs of row and column variables (denoted *X* and *Y*) of
+the matrix, i.e. *EH(Z\|X,Y)* where *Z* is the variable to be predicted.
+The diagonal gives *EH(Z\|X)* , that is when only one variable as a
+predictor. Note that `NA`’s are in the row and column representing the
+variable being predicted.
 
 Assume we are interested in predicting variable `status` (that is
 whether a lawyer in the data set is an associate or partner). This is

@@ -57,7 +57,7 @@ df.att <- lawdata[[4]]
 ```
 
 ## Variable Domains and Data Editing
-A requirement for the applicability of entropy tools is the specification of a discrete variables with finite range spaces on the same domain: either node attributes/vertex variables, edges/dyad variables or triad variables. These can be either observed or transformed as shown in the following using the above example data set.
+A requirement for the applicability of these entropy tools is the specification of discrete variables with finite range spaces on the same domain: either node attributes/vertex variables, edges/dyad variables or triad variables. These can be either observed or transformed as shown in the following using the above example data set.
 
 We have 8 vertex variables with 71 observations, two of which (`years` and `age`) are numerical and needs categorization based on their cumulative distributions. This categorization is in details described in the vignette  [variable domains and data editing](variable domains.html). Here we just show the new dataframe created (note that variable `senior` is omitted as it only comprises unique values and that we edit all variable to start from 0):
 ```{r edit_data1, eval=TRUE, include=TRUE, results ='markup'}
@@ -75,7 +75,7 @@ att.var <-
     )
 head(att.var)
 ```
-These vertex variables can be transformed into dyad variables by using the function `get_dyad_var()`. Observed node attribute in the dataframe `att_var` are then transformed into pairs of individual attributes. For example,  `status` with binary outcomes  is transformed into dyads having 4 possible outcomes $(0,0), (0,1), (1,0), (1,1)$:
+These vertex variables can be transformed into dyad variables by using the function `get_dyad_var()`. Observed node attributes in the dataframe `att_var` are then transformed into pairs of individual attributes. For example,  `status` with binary outcomes  is transformed into dyads having 4 possible outcomes $(0,0), (0,1), (1,0), (1,1)$:
 ```{r edit_data2, eval=TRUE, include=TRUE, results ='markup'}
 dyad.status    <- get_dyad_var(att.var$status, type = 'att')
 dyad.gender    <- get_dyad_var(att.var$gender, type = 'att')
@@ -86,7 +86,7 @@ dyad.practice  <- get_dyad_var(att.var$practice, type = 'att')
 dyad.lawschool <- get_dyad_var(att.var$lawschool, type = 'att')
 ```
 Similarly, dyad variables can be created based on observed ties.
-For the undirected edges, we use indicator variables read directly from the adjacency matrix for the dyad in question, while for the directed ones we have pairs of indicators representing sending and receiving ties with 4 possible outcomes (`advice` and `friendship`):
+For the undirected edges, we use indicator variables read directly from the adjacency matrix for the dyad in question, while for the directed ones (`advice` and `friendship`) we have pairs of indicators representing sending and receiving ties with 4 possible outcomes :
 ```{r edit_data3, eval=TRUE, include=TRUE, message = FALSE, results ='markup'}
 dyad.cwk    <- get_dyad_var(adj.cowork, type = 'tie')
 dyad.adv    <- get_dyad_var(adj.advice, type = 'tie')
@@ -117,7 +117,7 @@ The function `entropy_bivar()` computes the bivariate entropies of all pairs of 
 H2 <- entropy_bivar(dyad.var)
 H2
 ```
-Bivariate entropies can be used to detect redundant variables that should be omitted from the dataframe for further analysis. This occurs when the univariate entropy for a variable is equal to the bivariate entropies of pairs including that variable. 
+Bivariate entropies can be used to detect redundant variables that should be omitted from the dataframe for further analysis. This occurs when the univariate entropy for a variable is equal to the bivariate entropies for pairs including that variable. 
 As seen above, the dataframe `dyad.var`  has no redundant variables. This can also be checked using the function `redundancy()` which yields  a binary matrix as output indicating which row and column variables are hold the same information:
 ```{r red, eval=TRUE, include=TRUE, results ='markup'}
 redundancy(dyad.var)
@@ -142,12 +142,12 @@ J$freq
 As seen, the strongest association is between the variables `status` and `years` with joint entropy values of 0.79. We have independence (joint entropy value of 0) between two pairs of variables: (`status`,`practice`), (`practise`,`gender`), (`cowork`,`gender`),and  (`cowork`,`lawschool`).
 
 These results can be illustrated in a association graph using the function `assoc_graph()` which returns a `ggraph` object in which nodes represent variables and links represent strength of association (thicker links indicate stronger dependence). To use the function we need to load the `ggraph` library and to determine a threshold which the graph drawn is based on. We set it to 0.15 so that we only visualize the strongest associations
-```{r assoc_g, eval=TRUE, fig.align='center',fig.width=14, message =FALSE}
+```{r assoc_g, eval=TRUE, fig.align='center',fig.width=11, message =FALSE}
 library(ggraph)
 assoc_graph(dyad.var, 0.15)
 ```
 
-Given this threshold, we see isolated nodes representing independent variables. 
+Given this threshold, we see isolated and disconnected nodes representing independent variables. 
 We note strong dependence between the three dyadic variables `status`,`years` and `age`, but also a somewhat strong dependence among the three variables  `lawschool`, `years` and `age`, and the three variables `status`, `years` and `gender`. The association graph can also be interpreted as a tendency for  relations `cowork` and `friend` to be independent conditionally on relation `advice`, that is, any dependence between dyad variables `cowork` and `friend` is explained by `advice`.
 
 A threshold that gives a graph with reasonably many small independent or conditionally independent subsets of variables can be considered to represent a multivariate model for further testing.
@@ -155,7 +155,7 @@ A threshold that gives a graph with reasonably many small independent or conditi
 More details and examples of joint entropies and association graphs are given in the vignette  [joint_entropies](joint_entropies.html). 
 
 ## Prediction Power Based on Expected Conditional Entropies
-The function `prediction_power()` computes prediction power when pairs of variables in a given dataframe are used to predict a third variable from the same dataframe. The variable to be predicted and the dataframe in which this variable also is part of is given as input arguments, and the output is an upper triangular matrix giving the expected conditional entropies of pairs of row and column variables of the matrix, i.e. *EH(Z|X,Y)*. The diagonal gives *EH(Z|X)* , that is when only one variable as a predictor. Note that `NA`'s are in the row and column representing the variable being predicted.
+The function `prediction_power()` computes prediction power when pairs of variables in a given dataframe are used to predict a third variable from the same dataframe. The variable to be predicted and the dataframe in which this variable also is part of is given as input arguments, and the output is an upper triangular matrix giving the expected conditional entropies of pairs of row and column variables (denoted $X$ and $Y$) of the matrix, i.e. *EH(Z|X,Y)* where $Z$ is the variable to be predicted. The diagonal gives *EH(Z|X)* , that is when only one variable as a predictor. Note that `NA`'s are in the row and column representing the variable being predicted.
 
 Assume we are interested in predicting variable `status` (that is whether a lawyer in the data set is an associate or partner). This is done by running the following syntax
 ```{r predpow1, eval=TRUE, include=TRUE, results ='markup'}
