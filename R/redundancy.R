@@ -4,7 +4,7 @@
 #' Variables must all be observed or transformed categorical with finite range spaces.
 #' @param dec  the precision given as number of decimals used to round bivariate entropies
 #' in order to find redundant variables (the more decimals, the harder to detect redundancy). Default is 3.
-#' @return Binary matrix indicating which row and column variables are hold the same information.
+#' @return Binary matrix indicating which row and column variables hold the same information.
 #' @details   Redundancy is defined as two variables holding the same information (bivariate entropies)
 #' as at least one of the variable alone (univariate entropies).
 #' Consider removing one of these two variable from the dataframe for further analysis.

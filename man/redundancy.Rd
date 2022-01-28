@@ -14,7 +14,7 @@ Variables must all be observed or transformed categorical with finite range spac
 in order to find redundant variables (the more decimals, the harder to detect redundancy). Default is 3.}
 }
 \value{
-Binary matrix indicating which row and column variables are hold the same information.
+Binary matrix indicating which row and column variables hold the same information.
 }
 \description{
 Finds redundant variables in a dataframe consisting of discrete variables.
