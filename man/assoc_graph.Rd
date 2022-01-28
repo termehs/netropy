@@ -12,16 +12,17 @@ assoc_graph(dat, cutoff = 0)
 \item{cutoff}{the cutoff point for the edges to be drawn based on joint entropies. Default is 0 and draws all edges.}
 }
 \value{
-A ggraph object.
+A ggraph object with nodes representing all variables in \code{dat} and edges
+representing (the strength of) associations between them based on joint entropies.
 }
 \description{
-Draws association graphs/graphical models based on joint entropy values
+Draws association graphs (graphical models) based on joint entropy values
 to detect and visualize different dependence structures among the variables in the dataframe.
 }
 \details{
 Draws association graphs based on given thresholds of joint entropy values
 between pairs of variables represented as nodes. Thickness of edges between pairs of nodes/variables
-indicates strength of dependence between variables. Isolated nodes are completely
+indicates the strength of dependence between them. Isolated nodes are completely
 independent and paths through certain nodes/variables indicate conditional dependencies.
 }
 \examples{
