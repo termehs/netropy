@@ -107,7 +107,7 @@ redundancy(dyad.var)
 ```
 To illustrate an example with redundancy, we use the dataframe `att.var` with node attributes as described and created in [variable domains and data editing](variable domains.html). Note however that we now keep the variable `senior` in this dataframe:
 
- ```{r edit_data2, eval=TRUE, include=FALSE, results ='hide'}
+```{r edit_data2, eval=TRUE, include=FALSE, results ='hide'}
 att.var <-
   data.frame(
     senior   = df.att$senior,
@@ -122,6 +122,7 @@ att.var <-
     lawschool= df.att$lawschool-1
     )
 ```
+
 ```{r show_data2, eval=TRUE, include=TRUE, results ='markup'}
 head(att.var)
 ```
