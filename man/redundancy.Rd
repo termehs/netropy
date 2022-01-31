@@ -29,7 +29,7 @@ Consider removing one of these two variable from the dataframe for further analy
 data(lawdata)
 df.att <- lawdata[[4]]
 
-#' # two steps of data editing:
+# two steps of data editing:
 # 1. categorize variables 'years' and 'age' based on
 # approximately three equally size groups (values based on cdf)
 # 2. make sure all outcomes start from the value 0 (optional)
