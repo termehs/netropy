@@ -39,7 +39,7 @@ the stronger is the prediction of \emph{Z}.
 data(lawdata)
 df.att <- lawdata[[4]]
 
-#' # three steps of data editing:
+# three steps of data editing:
 # 1. categorize variables 'years' and 'age' based on
 # approximately three equally size groups (values based on cdf)
 # 2. make sure all outcomes start from the value 0 (optional)
