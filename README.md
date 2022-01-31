@@ -80,8 +80,8 @@ the following using the above example data set.
 We have 8 vertex variables with 71 observations, two of which (`years`
 and `age`) are numerical and needs categorization based on their
 cumulative distributions. This categorization is in details described in
-the vignette [variable domains and data
-editing](variable%20domains.html). Here we just show the new dataframe
+the vignette [“variable domains and data
+editing”](variable%20domains.html). Here we just show the new dataframe
 created (note that variable `senior` is omitted as it only comprises
 unique values and that we edit all variable to start from 0):
 
@@ -164,8 +164,8 @@ head(dyad.var)
 
 A similar function `get_triad_var()` is implemented for transforming
 vertex variables and different relation types into triad variables. This
-is described in more detail in the vignette [variable domains and data
-editing](variable%20domains.html).
+is described in more detail in the vignette [“variable domains and data
+editing”](variable%20domains.html).
 
 ## Univariate, Bivariate and Trivariate Entropies
 
@@ -218,8 +218,8 @@ redundancy(dyad.var)
 ```
 
 More examples of using the function `redundancy()` is given in the
-vignette
-[univariate\_bivariate\_trivariate](univariate_bivariate_trivariate.html).
+vignette [“univariate bivariate and trivariate
+entropies”](univariate_bivariate_trivariate.html).
 
 Trivariate entropies can be computed using the function
 `entropy_trivar()` which returns a dataframe with the first three
@@ -344,7 +344,8 @@ conditionally independent subsets of variables can be considered to
 represent a multivariate model for further testing.
 
 More details and examples of joint entropies and association graphs are
-given in the vignette [joint\_entropies](joint_entropies.html).
+given in the vignette [“joint entropies and association
+graphs”](joint_entropies.html).
 
 ## Prediction Power Based on Expected Conditional Entropies
 
@@ -406,8 +407,8 @@ combination with any other variable, and `age` in combination with any
 other variable. The best sole predictor is `gender`.
 
 More details and examples of expected conditional entropies and
-prediction power are given in the vignette
-[prediction\_power](prediction_power.html).
+prediction power are given in the vignette [“prediction power based on
+expected conditional entropies”](prediction_power.html).
 
 ## References
 

@@ -59,7 +59,7 @@ df.att <- lawdata[[4]]
 ## Variable Domains and Data Editing
 A requirement for the applicability of these entropy tools is the specification of discrete variables with finite range spaces on the same domain: either node attributes/vertex variables, edges/dyad variables or triad variables. These can be either observed or transformed as shown in the following using the above example data set.
 
-We have 8 vertex variables with 71 observations, two of which (`years` and `age`) are numerical and needs categorization based on their cumulative distributions. This categorization is in details described in the vignette  [variable domains and data editing](variable domains.html). Here we just show the new dataframe created (note that variable `senior` is omitted as it only comprises unique values and that we edit all variable to start from 0):
+We have 8 vertex variables with 71 observations, two of which (`years` and `age`) are numerical and needs categorization based on their cumulative distributions. This categorization is in details described in the vignette  ["variable domains and data editing"](variable domains.html). Here we just show the new dataframe created (note that variable `senior` is omitted as it only comprises unique values and that we edit all variable to start from 0):
 ```{r edit_data1, eval=TRUE, include=TRUE, results ='markup'}
 att.var <-
   data.frame(
@@ -109,7 +109,7 @@ dyad.var <-
 head(dyad.var)
 ```
 
-A similar function  `get_triad_var()` is implemented for transforming vertex variables and different relation types into triad variables. This is described in more detail in the vignette  [variable domains and data editing](variable domains.html). 
+A similar function  `get_triad_var()` is implemented for transforming vertex variables and different relation types into triad variables. This is described in more detail in the vignette  ["variable domains and data editing"](variable domains.html). 
 
 ## Univariate, Bivariate and Trivariate Entropies
 The function `entropy_bivar()` computes the bivariate entropies of all pairs of variables in the dataframe. The output is given as an upper triangular matrix with cells giving the bivariate entropies of row and column variables. The diagonal thus gives the univariate entropies for each variable in the dataframe:
@@ -122,7 +122,7 @@ As seen above, the dataframe `dyad.var`  has no redundant variables. This can al
 ```{r red, eval=TRUE, include=TRUE, results ='markup'}
 redundancy(dyad.var)
 ```
-More examples of using the function `redundancy()` is given in the vignette  [univariate_bivariate_trivariate](univariate_bivariate_trivariate.html). 
+More examples of using the function `redundancy()` is given in the vignette  ["univariate bivariate and trivariate entropies"](univariate_bivariate_trivariate.html). 
 
 Trivariate entropies can be computed using the function `entropy_trivar()` which returns a dataframe with the first three columns representing possible triples of variables `V1`,`V2`, and `V3` from the dataframe in question, and their entropies `H(V1,V2,V3)` as the fourth column. We illustrated this on the dataframe `dyad.var`:
 ```{r triv_ent, eval=TRUE, include=TRUE, results ='markup'}
@@ -152,7 +152,7 @@ We note strong dependence between the three dyadic variables `status`,`years` an
 
 A threshold that gives a graph with reasonably many small independent or conditionally independent subsets of variables can be considered to represent a multivariate model for further testing.
 
-More details and examples of joint entropies and association graphs are given in the vignette  [joint_entropies](joint_entropies.html). 
+More details and examples of joint entropies and association graphs are given in the vignette  ["joint entropies and association graphs"](joint_entropies.html). 
 
 ## Prediction Power Based on Expected Conditional Entropies
 The function `prediction_power()` computes prediction power when pairs of variables in a given dataframe are used to predict a third variable from the same dataframe. The variable to be predicted and the dataframe in which this variable also is part of is given as input arguments, and the output is an upper triangular matrix giving the expected conditional entropies of pairs of row and column variables (denoted $X$ and $Y$) of the matrix, i.e. *EH(Z|X,Y)* where $Z$ is the variable to be predicted. The diagonal gives *EH(Z|X)* , that is when only one variable as a predictor. Note that `NA`'s are in the row and column representing the variable being predicted.
@@ -167,7 +167,7 @@ For better readability, the powers of different predictors can be conveniently c
 
 Obviously, the darkest color is obtained when the variable to be predicted is included among the predictors, and the cells exhibit prediction power for a single predictor on the diagonal and for two predictors symmetrically outside the diagonal. Some findings are as follows: good predictors for `status` are given by `years` in combination with any other variable, and `age` in combination with any other variable. The best sole predictor is `gender`.
 
-More details and examples of expected conditional entropies and prediction power  are given in the vignette  [prediction_power](prediction_power.html). 
+More details and examples of expected conditional entropies and prediction power  are given in the vignette  ["prediction power based on expected conditional entropies"](prediction_power.html). 
 
 ## References
 
