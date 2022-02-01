@@ -7,7 +7,7 @@
 #' can be used to check for functional relationships and stochastic independence between pairs of variables.
 #' The bivariate entropy is bounded according to \cr
 #'
-#' \emph{H(X) ≤ H(X,Y) ≤ H(X) + H(Y)}
+#' \emph{H(X) <= H(X,Y) <= H(X) + H(Y)}
 #' \cr
 #'
 #' where \emph{H(X)} and
