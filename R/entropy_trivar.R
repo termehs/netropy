@@ -10,7 +10,7 @@
 #' The trivariate entropy \emph{H(X,Y,Z)} of three discrete random variables \emph{X, Y} and \emph{Z}
 #' is bounded according to \cr
 #'
-#' \emph{H(X,Y) ≤ H(X,Y,Z) ≤ H(X,Z) + H(Y,Z) - H(Z)}.
+#' \emph{H(X,Y) <= H(X,Y,Z) <= H(X,Z) + H(Y,Z) - H(Z)}.
 #' \cr
 #'
 #' The increment between the trivariate entropy and its lower bound is equal to the expected conditional entropy.
