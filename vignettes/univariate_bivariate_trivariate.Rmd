@@ -47,7 +47,7 @@ ________________________________________________________________________________
 library(netropy)
 ```
 
-We create a dataframe `dyad.var` consisting of dyad variables as described and created in [variable domains and data editing](variable domains.html). Similar analyses can be perfomed on observed and/or transformed dataframes with vertex or triad variables.
+We create a dataframe `dyad.var` consisting of dyad variables as described and created in [variable domains and data editing](variable_domains.html). Similar analyses can be perfomed on observed and/or transformed dataframes with vertex or triad variables.
 
 ```{r load_data, eval=TRUE, include=FALSE}
 data(lawdata) 
@@ -105,7 +105,7 @@ Bivariate entropies can be used to detect redundant variables that should be omi
 ```{r red, eval=TRUE, include=TRUE, results ='markup'}
 redundancy(dyad.var)
 ```
-To illustrate an example with redundancy, we use the dataframe `att.var` with node attributes as described and created in [variable domains and data editing](variable domains.html). Note however that we now keep the variable `senior` in this dataframe:
+To illustrate an example with redundancy, we use the dataframe `att.var` with node attributes as described and created in [variable domains and data editing](variable_domains.html). Note however that we now keep the variable `senior` in this dataframe:
 
 ```{r edit_data2, eval=TRUE, include=FALSE, results ='hide'}
 att.var <-

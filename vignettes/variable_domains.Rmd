@@ -13,10 +13,6 @@ knitr::opts_chunk$set(out.width = "100%",
 )
 ```
 
-
-
-
-
 Data editing should guarantee that all variables are carefully defined with specified domains where they are observed or measured and with specified range spaces where their possible values are given. A usual set-up is that all variables have the same domain, for instance a set of individuals for which several attributes are registered. If a binary relationship like friendship or not friendship is registered for all pairs of individuals, then the domain for this relationship is the set of dyads (pairs without regard to order) of individuals.
 
 Variables with different domains can sometimes be combined. For instance, node or vertex variable $X$ with value $X_u$ for node $u$ can be extended to the domain of dyads by defining it as the pair $X_{uv} = (X_u,X_v)$ for dyad $(u,v)$. Examples of such variable transformations are given in Frank & Shafie (2016) ([link](https://doi.org/10.1177%2F0759106315615511)). 

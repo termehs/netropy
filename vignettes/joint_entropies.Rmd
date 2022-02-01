@@ -34,7 +34,7 @@ ________________________________________________________________________________
 library(netropy)
 ```
 
-We create a dataframe `dyad.var` consisting of dyad variables as described and created in [variable domains and data editing](variable domains.html). Similar analyses can be performed on observed and/or transformed dataframes with vertex or triad variables.
+We create a dataframe `dyad.var` consisting of dyad variables as described and created in [variable domains and data editing](variable_domains.html). Similar analyses can be performed on observed and/or transformed dataframes with vertex or triad variables.
 
 ```{r load_data, eval=TRUE, include=FALSE}
 data(lawdata) 
