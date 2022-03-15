@@ -7,3 +7,12 @@
 #' @return Test results
 #' @details description of tests
 #'
+#' @author Termeh Shafie
+#' @seealso \code{\link{get_dyad_var}}
+#' @references Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data.
+#' \emph{Bulletin of Sociological Methodology/Bulletin de Méthodologie Sociologique}, 129(1), 45-63.
+#' \cr
+#'
+#' Nowicki, K., Shafie, T., & Frank, O. (Forthcoming 2022). \emph{Statistical Entropy Analysis of Network Data}.
+#' @examples
+#'
