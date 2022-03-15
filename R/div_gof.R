@@ -5,3 +5,5 @@
 #' @param varset2 column vector of variables in set2
 #' @param condition column vector of variables,default empty (no conditioning)
 #' @return Test results
+#' @details description of tests
+#'
