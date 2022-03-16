@@ -16,3 +16,6 @@
 #' Nowicki, K., Shafie, T., & Frank, O. (Forthcoming 2022). \emph{Statistical Entropy Analysis of Network Data}.
 #' @examples
 #'
+div_gof <- function(varset1, varset2, condition = 0) {
+
+}
