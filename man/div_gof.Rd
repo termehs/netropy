@@ -9,9 +9,9 @@ div_gof(varset1, varset2, condition = 0)
 \arguments{
 \item{varset1}{column vector of variables in set 1}
 
-\item{varset2}{column vector of variables in set2}
+\item{varset2}{column vector of variables in set 2}
 
-\item{condition}{column vector of variables,default empty (no conditioning)}
+\item{condition}{column vector of variables, default empty (no conditioning)}
 }
 \value{
 Test results
