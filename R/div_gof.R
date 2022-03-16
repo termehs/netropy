@@ -2,8 +2,8 @@
 #' @description Tests of various hypothetical structural models \emph{p0} against the general the model \emph{p} which is
 #' estimated using the empirical data.
 #' @param varset1 column vector of variables in set 1
-#' @param varset2 column vector of variables in set2
-#' @param condition column vector of variables,default empty (no conditioning)
+#' @param varset2 column vector of variables in set 2
+#' @param condition column vector of variables, default empty (no conditioning)
 #' @return Test results
 #' @details description of tests
 #'
