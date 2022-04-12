@@ -1,9 +1,15 @@
 #' @title Divergence Tests of Goodness of Fit
-#' @description Tests of various hypothetical structural models \emph{p0} against the general the model \emph{p} which is
-#' estimated using the empirical data.
-#' @param varset1 column vector of variables in set 1
-#' @param varset2 column vector of variables in set 2
-#' @param condition column vector of variables, default empty (no conditioning)
+#' @description Tests of various hypothetical structural models \emph{p0} against
+#' the general model \emph{p} which is estimated using empirical data.
+#' @param dat dataframe with rows as observations and columns as variables.
+#' Variables must all be observed or transformed categorical with finite range spaces.
+#' @param set1 column vector of variables in the set
+#' to be tested for independence against those in \code{set2}
+#' @param set2 column vector of variables in set
+#' to be tested for independence against those in \code{set1}
+#' @param condition column vector of variables to condition the independence test on,
+#' must be different variables than those in \code{set1} and set \code{set2}).
+#' Default empty (no conditioning).
 #' @return Test results
 #' @details description of tests
 #'
@@ -16,6 +22,25 @@
 #' Nowicki, K., Shafie, T., & Frank, O. (Forthcoming 2022). \emph{Statistical Entropy Analysis of Network Data}.
 #' @examples
 #'
-div_gof <- function(varset1, varset2, condition = 0) {
+div_gof <- function(dat, set1, set2, condition = 0) {
+  if (condition == 0) {
+    varname.orig <- colnames(dat)
+    varname.new <- sprintf("V%d", 1:ncol(dat))
+    names(dat) <- varname.new
+
+    idx_set1 <- which(names(dat) == set1)
+    idx_set2 <- which(names(dat) == set2)
+
+
+
+  # empirical distribution/general model
+   tab <- table(dat[,idx_set1:idx_set2])
+   p <- addmargins(prop.table(tab))
+
+   # independent model
+   q <- p["Sum",]*p[,"Sum"]
+
+  }
+
 
 }
