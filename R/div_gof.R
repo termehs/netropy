@@ -40,7 +40,9 @@ div_gof <- function(dat, set1, set2, condition = 0) {
    # independent model, is this needed?
    q <- p["Sum",]*p[,"Sum"]
 
-   #chi.stat = 2nD(pq) where D = H_X + H_Y − H_(X,Y) = 2n J(X,Y)
+   # chi.stat = 2nD(pq) where D = H_X + H_Y − H_(X,Y) = 2n J(X,Y) pairwise
+   # conditional
+   # nested
   }
 
 
