@@ -4,21 +4,28 @@
 \alias{div_gof}
 \title{Divergence Tests of Goodness of Fit}
 \usage{
-div_gof(varset1, varset2, condition = 0)
+div_gof(dat, set1, set2, condition = 0)
 }
 \arguments{
-\item{varset1}{column vector of variables in set 1}
+\item{dat}{dataframe with rows as observations and columns as variables.
+Variables must all be observed or transformed categorical with finite range spaces.}
 
-\item{varset2}{column vector of variables in set 2}
+\item{set1}{column vector of variables in the set
+to be tested for independence against those in \code{set2}}
 
-\item{condition}{column vector of variables, default empty (no conditioning)}
+\item{set2}{column vector of variables in set
+to be tested for independence against those in \code{set1}}
+
+\item{condition}{column vector of variables to condition the independence test on,
+must be different variables than those in \code{set1} and set \code{set2}).
+Default empty (no conditioning).}
 }
 \value{
 Test results
 }
 \description{
-Tests of various hypothetical structural models \emph{p0} against the general the model \emph{p} which is
-estimated using the empirical data.
+Tests of various hypothetical structural models \emph{p0} against
+the general model \emph{p} which is estimated using empirical data.
 }
 \details{
 description of tests
