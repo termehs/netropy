@@ -31,6 +31,18 @@ div_gof <- function(dat, set1, set2, condition = 0) {
     idx_set1 <- which(names(dat) == set1)
     idx_set2 <- which(names(dat) == set2)
 
+    # pairwise independence
+    if (length(set1) == 1 & length(set2) == 1) {
+      J <- joint_entropy(dat, dec = 3)
+      J <- J$matrix
+      D <- 2*dim(dat)[1]*(J[idx_set1,idx_set2])
+
+      # alternatively
+      H <- entropy_bivar(dat)
+      D <- 2*dim(dat)[1]*(H[idx_set1,idx_set1]
+                          + H[idx_set2,idx_set2]
+                          - H[idx_set1,idx_set2])
+    }
 
 
   # empirical distribution/general model, is this needed?
@@ -43,16 +55,6 @@ div_gof <- function(dat, set1, set2, condition = 0) {
    # chi.stat = 2nD(pq) where D = H_X + H_Y − H_(X,Y) = 2n J(X,Y) pairwise
    # conditional specifications
    # nested specifications
-
-   J <- joint_entropy(dat, dec = 3)
-   J <- J$matrix
-   D <- 2*dim(dat)[1]*(J[idx_set1,idx_set2])
-
-   # alternatively
-   H <- entropy_bivar(dat)
-   D <- 2*dim(dat)[1]*(H[idx_set1,idx_set1]
-                       + H[idx_set2,idx_set2]
-                       - H[idx_set1,idx_set2])
   }
 
 
