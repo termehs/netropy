@@ -3,6 +3,7 @@
 #' the general model \emph{p} which is estimated using empirical data.
 #' @param dat dataframe with rows as observations and columns as variables.
 #' Variables must all be observed or transformed categorical with finite range spaces.
+#' @param spec either 'pairwise', 'conditional' or 'nested' to specify the model to test
 #' @param set1 column vector of variables in the set
 #' to be tested for independence against those in \code{set2}
 #' @param set2 column vector of variables in set
