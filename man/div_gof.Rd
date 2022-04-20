@@ -19,6 +19,8 @@ to be tested for independence against those in \code{set1}}
 \item{condition}{column vector of variables to condition the independence test on,
 must be different variables than those in \code{set1} and set \code{set2}).
 Default empty (no conditioning).}
+
+\item{spec}{either 'pairwise', 'conditional' or 'nested' to specify the model to test}
 }
 \value{
 Test results

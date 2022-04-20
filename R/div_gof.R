@@ -24,7 +24,7 @@
 #' @examples
 #'
 div_gof <- function(dat, set1, set2, condition = 0) {
-  if (condition == 0) {
+  if (spec == 'pairwise') {
     varname.orig <- colnames(dat)
     varname.new <- sprintf("V%d", 1:ncol(dat))
     names(dat) <- varname.new
