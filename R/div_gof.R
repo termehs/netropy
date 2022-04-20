@@ -8,7 +8,7 @@
 #' to be tested for independence against those in \code{set2}
 #' @param set2 column vector of variables in set
 #' to be tested for independence against those in \code{set1}
-#' @param condition column vector of variables to condition the independence test on,
+#' @param condition specify this when \code{spec} is defined as 'conditional' as a vector of variables to condition the independence test on,
 #' must be different variables than those in \code{set1} and set \code{set2}).
 #' Default empty (no conditioning).
 #' @return Test results
