@@ -57,6 +57,11 @@ div_gof <- function(dat, set1, set2, condition = 0) {
    # conditional specifications
    # nested specifications
   }
+  else if (spec == 'conditional') {
 
+  }
+  else if (spec == 'nested') {
+
+  }
 
 }
