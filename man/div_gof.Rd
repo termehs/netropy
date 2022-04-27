@@ -4,7 +4,7 @@
 \alias{div_gof}
 \title{Divergence Tests of Goodness of Fit}
 \usage{
-div_gof(dat, var1, var2, var_cond = 0)
+div_gof(dat, var1, var2, var_cond = NULL)
 }
 \arguments{
 \item{dat}{dataframe with rows as observations and columns as variables.
@@ -21,7 +21,8 @@ must be different variables than those specified in \code{var1} and \code{var2})
 Default empty (no conditioning).}
 }
 \value{
-Test results
+Message indicating whether the hypothesis with the specified independence model
+can be rejected or not on approximately 5% level of significance.
 }
 \description{
 Tests of various hypothetical structural models \emph{p0} against
@@ -41,7 +42,7 @@ Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data.
 Nowicki, K., Shafie, T., & Frank, O. (Forthcoming 2022). \emph{Statistical Entropy Analysis of Network Data}.
 }
 \seealso{
-\code{\link{get_dyad_var}}
+\code{\link{joint_entropy}},   \code{\link{assoc_graph}},  \code{\link{entropy_trivar}}
 }
 \author{
 Termeh Shafie

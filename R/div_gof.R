@@ -57,10 +57,9 @@ div_gof <- function(dat, var1, var2, var_cond = NULL) {
       else if (chi2 <= cv) {
         message("the specified model of independence is rejected at approximately 5% significance level.")
       }
-  }
 
   # conditional independence
-  if (length(idx_var1) == 1 & length(idx_var2) == 1 & length(var_cond) == 1) {
+  else if (length(idx_var1) == 1 & length(idx_var2) == 1 & length(var_cond) == 1) {
     H <- entropy_bivar(dat)
     H[lower.tri(H)] = t(H)[lower.tri(H)]
     D <- 2*dim(dat)[1]*(H[idx_var1,var_cond] +
@@ -86,6 +85,12 @@ div_gof <- function(dat, var1, var2, var_cond = NULL) {
     }
   }
 
+  # warning message for wrongful model specification
+  else {
+    warning("function currently implemented for tests of the kind X is indepndent of Y: Z _|_Y,
+            and X is idependent of Y given Z: X_|_Y|Z ")
+     }
+  }
 }
 
 
