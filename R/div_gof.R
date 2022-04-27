@@ -59,19 +59,19 @@ div_gof <- function(dat, var1, var2, var_cond = NULL) {
       }
 
   # conditional independence
-  else if (length(idx_var1) == 1 & length(idx_var2) == 1 & length(var_cond) == 1) {
+  else if (length(idx_var1) == 1 & length(idx_var2) == 1 & length(idx_cond ) == 1) {
     H <- entropy_bivar(dat)
     H[lower.tri(H)] = t(H)[lower.tri(H)]
-    D <- 2*dim(dat)[1]*(H[idx_var1,var_cond] +
-                          H[idx_var2, var_cond] -
-                          H[var_cond,var_cond] -
+    D <- 2*dim(dat)[1]*(H[idx_var1,idx_cond ] +
+                          H[idx_var2, idx_cond ] -
+                          H[var_cond, idx_cond ] -
                           H[idx_var1, idx_var2])
     chi2 <- (2*dim(dat)[1]*D)/(log2(exp(1)))
 
     # degrees of freedom for test statistic chi2
     df_var1 = length(unique(dat[,idx_var1]))
     df_var2 = length(unique(dat[,idx_var2]))
-    df_varcond = length(unique(dat[,var_cond]))
+    df_varcond = length(unique(dat[,idx_cond ]))
 
     df_chi2 = (df_var1-1)*(df_var2-1)*df_varcond
 
