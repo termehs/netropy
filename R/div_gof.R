@@ -14,7 +14,7 @@
 #' @details description of tests
 #'
 #' @author Termeh Shafie
-#' @seealso \code{\link{get_dyad_var}}
+#' @seealso \code{\link{joint_entropy}},   \code{\link{assoc_graph}},  \code{\link{entropy_trivar}}
 #' @references Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data.
 #' \emph{Bulletin of Sociological Methodology/Bulletin de Méthodologie Sociologique}, 129(1), 45-63.
 #' \cr
@@ -34,43 +34,33 @@ div_gof <- function(dat, var1, var2, var_cond = 0) {
   if (length(idx_var1) == 1 & length(idx_var2) == 1 & var_cond == 0) {
       J <- joint_entropy(dat, dec = 3)
       J <- J$matrix
-      J <- J[lower.tri(J)] = t(J)[lower.tri(J)]
+      J[lower.tri(J)] = t(J)[lower.tri(J)]
       D <- 2*dim(dat)[1]*(J[idx_var1,idx_var2])
       chi2 <- (2*dim(dat)[1]*D)/(log2(exp(1)))
 
     # degrees of freedom for test statistic chi2
-      df_var1 = length(range(dat[,idx_var1]))
-      df_var2 = length(range(dat[,idx_var2]))
+      df_var1 = length(unique(dat[,idx_var1]))
+      df_var2 = length(unique(dat[,idx_var2]))
 
       df_chi2 = (df_var1-1)*(df_var2-1)
 
-    # critical value
+    # critical value at 5% level
       cv = df_chi2 + sqrt((8*df_chi2))
+      if (chi2 > cv) {
+        message("the specified model of independence cannot be rejected at approximately 5% significance level")
+        }
+      else if (chi2 <= cv) {
+        message("the specified model of independence is rejected at approximately 5% significance level.")
+      }
 
-
-
-
-
-
-      # alternatively
-      H <- entropy_bivar(dat)
-      D <- 2*dim(dat)[1]*(H[idx_set1,idx_set1]
-                          + H[idx_set2,idx_set2]
-                          - H[idx_set1,idx_set2])
-    }
-
-
-  # empirical distribution/general model, is this needed?
-   tab <- table(dat[,idx_set1:idx_set2])
-   p <- addmargins(prop.table(tab))
-
-   # independent model, is this needed?
-   q <- p["Sum",]*p[,"Sum"]
-
-   # chi.stat = 2nD(pq) where D = H_X + H_Y − H_(X,Y) = 2n J(X,Y) pairwise
-   # conditional specifications
-   # nested specifications
-
-
+      round(1 - pchisq(chi2, df_chi2),3)
+  }
 
 }
+
+
+
+
+
+
+
