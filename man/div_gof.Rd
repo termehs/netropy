@@ -4,20 +4,20 @@
 \alias{div_gof}
 \title{Divergence Tests of Goodness of Fit}
 \usage{
-div_gof(dat, set1, set2, condition = 0)
+div_gof(dat, var1, var2, var_cond = 0)
 }
 \arguments{
 \item{dat}{dataframe with rows as observations and columns as variables.
 Variables must all be observed or transformed categorical with finite range spaces.}
 
-\item{var1}{vector of variables in \code{dat} to be tested for independence against
-those specified in \code{set2}}
+\item{var1}{vector of variables in \code{dat} specified to be independent to
+those specified in \code{var2} under \emph{p0}}
 
-\item{var2}{vector of variables in \code{dat} to be tested for independence against
-those specified in \code{set1}}
+\item{var2}{vector of variables in \code{dat} specified to be independent to
+those specified in \code{var1}}
 
-\item{var_cond}{vector of variables in \code{dat} to condition the independence test on,
-must be different variables than those specified in \code{set1} and \code{set2}).
+\item{var_cond}{vector of variables in \code{dat} to condition the independence specification on,
+must be different variables than those specified in \code{var1} and \code{var2}).
 Default empty (no conditioning).}
 }
 \value{

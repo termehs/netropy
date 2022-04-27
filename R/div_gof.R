@@ -3,12 +3,12 @@
 #' the general model \emph{p} which is estimated using empirical data.
 #' @param dat dataframe with rows as observations and columns as variables.
 #' Variables must all be observed or transformed categorical with finite range spaces.
-#' @param var1 vector of variables in \code{dat} to be tested for independence against
-#' those specified in \code{set2}
-#' @param var2 vector of variables in \code{dat} to be tested for independence against
-#' those specified in \code{set1}
-#' @param var_cond vector of variables in \code{dat} to condition the independence test on,
-#' must be different variables than those specified in \code{set1} and \code{set2}).
+#' @param var1 vector of variables in \code{dat} specified to be independent to
+#' those specified in \code{var2} under \emph{p0}
+#' @param var2 vector of variables in \code{dat} specified to be independent to
+#' those specified in \code{var1}
+#' @param var_cond vector of variables in \code{dat} to condition the independence specification on,
+#' must be different variables than those specified in \code{var1} and \code{var2}).
 #' Default empty (no conditioning).
 #' @return Test results
 #' @details description of tests
@@ -23,29 +23,34 @@
 #' @examples
 #'
 div_gof <- function(dat, var1, var2, var_cond = 0) {
+  idx_var1 <- which(names(dat) == var1)
+  idx_var2 <- which(names(dat) == var2)
 
-  idx_set1 <- which(names(dat) == var1)
-  idx_set2 <- which(names(dat) == var2)
+  varname.orig <- colnames(dat)
+  varname.new <- sprintf("V%d", 1:ncol(dat))
+  names(dat) <- varname.new
 
   # pairwise independence
-  if (length(idx_set1 == 1 & length(set2) == 1 & var_cond == 0) {
-    varname.orig <- colnames(dat)
-    varname.new <- sprintf("V%d", 1:ncol(dat))
-    names(dat) <- varname.new
-
+  if (length(idx_var1) == 1 & length(idx_var2) == 1 & var_cond == 0) {
       J <- joint_entropy(dat, dec = 3)
       J <- J$matrix
-      D <- 2*dim(dat)[1]*(J[idx_set1,idx_set2])
-      chi2 <- 2*dim(dat)[1]/(log2(exp(1)))
+      J <- J[lower.tri(J)] = t(J)[lower.tri(J)]
+      D <- 2*dim(dat)[1]*(J[idx_var1,idx_var2])
+      chi2 <- (2*dim(dat)[1]*D)/(log2(exp(1)))
 
     # degrees of freedom for test statistic chi2
-      df_set1 = length(range(dat[,idx_set1]))
-      df_set2 = length(range(dat[,idx_set2]))
+      df_var1 = length(range(dat[,idx_var1]))
+      df_var2 = length(range(dat[,idx_var2]))
 
-      df_chi2 = (df_set1-1)*(df_set2-1)
+      df_chi2 = (df_var1-1)*(df_var2-1)
 
     # critical value
       cv = df_chi2 + sqrt((8*df_chi2))
+
+
+
+
+
 
       # alternatively
       H <- entropy_bivar(dat)
