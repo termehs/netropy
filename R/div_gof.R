@@ -22,20 +22,30 @@
 #' Nowicki, K., Shafie, T., & Frank, O. (Forthcoming 2022). \emph{Statistical Entropy Analysis of Network Data}.
 #' @examples
 #'
-div_gof <- function(dat, set1, set2, condition = 0) {
-  if (spec == 'pairwise') {
+div_gof <- function(dat, var1, var2, var_cond = 0) {
+
+  idx_set1 <- which(names(dat) == var1)
+  idx_set2 <- which(names(dat) == var2)
+
+  # pairwise independence
+  if (length(idx_set1 == 1 & length(set2) == 1 & var_cond == 0) {
     varname.orig <- colnames(dat)
     varname.new <- sprintf("V%d", 1:ncol(dat))
     names(dat) <- varname.new
 
-    idx_set1 <- which(names(dat) == set1)
-    idx_set2 <- which(names(dat) == set2)
-
-    # pairwise independence
-    if (length(set1) == 1 & length(set2) == 1) {
       J <- joint_entropy(dat, dec = 3)
       J <- J$matrix
       D <- 2*dim(dat)[1]*(J[idx_set1,idx_set2])
+      chi2 <- 2*dim(dat)[1]/(log2(exp(1)))
+
+    # degrees of freedom for test statistic chi2
+      df_set1 = length(range(dat[,idx_set1]))
+      df_set2 = length(range(dat[,idx_set2]))
+
+      df_chi2 = (df_set1-1)*(df_set2-1)
+
+    # critical value
+      cv = df_chi2 + sqrt((8*df_chi2))
 
       # alternatively
       H <- entropy_bivar(dat)
@@ -55,12 +65,7 @@ div_gof <- function(dat, set1, set2, condition = 0) {
    # chi.stat = 2nD(pq) where D = H_X + H_Y − H_(X,Y) = 2n J(X,Y) pairwise
    # conditional specifications
    # nested specifications
-  }
-  else if (spec == 'conditional') {
 
-  }
-  else if (spec == 'nested') {
 
-  }
 
 }
