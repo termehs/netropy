@@ -36,7 +36,7 @@ div_gof <- function(dat, var1, var2, var_cond = NULL) {
   names(dat) <- varname.new
 
   # pairwise independence
-  if (length(idx_var1) == 1 & length(idx_var2) == 1 & var_cond == 0) {
+  if (length(idx_var1) == 1 & length(idx_var2) == 1 & is.null(var_cond)) {
       J <- joint_entropy(dat, dec = 3)
       J <- J$matrix
       J[lower.tri(J)] = t(J)[lower.tri(J)]
@@ -51,15 +51,16 @@ div_gof <- function(dat, var1, var2, var_cond = NULL) {
 
     # critical value at 5% level
       cv = df_chi2 + sqrt((8*df_chi2))
-      if (chi2 > cv) {
-        message("the specified model of independence cannot be rejected at approximately 5% significance level")
+        if (chi2 > cv) {
+          return(message("the specified model of independence cannot be rejected"))
         }
-      else if (chi2 <= cv) {
-        message("the specified model of independence is rejected at approximately 5% significance level.")
-      }
+        else if (chi2 <= cv) {
+          return(message("the specified model of independence is rejected"))
+        }
+
 
   # conditional independence
-  else if (length(idx_var1) == 1 & length(idx_var2) == 1 & length(idx_cond ) == 1) {
+  else if (length(idx_var1) == 1 & length(idx_var2) == 1 & length(idx_cond) == 1) {
     H <- entropy_bivar(dat)
     H[lower.tri(H)] = t(H)[lower.tri(H)]
     D <- 2*dim(dat)[1]*(H[idx_var1,idx_cond ] +
@@ -78,18 +79,19 @@ div_gof <- function(dat, var1, var2, var_cond = NULL) {
     # critical value at 5% level
     cv = df_chi2 + sqrt((8*df_chi2))
     if (chi2 > cv) {
-      message("the specified model of independence cannot be rejected at approximately 5% significance level")
+      return(message("the specified model of independence cannot be rejected"))
     }
     else if (chi2 <= cv) {
-      message("the specified model of independence is rejected at approximately 5% significance level.")
+      return(message("the specified model of independence is rejected"))
     }
-  }
+
 
   # warning message for wrongful model specification
   else {
     warning("function currently implemented for tests of the kind X is indepndent of Y: Z _|_Y,
             and X is idependent of Y given Z: X_|_Y|Z ")
-     }
+  }
+  }
   }
 }
 
