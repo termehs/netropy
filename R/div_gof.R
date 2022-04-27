@@ -10,7 +10,8 @@
 #' @param var_cond vector of variables in \code{dat} to condition the independence specification on,
 #' must be different variables than those specified in \code{var1} and \code{var2}).
 #' Default empty (no conditioning).
-#' @return Test results
+#' @return Message indicating whether the hypothesis with the specified independence model
+#' can be rejected or not on approximately 5% level of significance.
 #' @details description of tests
 #'
 #' @author Termeh Shafie
@@ -22,9 +23,13 @@
 #' Nowicki, K., Shafie, T., & Frank, O. (Forthcoming 2022). \emph{Statistical Entropy Analysis of Network Data}.
 #' @examples
 #'
-div_gof <- function(dat, var1, var2, var_cond = 0) {
+div_gof <- function(dat, var1, var2, var_cond = NULL) {
   idx_var1 <- which(names(dat) == var1)
   idx_var2 <- which(names(dat) == var2)
+
+  if (is.null(var_cond) == FALSE) {
+  idx_cond <- which(names(dat) == var_cond)
+  }
 
   varname.orig <- colnames(dat)
   varname.new <- sprintf("V%d", 1:ncol(dat))
@@ -52,8 +57,33 @@ div_gof <- function(dat, var1, var2, var_cond = 0) {
       else if (chi2 <= cv) {
         message("the specified model of independence is rejected at approximately 5% significance level.")
       }
+  }
 
-      round(1 - pchisq(chi2, df_chi2),3)
+  # conditional independence
+  if (length(idx_var1) == 1 & length(idx_var2) == 1 & length(var_cond) == 1) {
+    H <- entropy_bivar(dat)
+    H[lower.tri(H)] = t(H)[lower.tri(H)]
+    D <- 2*dim(dat)[1]*(H[idx_var1,var_cond] +
+                          H[idx_var2, var_cond] -
+                          H[var_cond,var_cond] -
+                          H[idx_var1, idx_var2])
+    chi2 <- (2*dim(dat)[1]*D)/(log2(exp(1)))
+
+    # degrees of freedom for test statistic chi2
+    df_var1 = length(unique(dat[,idx_var1]))
+    df_var2 = length(unique(dat[,idx_var2]))
+    df_varcond = length(unique(dat[,var_cond]))
+
+    df_chi2 = (df_var1-1)*(df_var2-1)*df_varcond
+
+    # critical value at 5% level
+    cv = df_chi2 + sqrt((8*df_chi2))
+    if (chi2 > cv) {
+      message("the specified model of independence cannot be rejected at approximately 5% significance level")
+    }
+    else if (chi2 <= cv) {
+      message("the specified model of independence is rejected at approximately 5% significance level.")
+    }
   }
 
 }
