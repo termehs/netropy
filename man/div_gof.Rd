@@ -10,17 +10,15 @@ div_gof(dat, set1, set2, condition = 0)
 \item{dat}{dataframe with rows as observations and columns as variables.
 Variables must all be observed or transformed categorical with finite range spaces.}
 
-\item{set1}{column vector of variables in the set
-to be tested for independence against those in \code{set2}}
+\item{var1}{vector of variables in \code{dat} to be tested for independence against
+those specified in \code{set2}}
 
-\item{set2}{column vector of variables in set
-to be tested for independence against those in \code{set1}}
+\item{var2}{vector of variables in \code{dat} to be tested for independence against
+those specified in \code{set1}}
 
-\item{condition}{specify this when \code{spec} is defined as 'conditional' as a vector of variables to condition the independence test on,
-must be different variables than those in \code{set1} and set \code{set2}).
+\item{var_cond}{vector of variables in \code{dat} to condition the independence test on,
+must be different variables than those specified in \code{set1} and \code{set2}).
 Default empty (no conditioning).}
-
-\item{spec}{either 'pairwise', 'conditional' or 'nested' to specify the model to test}
 }
 \value{
 Test results
