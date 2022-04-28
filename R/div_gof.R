@@ -44,7 +44,7 @@ div_gof <- function(dat, var1, var2, var_cond = NULL) {
       J <- joint_entropy(dat, dec = 3)
       J <- J$matrix
       J[lower.tri(J)] = t(J)[lower.tri(J)]
-      D <- 2*dim(dat)[1]*(J[idx_var1,idx_var2])
+      D <- (J[idx_var1,idx_var2])
       chi2 <- (2*dim(dat)[1]*D)/(log2(exp(1)))
 
     # degrees of freedom for test statistic chi2
@@ -67,7 +67,7 @@ div_gof <- function(dat, var1, var2, var_cond = NULL) {
   else if (length(idx_var1) == 1 & length(idx_var2) == 1 & length(idx_cond) == 1) {
     H <- entropy_bivar(dat)
     H[lower.tri(H)] = t(H)[lower.tri(H)]
-    D <- 2*dim(dat)[1]*(H[idx_var1,idx_cond ] +
+    D <- (H[idx_var1,idx_cond ] +
                           H[idx_var2, idx_cond ] -
                           H[idx_cond, idx_cond ] -
                           H[idx_var1, idx_var2])
@@ -83,10 +83,10 @@ div_gof <- function(dat, var1, var2, var_cond = NULL) {
     # critical value at 5% level
     cv = df_chi2 + sqrt((8*df_chi2))
     if (chi2 > cv) {
-      message("the specified model of independence cannot be rejected")
+      message("the specified model of conditional independence cannot be rejected")
     }
     else if (chi2 <= cv) {
-      message("the specified model of independence is rejected")
+      message("the specified model of conditional independence is rejected")
     }
 }
 
