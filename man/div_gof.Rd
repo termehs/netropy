@@ -10,27 +10,28 @@ div_gof(dat, var1, var2, var_cond = NULL)
 \item{dat}{dataframe with rows as observations and columns as variables.
 Variables must all be observed or transformed categorical with finite range spaces.}
 
-\item{var1}{variable in \code{dat} specified to be independent to
+\item{var1}{character of variable name in \code{dat} specified to be independent to
 those specified in \code{var2} under \emph{p0}}
 
-\item{var2}{variable in \code{dat} specified to be independent to
+\item{var2}{character of variable name in \code{dat} specified to be independent to
 those specified in \code{var1}}
 
-\item{var_cond}{variable in \code{dat} to condition the independence specification on,
+\item{var_cond}{character of variable name in \code{dat} to condition the independence specification on,
 must be different variables than those specified in \code{var1} and \code{var2}).
 Default empty (no conditioning).}
 }
 \value{
 Message indicating whether the hypothesis with the specified independence model
 can be rejected or not on approximately 5% level of significance.
-\item{summary}{Data frame including the value of the Divergence and its degrees of freedom}
+\item{summary}{Data frame including the value of the value of
+the divergence \emph{D} and its degrees of freedom}
 }
 \description{
 Tests of various hypothetical structural models \emph{p0} against
 the general model \emph{p} which is estimated using empirical data.
 }
 \details{
-this function is currently implemented to only test the goodness of fit of models specified as
+this function is currently implemented to only test goodness of fit of models specified as
 \emph{X} independent of \emph{Y}, or \emph{X} independent of \emph{Y} given \emph{Z}.
 }
 \examples{
