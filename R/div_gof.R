@@ -3,17 +3,18 @@
 #' the general model \emph{p} which is estimated using empirical data.
 #' @param dat dataframe with rows as observations and columns as variables.
 #' Variables must all be observed or transformed categorical with finite range spaces.
-#' @param var1 vector of variables in \code{dat} specified to be independent to
+#' @param var1 variable in \code{dat} specified to be independent to
 #' those specified in \code{var2} under \emph{p0}
-#' @param var2 vector of variables in \code{dat} specified to be independent to
+#' @param var2 variable in \code{dat} specified to be independent to
 #' those specified in \code{var1}
-#' @param var_cond vector of variables in \code{dat} to condition the independence specification on,
+#' @param var_cond variable in \code{dat} to condition the independence specification on,
 #' must be different variables than those specified in \code{var1} and \code{var2}).
 #' Default empty (no conditioning).
 #' @return Message indicating whether the hypothesis with the specified independence model
 #' can be rejected or not on approximately 5% level of significance.
-#' @details description of tests
-#'
+#' \item{summary}{Data frame including the value of the Divergence and its degrees of freedom}
+#' @details this function is currently implemented to only test the goodness of fit of models specified as
+#' \emph{X} independent of \emph{Y}, or \emph{X} independent of \emph{Y} given \emph{Z}.
 #' @author Termeh Shafie
 #' @seealso \code{\link{joint_entropy}},   \code{\link{assoc_graph}},  \code{\link{entropy_trivar}}
 #' @references Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data.
@@ -57,6 +58,7 @@ div_gof <- function(dat, var1, var2, var_cond = NULL) {
         else if (chi2 <= cv) {
           return(message("the specified model of independence is rejected"))
         }
+  }
 
 
   # conditional independence
@@ -65,7 +67,7 @@ div_gof <- function(dat, var1, var2, var_cond = NULL) {
     H[lower.tri(H)] = t(H)[lower.tri(H)]
     D <- 2*dim(dat)[1]*(H[idx_var1,idx_cond ] +
                           H[idx_var2, idx_cond ] -
-                          H[var_cond, idx_cond ] -
+                          H[idx_cond, idx_cond ] -
                           H[idx_var1, idx_var2])
     chi2 <- (2*dim(dat)[1]*D)/(log2(exp(1)))
 
@@ -84,14 +86,13 @@ div_gof <- function(dat, var1, var2, var_cond = NULL) {
     else if (chi2 <= cv) {
       return(message("the specified model of independence is rejected"))
     }
+  }
 
 
   # warning message for wrongful model specification
   else {
     warning("function currently implemented for tests of the kind X is indepndent of Y: Z _|_Y,
-            and X is idependent of Y given Z: X_|_Y|Z ")
-  }
-  }
+            and X is independent of Y given Z: X_|_Y|Z ")
   }
 }
 
