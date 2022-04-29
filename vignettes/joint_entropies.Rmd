@@ -22,7 +22,7 @@ and is a non-negative measure of dependence or association between variable $X$ 
 Trivariate entropies for triples of variables $X,Y,Z$ are bounded by
 $$ H(X,Y) \leq H(X,Y,Z) \leq H(X,Z) + H(Y,Z) - H(Z) $$
 The increment between the upper bound and the trivariate entropy is equal to the expected joint entropy given by
-$$EJ(X,Y|Z) = H(X,Z)-H(Y,Z)-H(Z)-H(X,Y,Z)$$
+$$EJ(X,Y|Z) = H(X,Z)+H(Y,Z)-H(Z)-H(X,Y,Z)$$
 which is non-negative and equal to 0 if and only if we have conditional independence of the form $X\bot Y | Z$. Thus, it can be used to measure the deviation from conditional independence.
 
 The joint entropies $J(X,Y)$ for all pairs of variables $X$ and $Y$ are used to check dependence structure by looking at a sequence of association graphs constructed with nodes representing the variables and links between any pair of nodes corresponding to two variables with joint entropy above a chosen threshold. By successively lowering the threshold from the maximum joint entropy to smaller occurring values, the sequence of graphs get more and more links. Connected components that are cliques represent dependent subsets of variables, and different components represent independent subsets of variables. Conditional independence between subsets of variables can be identified by omitting the subset corresponding to the conditioning variables. A threshold that gives a graph with reasonably many small independent or conditionally independent subsets of variables can be considered to represent a multivariate model for further testing.
