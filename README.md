@@ -112,7 +112,7 @@ These vertex variables can be transformed into dyad variables by using
 the function `get_dyad_var()`. Observed node attributes in the dataframe
 `att_var` are then transformed into pairs of individual attributes. For
 example, `status` with binary outcomes is transformed into dyads having
-4 possible outcomes (0, 0), (0, 1), (1, 0), (1, 1):
+4 possible outcomes (0,0), (0,1), (1,0), (1,1):
 
 ``` r
 dyad.status    <- get_dyad_var(att.var$status, type = 'att')
