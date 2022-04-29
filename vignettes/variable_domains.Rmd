@@ -161,7 +161,7 @@ triad.var <- data.frame(cbind(
              advice    = triad.adv$var,
              friend    = triad.frn$var)
              )
-head(triad.var, 5)
+head(triad.var)
 ```
 
 ## References
