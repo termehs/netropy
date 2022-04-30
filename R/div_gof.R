@@ -11,7 +11,7 @@
 #' must be different variables than those specified in \code{var1} and \code{var2}).
 #' Default empty (no conditioning).
 #' @return Message indicating whether the hypothesis with the specified independence model
-#' can be rejected or not on approximately 5% level of significance.
+#' can be rejected or not on approximately 5\% level of significance.
 #' \item{summary}{Data frame including the value of the value of
 #' the divergence \emph{D} and its degrees of freedom}
 #' @details this function is currently implemented to only test goodness of fit of models specified as
