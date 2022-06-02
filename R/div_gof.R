@@ -9,7 +9,7 @@
 #' those specified in \code{var1}
 #' @param var_cond character of variable name in \code{dat} to condition the independence specification on,
 #' must be different variables than those specified in \code{var1} and \code{var2}).
-#' Default empty (no conditioning).
+#' Default = empty (no conditioning).
 #' @return Message indicating whether the hypothesis with the specified independence model
 #' can be rejected or not on approximately 5\% level of significance.
 #' \item{summary}{Data frame including the value of the value of

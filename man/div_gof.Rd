@@ -18,7 +18,7 @@ those specified in \code{var1}}
 
 \item{var_cond}{character of variable name in \code{dat} to condition the independence specification on,
 must be different variables than those specified in \code{var1} and \code{var2}).
-Default empty (no conditioning).}
+Default = empty (no conditioning).}
 }
 \value{
 Message indicating whether the hypothesis with the specified independence model
