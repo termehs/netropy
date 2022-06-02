@@ -23,8 +23,7 @@ Default = empty (no conditioning).}
 \value{
 Message indicating whether the hypothesis with the specified independence model
 can be rejected or not on approximately 5\% level of significance.
-\item{summary}{Data frame including the value of the value of
-the divergence \emph{D} and its degrees of freedom}
+\item{summary}{Dataframe including the value of the divergence \emph{D} and its degrees of freedom}
 }
 \description{
 Tests of various hypothetical structural models \emph{p0} against
