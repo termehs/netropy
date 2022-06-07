@@ -34,7 +34,7 @@ this function is currently implemented to only test goodness of fit of models sp
 \emph{X} independent of \emph{Y}, or \emph{X} independent of \emph{Y} given \emph{Z}.
 }
 \examples{
-
+examples to be added
 }
 \references{
 Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data.
