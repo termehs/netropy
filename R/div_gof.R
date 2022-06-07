@@ -96,7 +96,7 @@ div_gof <- function(dat, var1, var2, var_cond = NULL) {
   }
 
     # output: test summary
-    #    p <- round(1 - pchisq(chi2, df_chi2),3)
+    # p <- round(1 - pchisq(chi2, df_chi2),3)
     summary <- as.data.frame(cbind(round(D,2), df_chi2))
     rownames(summary)<- c()
     colnames(summary) <- c('D', 'df(D)')
