@@ -79,7 +79,7 @@ div_gof <- function(dat, var1, var2, var_cond = NULL) {
 
     df_chi2 = (df_var1-1)*(df_var2-1)*df_varcond
 
-    # critical value at 5% level
+    # critical value at approximately 5% level
     cv = df_chi2 + sqrt((8*df_chi2))
     if (chi2 > cv) {
       message("the specified model of conditional independence cannot be rejected")
