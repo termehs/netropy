@@ -3,9 +3,9 @@
 #' the general model \emph{p} which is estimated using empirical data.
 #' @param dat dataframe with rows as observations and columns as variables.
 #' Variables must all be observed or transformed categorical with finite range spaces.
-#' @param var1 character of variable name in \code{dat} specified to be independent to
+#' @param var1 variable name as character in \code{dat} specified to be independent to
 #' those specified in \code{var2} under \emph{p0}
-#' @param var2 character of variable name in \code{dat} specified to be independent to
+#' @param var2 variable name as character in \code{dat} specified to be independent to
 #' those specified in \code{var1}
 #' @param var_cond character of variable name in \code{dat} to condition the independence specification on,
 #' must be different variables than those specified in \code{var1} and \code{var2}).
