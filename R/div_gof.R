@@ -89,6 +89,7 @@ div_gof <- function(dat, var1, var2, var_cond = NULL) {
     }
 }
 
+
   # warning message for wrongful model specification
   else {
     warning("function currently only implemented for tests of the kind X is independent of Y: Z _|_Y,
