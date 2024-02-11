@@ -37,15 +37,18 @@
 #' # 2. make sure all outcomes start from the value 0 (optional)
 #' # 3. remove variable 'senior' as it consists of only unique values (thus redundant)
 #' df.att.ed <- data.frame(
-#'    status   = df.att$status,
-#'    gender   = df.att$gender,
-#'    office   = df.att$office-1,
-#'    years    = ifelse(df.att$years<=3,0,
-#'               ifelse(df.att$years<=13,1,2)),
-#'    age      = ifelse(df.att$age<=35,0,
-#'                 ifelse(df.att$age<=45,1,2)),
-#'    practice = df.att$practice,
-#'    lawschool= df.att$lawschool-1)
+#'     status = df.att$status,
+#'     gender = df.att$gender,
+#'     office = df.att$office - 1,
+#'     years = ifelse(df.att$years <= 3, 0,
+#'         ifelse(df.att$years <= 13, 1, 2)
+#'     ),
+#'     age = ifelse(df.att$age <= 35, 0,
+#'         ifelse(df.att$age <= 45, 1, 2)
+#'     ),
+#'     practice = df.att$practice,
+#'     lawschool = df.att$lawschool - 1
+#' )
 #'
 #' # calculate joint entropies
 #' J <- joint_entropy(df.att.ed)
@@ -58,41 +61,40 @@
 #'
 
 joint_entropy <- function(dat, dec = 3) {
-  varname.orig <- colnames(dat)
-  varname.new <- sprintf("V%d", 1:length(dat))
-  names(dat) <- varname.new
+    varname_orig <- colnames(dat)
+    varname_new <- sprintf("V%d", seq_len(length(dat)))
+    names(dat) <- varname_new
 
-  J <- matrix(0, nrow = ncol(dat), ncol = ncol(dat))
-  colnames(J) = colnames(dat)
-  rownames(J) = colnames(dat)
+    J <- matrix(0, nrow = ncol(dat), ncol = ncol(dat))
+    colnames(J) <- colnames(dat)
+    rownames(J) <- colnames(dat)
 
-  # get the bivariate entropies H
-  H <- entropy_bivar(dat)
+    # get the bivariate entropies H
+    H <- entropy_bivar(dat)
 
-  # joint entropies after calculation of H matrix
-  for (x in 1:(ncol(H))) {
-    for (y in (x):ncol(H)) {
-      J[x, y] <- H[x, x] + H[y, y] - H[x, y]
+    # joint entropies after calculation of H matrix
+    for (x in seq_len(ncol(H))) {
+        for (y in (x):ncol(H)) {
+            J[x, y] <- H[x, x] + H[y, y] - H[x, y]
+        }
     }
-  }
 
-  # given input argument dec giving precision, round J
-  J <- round(J, dec)
-  colnames(J) <- varname.orig
-  rownames(J) <- varname.orig
-  J[lower.tri(J)] <- NA
+    # given input argument dec giving precision, round J
+    J <- round(J, dec)
+    colnames(J) <- varname_orig
+    rownames(J) <- varname_orig
+    J[lower.tri(J)] <- NA
 
 
-  # frequency distribution of the joint entropy values
-  FrqJ <-
-    as.data.frame(table(round(J[upper.tri(J, diag = FALSE)], dec)))
-  FrqJ <- FrqJ[order(FrqJ$Var1, decreasing = TRUE), ]
-  FrqJ$CumFreq <- cumsum(FrqJ$Freq)
-  names(FrqJ)[names(FrqJ) == "Var1"] <- "j"
-  names(FrqJ)[names(FrqJ) == "Freq"] <- " #(J = j)"
-  names(FrqJ)[names(FrqJ) == "CumFreq"] <- "#(J >= j)"
-  row.names(FrqJ) <- NULL
+    # frequency distribution of the joint entropy values
+    FrqJ <- as.data.frame(table(round(J[upper.tri(J, diag = FALSE)], dec)))
+    FrqJ <- FrqJ[order(FrqJ$Var1, decreasing = TRUE), ]
+    FrqJ$CumFreq <- cumsum(FrqJ$Freq)
+    names(FrqJ)[names(FrqJ) == "Var1"] <- "j"
+    names(FrqJ)[names(FrqJ) == "Freq"] <- " #(J = j)"
+    names(FrqJ)[names(FrqJ) == "CumFreq"] <- "#(J >= j)"
+    row.names(FrqJ) <- NULL
 
-  listout <- list("matrix" = J, "freq" = FrqJ)
-  return(listout)
+    listout <- list("matrix" = J, "freq" = FrqJ)
+    return(listout)
 }

@@ -37,65 +37,67 @@
 #' # 2. make sure all outcomes start from the value 0 (optional)
 #' # 3. remove variable 'senior' as it consists of only unique values (thus redundant)
 #' df.att.ed <- data.frame(
-#'    status   = df.att$status,
-#'    gender   = df.att$gender,
-#'    office   = df.att$office-1,
-#'    years    = ifelse(df.att$years<=3,0,
-#'               ifelse(df.att$years<=13,1,2)),
-#'    age      = ifelse(df.att$age<=35,0,
-#'                 ifelse(df.att$age<=45,1,2)),
-#'    practice = df.att$practice,
-#'    lawschool= df.att$lawschool-1)
+#'     status = df.att$status,
+#'     gender = df.att$gender,
+#'     office = df.att$office - 1,
+#'     years = ifelse(df.att$years <= 3, 0,
+#'         ifelse(df.att$years <= 13, 1, 2)
+#'     ),
+#'     age = ifelse(df.att$age <= 35, 0,
+#'         ifelse(df.att$age <= 45, 1, 2)
+#'     ),
+#'     practice = df.att$practice,
+#'     lawschool = df.att$lawschool - 1
+#' )
 #'
 #' # power of predicting 'status' using pairs of other variables
-#' prediction_power('status', df.att.ed)
+#' prediction_power("status", df.att.ed)
 
 #' @export
 
 prediction_power <- function(var, dat) {
-  z <- which(names(dat) == var)
+    z <- which(names(dat) == var)
 
-  varname.orig <- colnames(dat)
-  varname.new <- sprintf("V%d", 1:ncol(dat))
-  names(dat) <- varname.new
+    varname_orig <- colnames(dat)
+    varname_new <- sprintf("V%d", seq_len(ncol(dat)))
+    names(dat) <- varname_new
 
-  H2 <- entropy_bivar(dat)
-  H3 <- entropy_trivar(dat)
+    H2 <- entropy_bivar(dat)
+    H3 <- entropy_trivar(dat)
 
 
-  H3$V1 <- as.numeric(gsub("V", "", H3$V1))
-  H3$V2 <- as.numeric(gsub("V", "", H3$V2))
-  H3$V3 <- as.numeric(gsub("V", "", H3$V3))
+    H3$V1 <- as.numeric(gsub("V", "", H3$V1))
+    H3$V2 <- as.numeric(gsub("V", "", H3$V2))
+    H3$V3 <- as.numeric(gsub("V", "", H3$V3))
 
-  H3 <-  as.matrix(H3)
-  dimE <- max(H3[,1:3])
+    H3 <- as.matrix(H3)
+    dimE <- max(H3[, 1:3])
 
-  idz = which(apply(H3[,1:3], 1, function(x) any(x==z)))
-    EHZXY=matrix(NA,dimE,dimE)
-    for(xy in idz){
-      idxy=sort(setdiff(H3[xy,1:3],z))
-      x=idxy[1]
-      y=idxy[2]
-      x.coord=which(paste0("V",x)==colnames(H2))
-      y.coord=which(paste0("V",y)==colnames(H2))
-      z.coord=which(paste0("V",z)==colnames(H2))
-      EHZXY[x,y]=H3[xy,4]-H2[x.coord,y.coord]
-      }
-
-  #add the diagonal
-    z.coord=which(paste0("V",z)==colnames(H2))
-    H2[lower.tri(H2)] <- H2[upper.tri(H2)]
-    for(x in 1:nrow(H2)){
-      if(x!=z){
-        EHZXY[x,x]= H2[x,z.coord]-H2[z.coord,z.coord]
-      }
+    idz <- which(apply(H3[, 1:3], 1, function(x) any(x == z)))
+    EHZXY <- matrix(NA, dimE, dimE)
+    for (xy in idz) {
+        idxy <- sort(setdiff(H3[xy, 1:3], z))
+        x <- idxy[1]
+        y <- idxy[2]
+        x.coord <- which(paste0("V", x) == colnames(H2))
+        y.coord <- which(paste0("V", y) == colnames(H2))
+        z.coord <- which(paste0("V", z) == colnames(H2))
+        EHZXY[x, y] <- H3[xy, 4] - H2[x.coord, y.coord]
     }
 
-    colnames(EHZXY) <- varname.orig
-    rownames(EHZXY) <- varname.orig
-    EHZXY <-  as.matrix(EHZXY)
+    # add the diagonal
+    z.coord <- which(paste0("V", z) == colnames(H2))
+    H2[lower.tri(H2)] <- H2[upper.tri(H2)]
+    for (x in seq_len(nrow(H2))) {
+        if (x != z) {
+            EHZXY[x, x] <- H2[x, z.coord] - H2[z.coord, z.coord]
+        }
+    }
+
+    colnames(EHZXY) <- varname_orig
+    rownames(EHZXY) <- varname_orig
+    EHZXY <- as.matrix(EHZXY)
     EHZXY <- round(EHZXY, 3)
 
     return(EHZXY)
 }
-
