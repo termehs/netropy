@@ -22,5 +22,6 @@ Suggests:
     testthat (>= 3.0.0),
     rmarkdown,
     knitr
+URL: https://github.com/termehs/netropy
 Config/testthat/edition: 3
 VignetteBuilder: knitr
