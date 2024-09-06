@@ -413,8 +413,8 @@ expected conditional entropies”.
 Occurring cliques in association graphs represent connected components
 of dependent variables, and by comparing the graphs for different
 thresholds, specific structural models of multivariate dependence can be
-suggested and tested. The function allows such hypothesis tests for
-pairwise independence of $X$ and $Y$: $X \bot Y$, and pairwise
+suggested and tested. The function `div_gof()` allows such hypothesis
+tests for pairwise independence of $X$ and $Y$: $X \bot Y$, and pairwise
 independence conditional a third variable $Z$: $X\bot Y|Z$.
 
 To test `friend`$\bot$ `cowork`$|$`advice`, that is whether dyad
