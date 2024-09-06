@@ -30,15 +30,18 @@
 #' # 2. make sure all outcomes start from the value 0 (optional)
 #' # 3. remove variable 'senior' as it consists of only unique values (thus redundant)
 #' df.att.ed <- data.frame(
-#'    status   = df.att$status,
-#'    gender   = df.att$gender,
-#'    office   = df.att$office-1,
-#'    years    = ifelse(df.att$years<=3,0,
-#'               ifelse(df.att$years<=13,1,2)),
-#'    age      = ifelse(df.att$age<=35,0,
-#'                 ifelse(df.att$age<=45,1,2)),
-#'    practice = df.att$practice,
-#'    lawschool= df.att$lawschool-1)
+#'     status = df.att$status,
+#'     gender = df.att$gender,
+#'     office = df.att$office - 1,
+#'     years = ifelse(df.att$years <= 3, 0,
+#'         ifelse(df.att$years <= 13, 1, 2)
+#'     ),
+#'     age = ifelse(df.att$age <= 35, 0,
+#'         ifelse(df.att$age <= 45, 1, 2)
+#'     ),
+#'     practice = df.att$practice,
+#'     lawschool = df.att$lawschool - 1
+#' )
 #'
 #' # calculate bivariate entropies
 #' H.biv <- entropy_bivar(df.att.ed)
@@ -47,38 +50,34 @@
 #' @export
 #'
 entropy_bivar <- function(dat) {
-  varname.orig <- colnames(dat)
-  varname.new <- sprintf("V%d", 1:length(dat))
-  names(dat) <- varname.new
+    varname_orig <- colnames(dat)
+    varname_new <- sprintf("V%d", seq_len(length(dat)))
+    names(dat) <- varname_new
 
-  H2 <- matrix(0, nrow = ncol(dat), ncol = ncol(dat))
+    H2 <- matrix(0, nrow = ncol(dat), ncol = ncol(dat))
 
-  # rename columns and rows to match variable names in data frame
-  colnames(H2) <- colnames(dat)
-  rownames(H2) <- colnames(dat)
+    # rename columns and rows to match variable names in data frame
+    colnames(H2) <- colnames(dat)
+    rownames(H2) <- colnames(dat)
 
-  # iterate over all variables in data frame to calculate bivariate entropy
-  for (x in 1:(ncol(dat))) {
-    for (y in (x):ncol(dat)) {
-      # create outcome space for pairs of variables
-      unq.x   <- sort(unique(dat[, x]))
-      unq.y   <- sort((unique(dat[, y])))
-      R       <- expand.grid(unq.x, unq.y)
-      freq    <- as.data.frame(table(dat[, x], dat[, y]))
-      # frequencies of observations ordered in outcome space
-      freq.os <- freq[order(freq[, 1], freq[, 2]),]
-      # calculate bivariate entropies
-      H2pos    <-
-        ifelse(freq.os$Freq > 0, freq.os$Freq * log2(freq.os$Freq), 0)
-      H2[x, y]  <- log2(nrow(dat)) - (1 / nrow(dat)) * (sum(H2pos))
+    # iterate over all variables in data frame to calculate bivariate entropy
+    for (x in seq_len(ncol(dat))) {
+        for (y in (x):ncol(dat)) {
+            freq <- as.data.frame(table(dat[, x], dat[, y]))
+            # frequencies of observations ordered in outcome space
+            freq.os <- freq[order(freq[, 1], freq[, 2]), ]
+            # calculate bivariate entropies
+            H2pos <-
+                ifelse(freq.os$Freq > 0, freq.os$Freq * log2(freq.os$Freq), 0)
+            H2[x, y] <- log2(nrow(dat)) - (1 / nrow(dat)) * (sum(H2pos))
+        }
     }
-  }
 
-  colnames(H2) <- varname.orig
-  rownames(H2) <- varname.orig
-  H2[lower.tri(H2)] <- NA
-  H2 <-  as.matrix(H2)
-  H2 <- round(H2, 3)
+    colnames(H2) <- varname_orig
+    rownames(H2) <- varname_orig
+    H2[lower.tri(H2)] <- NA
+    H2 <- as.matrix(H2)
+    H2 <- round(H2, 3)
 
-  return(H2)
+    return(H2)
 }

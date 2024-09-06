@@ -1,6 +1,6 @@
 Package: netropy
 Title: Statistical Entropy Analysis of Network Data
-Version: 0.1.0
+Version: 0.1.1
 Authors@R: 
     person(given = "Termeh",
            family = "Shafie",

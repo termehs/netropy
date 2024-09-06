@@ -25,39 +25,42 @@
 #' # approximately three equally size groups (values based on cdf)
 #' # 2. make sure all outcomes start from the value 0 (optional)
 #' df.att.ed <- data.frame(
-#'    senior   = df.att$senior,
-#'    status   = df.att$status,
-#'    gender   = df.att$gender,
-#'    office   = df.att$office-1,
-#'    years    = ifelse(df.att$years<=3,0,
-#'               ifelse(df.att$years<=13,1,2)),
-#'    age      = ifelse(df.att$age<=35,0,
-#'                 ifelse(df.att$age<=45,1,2)),
-#'    practice = df.att$practice,
-#'    lawschool= df.att$lawschool-1)
+#'     senior = df.att$senior,
+#'     status = df.att$status,
+#'     gender = df.att$gender,
+#'     office = df.att$office - 1,
+#'     years = ifelse(df.att$years <= 3, 0,
+#'         ifelse(df.att$years <= 13, 1, 2)
+#'     ),
+#'     age = ifelse(df.att$age <= 35, 0,
+#'         ifelse(df.att$age <= 45, 1, 2)
+#'     ),
+#'     practice = df.att$practice,
+#'     lawschool = df.att$lawschool - 1
+#' )
 #'
 #' # find redundant variables in dataframe
 #' redundancy(df.att.ed) # variable 'senior' should be omitted
 #' @export
 #'
 redundancy <- function(dat, dec = 3) {
-  H2 <- entropy_bivar(dat)
+    H2 <- entropy_bivar(dat)
 
-  # given input argument dec giving precision, round H2 matrix
-  H2 <- round(H2, dec)
+    # given input argument dec giving precision, round H2 matrix
+    H2 <- round(H2, dec)
 
-  # print out redundant variables
-  H2[lower.tri(H2)] <- H2[upper.tri(H2)]
-  red <- H2
-  for (i in 1:ncol(H2)) {
-    red[i,] = diag(H2)[i] == H2[i,]
-  }
-  diag(red) = 0
+    # print out redundant variables
+    H2[lower.tri(H2)] <- H2[upper.tri(H2)]
+    red <- H2
+    for (i in seq_len(ncol(H2))) {
+        red[i, ] <- diag(H2)[i] == H2[i, ]
+    }
+    diag(red) <- 0
 
-  if (sum(red) == 0) {
-    message('no redundant variables')
-    return()
-  }
+    if (sum(red) == 0) {
+        message("no redundant variables")
+        return()
+    }
 
-  return(red)
+    return(red)
 }

@@ -36,7 +36,7 @@
 #' # use internal data set
 #' data(lawdata)
 #' adj.advice <- lawdata[[1]]
-#' adj.cowork <-lawdata[[3]]
+#' adj.cowork <- lawdata[[3]]
 #' df.att <- lawdata[[4]]
 #'
 #' # three steps of data editing of attribute dataframe:
@@ -45,60 +45,59 @@
 #' # 2. make sure all outcomes start from the value 0 (optional)
 #' # 3. remove variable 'senior' as it consists of only unique values (thus redundant)
 #' df.att.ed <- data.frame(
-#'    status   = df.att$status,
-#'    gender   = df.att$gender,
-#'    office   = df.att$office-1,
-#'    years    = ifelse(df.att$years<=3,0,
-#'               ifelse(df.att$years<=13,1,2)),
-#'    age      = ifelse(df.att$age<=35,0,
-#'                 ifelse(df.att$age<=45,1,2)),
-#'    practice = df.att$practice,
-#'    lawschool= df.att$lawschool-1)
+#'     status = df.att$status,
+#'     gender = df.att$gender,
+#'     office = df.att$office - 1,
+#'     years = ifelse(df.att$years <= 3, 0,
+#'         ifelse(df.att$years <= 13, 1, 2)
+#'     ),
+#'     age = ifelse(df.att$age <= 35, 0,
+#'         ifelse(df.att$age <= 45, 1, 2)
+#'     ),
+#'     practice = df.att$practice,
+#'     lawschool = df.att$lawschool - 1
+#' )
 #'
 #' # actor attribute converted to dyad variable
-#' dyad.gend <- get_dyad_var(df.att.ed$gender, 'att')
+#' dyad.gend <- get_dyad_var(df.att.ed$gender, "att")
 #'
 #' # directed tie converted to dyad variable
-#' dyad.adv <- get_dyad_var(adj.advice, 'tie')
+#' dyad.adv <- get_dyad_var(adj.advice, "tie")
 #'
 #' # undirected tie converted to dyad variable
-#' dyad.cwk <- get_dyad_var(adj.cowork, 'tie')
+#' dyad.cwk <- get_dyad_var(adj.cowork, "tie")
 #' @export
 
-get_dyad_var <- function(var, type = 'att') {
-  if (type == 'att') {
-    n <- length(var)
-    if (length(unique(var))>=7) {
-      warning('consider categorizing variable as it yields too many dyadic outcomes')
+get_dyad_var <- function(var, type = "att") {
+    if (type == "att") {
+        n <- length(var)
+        if (length(unique(var)) >= 7) {
+            warning("consider categorizing variable as it yields too many dyadic outcomes")
+        }
+        var.matching <- outer(c(min(var):max(var)), c(min(var):max(var)), paste)
+        dyad <- expand.grid(u = 1:n, v = 1:n)
+        dyad$var <- match(paste(var[dyad$u], var[dyad$v]), var.matching) - 1
+        dyad <- dyad[dyad$u < dyad$v, ]
+    } else if (type == "tie") {
+        n <- dim(var)[1]
+        if (isSymmetric(var) == TRUE) {
+            dyad <- data.frame(
+                u = rep(1:n, n), v = rep(1:n, each = n),
+                var = c(var)
+            )
+            dyad <- dyad[dyad$u < dyad$v, ]
+            message("two outcomes based on an indicator variable for the undirected relation is created")
+        } else if (isSymmetric(var) == FALSE) {
+            var.matching <- outer(c(0, 1), c(0, 1), paste)
+            dyad <- data.frame(
+                u = rep(1:n, n), v = rep(1:n, each = n),
+                var = paste(c(t(var)), c(var))
+            )
+            dyad$var <- match(dyad$var, var.matching) - 1
+            dyad <- dyad[dyad$u < dyad$v, ]
+            message("four outcomes based on pairs of indicators for the directed relation is created")
+        }
     }
-    var.matching <- outer(c(min(var):max(var)),c(min(var):max(var)),paste)
-    dyad <- expand.grid(u=1:n,v=1:n)
-    dyad$var <- match(paste(var[dyad$u],var[dyad$v]),var.matching)-1
-    dyad <- dyad[dyad$u<dyad$v,]
-  }
-  else if (type == 'tie') {
-    n <- dim(var)[1]
-    if (isSymmetric(var) == TRUE) {
-      dyad <- data.frame(
-        u=rep(1:n,n),v=rep(1:n,each=n),
-        var = c(var)
-      )
-      dyad <- dyad[dyad$u<dyad$v,]
-      message('two outcomes based on an indicator variable for the undirected relation is created')
-    }
-    else if (isSymmetric(var) == FALSE) {
-      var.matching <- outer(c(0,1),c(0,1),paste)
-      dyad <- data.frame(u=rep(1:n,n), v=rep(1:n,each=n),
-                         var=paste(c(t(var)),c(var)))
-      dyad$var <- match(dyad$var,var.matching)-1
-      dyad  <- dyad[dyad$u<dyad$v,]
-      message('four outcomes based on pairs of indicators for the directed relation is created')
-    }
-  }
 
-  return(dyad)
+    return(dyad)
 }
-
-
-
-

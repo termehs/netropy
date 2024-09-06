@@ -28,41 +28,44 @@
 #' # 2. make sure all outcomes start from the value 0 (optional)
 #' # 3. remove variable 'senior' as it consists of only unique values (thus redundant)
 #' df.att.ed <- data.frame(
-#'    status   = df.att$status,
-#'    gender   = df.att$gender,
-#'    office   = df.att$office-1,
-#'    years    = ifelse(df.att$years<=3,0,
-#'               ifelse(df.att$years<=13,1,2)),
-#'    age      = ifelse(df.att$age<=35,0,
-#'                 ifelse(df.att$age<=45,1,2)),
-#'    practice = df.att$practice,
-#'    lawschool= df.att$lawschool-1)
+#'     status = df.att$status,
+#'     gender = df.att$gender,
+#'     office = df.att$office - 1,
+#'     years = ifelse(df.att$years <= 3, 0,
+#'         ifelse(df.att$years <= 13, 1, 2)
+#'     ),
+#'     age = ifelse(df.att$age <= 35, 0,
+#'         ifelse(df.att$age <= 45, 1, 2)
+#'     ),
+#'     practice = df.att$practice,
+#'     lawschool = df.att$lawschool - 1
+#' )
 #'
 #' # association graph based on cutoff 0.15
 #' assoc_graph(df.att.ed, 0.15)
 #' @export
 assoc_graph <- function(dat, cutoff = 0) {
-  J <- joint_entropy(dat)
-  adj <- J$matrix
-  diag(adj) <- 0
-  plot_title <- paste("J", ">",  cutoff, sep = " ")
-  adj[adj < cutoff] <-  0
+    J <- joint_entropy(dat)
+    adj <- J$matrix
+    diag(adj) <- 0
+    plot_title <- paste("J", ">", cutoff, sep = " ")
+    adj[adj < cutoff] <- 0
+    adj[lower.tri(adj)] <- adj[upper.tri(adj)]
+    ag <-
+        igraph::graph_from_adjacency_matrix(adj, mode = "undirected", weighted = TRUE)
+    ag.p <- ggraph::ggraph(ag, layout = "stress") +
+        ggraph::geom_edge_link0(edge_colour = "grey40", edge_width = igraph::E(ag)$weight) +
+        ggraph::geom_node_point(
+            shape = 21,
+            size = 20,
+            fill = "white",
+            stroke = 1
+        ) +
+        ggraph::geom_node_text(ggplot2::aes(label = igraph::V(ag)$name), size = 3.5) +
+        ggplot2::ggtitle(plot_title) +
+        ggraph::theme_graph(base_family = "") +
+        ggplot2::theme(legend.position = "none") +
+        ggplot2::coord_cartesian(clip = "off")
 
-  ag <-
-    igraph::graph_from_adjacency_matrix(adj, mode = 'undirected', weighted = TRUE)
-  ag.p <- ggraph::ggraph(ag, layout = 'stress') +
-    ggraph::geom_edge_link0(edge_colour = "grey40", edge_width = igraph::E(ag)$weight) +
-    ggraph::geom_node_point(
-      shape = 21,
-      size = 20,
-      fill = 'white',
-      stroke = 1
-    ) +
-    ggraph::geom_node_text(ggplot2::aes(label = igraph::V(ag)$name), size = 3.5) +
-    ggplot2::ggtitle(plot_title) +
-    ggraph::theme_graph(base_family = "") +
-    ggplot2::theme(legend.position = 'none') +
-    ggplot2::coord_cartesian(clip = 'off')
-
-  return(ag.p)
+    return(ag.p)
 }
