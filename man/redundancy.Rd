@@ -34,16 +34,19 @@ df.att <- lawdata[[4]]
 # approximately three equally size groups (values based on cdf)
 # 2. make sure all outcomes start from the value 0 (optional)
 df.att.ed <- data.frame(
-   senior   = df.att$senior,
-   status   = df.att$status,
-   gender   = df.att$gender,
-   office   = df.att$office-1,
-   years    = ifelse(df.att$years<=3,0,
-              ifelse(df.att$years<=13,1,2)),
-   age      = ifelse(df.att$age<=35,0,
-                ifelse(df.att$age<=45,1,2)),
-   practice = df.att$practice,
-   lawschool= df.att$lawschool-1)
+    senior = df.att$senior,
+    status = df.att$status,
+    gender = df.att$gender,
+    office = df.att$office - 1,
+    years = ifelse(df.att$years <= 3, 0,
+        ifelse(df.att$years <= 13, 1, 2)
+    ),
+    age = ifelse(df.att$age <= 35, 0,
+        ifelse(df.att$age <= 45, 1, 2)
+    ),
+    practice = df.att$practice,
+    lawschool = df.att$lawschool - 1
+)
 
 # find redundant variables in dataframe
 redundancy(df.att.ed) # variable 'senior' should be omitted
@@ -51,9 +54,6 @@ redundancy(df.att.ed) # variable 'senior' should be omitted
 \references{
 Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data.
 \emph{Bulletin of Sociological Methodology/Bulletin de Méthodologie Sociologique}, 129(1), 45-63.
-\cr
-
-Nowicki, K., Shafie, T., & Frank, O. (Forthcoming 2022). \emph{Statistical Entropy Analysis of Network Data}.
 }
 \seealso{
 \code{\link{entropy_bivar}},

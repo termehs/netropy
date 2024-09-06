@@ -43,7 +43,7 @@ For undirected relations, triples of indicators are created from the adjacency m
 # use internal data set
 data(lawdata)
 adj.advice <- lawdata[[1]]
-adj.cowork <-lawdata[[3]]
+adj.cowork <- lawdata[[3]]
 df.att <- lawdata[[4]]
 
 # three steps of data editing:
@@ -52,31 +52,31 @@ df.att <- lawdata[[4]]
 # 2. make sure all outcomes start from the value 0 (optional)
 # 3. remove variable 'senior' as it consists of only unique values (thus redundant)
 df.att.ed <- data.frame(
-   status   = df.att$status,
-   gender   = df.att$gender,
-   office   = df.att$office-1,
-   years    = ifelse(df.att$years<=3,0,
-              ifelse(df.att$years<=13,1,2)),
-   age      = ifelse(df.att$age<=35,0,
-                ifelse(df.att$age<=45,1,2)),
-   practice = df.att$practice,
-   lawschool= df.att$lawschool-1)
+    status = df.att$status,
+    gender = df.att$gender,
+    office = df.att$office - 1,
+    years = ifelse(df.att$years <= 3, 0,
+        ifelse(df.att$years <= 13, 1, 2)
+    ),
+    age = ifelse(df.att$age <= 35, 0,
+        ifelse(df.att$age <= 45, 1, 2)
+    ),
+    practice = df.att$practice,
+    lawschool = df.att$lawschool - 1
+)
 
 # actor attribute converted to triad variable
-triad.gend <- get_triad_var(df.att.ed$gender, 'att')
+triad.gend <- get_triad_var(df.att.ed$gender, "att")
 
 # directed tie converted to triad variable
-triad.adv <- get_triad_var(adj.advice, type = 'tie')
+triad.adv <- get_triad_var(adj.advice, type = "tie")
 
 # undirected tie converted to triad variable
-triad.cwk <- get_triad_var(adj.cowork, type = 'tie')
+triad.cwk <- get_triad_var(adj.cowork, type = "tie")
 }
 \references{
 Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data.
 \emph{Bulletin of Sociological Methodology/Bulletin de Méthodologie Sociologique}, 129(1), 45-63.
-\cr
-
-Nowicki, K., Shafie, T., & Frank, O. (Forthcoming 2022). \emph{Statistical Entropy Analysis of Network Data}.
 }
 \seealso{
 \code{\link{get_dyad_var}}
