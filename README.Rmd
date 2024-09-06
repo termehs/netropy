@@ -171,7 +171,7 @@ More details and examples of expected conditional entropies and prediction power
 ## Divergence Tests of Goodness of Fit
 Occurring cliques in association graphs represent connected components of dependent variables, and by comparing the graphs for different thresholds, specific structural models of multivariate dependence can be suggested and tested. The function allows such hypothesis tests for pairwise independence of $X$ and $Y$: $X \bot Y$, and pairwise independence conditional a third variable $Z$: $X\bot Y|Z$.
 
-To test `friend`$\bot$`cowork`$|$`advice`, that is whether dyad variable `friend` is independent of `cowork` given `advice` we use the function as shown below:
+To test `friend`$\bot$ `cowork`$|$`advice`, that is whether dyad variable `friend` is independent of `cowork` given `advice` we use the function as shown below:
 ```{r eval=TRUE}
 div_gof(dat = dyad.var, var1 = "friend", var2 = "cowork", var_cond = "advice")
 ```

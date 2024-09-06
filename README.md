@@ -417,9 +417,9 @@ suggested and tested. The function allows such hypothesis tests for
 pairwise independence of $X$ and $Y$: $X \bot Y$, and pairwise
 independence conditional a third variable $Z$: $X\bot Y|Z$.
 
-To test `friend`$\bot$`cowork`$|$`advice`, that is whether dyad variable
-`friend` is independent of `cowork` given `advice` we use the function
-as shown below:
+To test `friend`$\bot$ `cowork`$|$`advice`, that is whether dyad
+variable `friend` is independent of `cowork` given `advice` we use the
+function as shown below:
 
 ``` r
 div_gof(dat = dyad.var, var1 = "friend", var2 = "cowork", var_cond = "advice")

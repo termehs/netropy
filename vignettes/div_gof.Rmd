@@ -67,7 +67,7 @@ dyad.var <-
 head(dyad.var)
 ```
 
-To test `friend`$\bot$`cowork`$|$`advice`, that is whether dyad variable `friend` is independent of `cowork` given `advice` we use the function as shown below:
+To test `friend`$\bot$ `cowork`$|$`advice`, that is whether dyad variable `friend` is independent of `cowork` given `advice` we use the function as shown below:
 ```{r eval=TRUE}
 div_gof(dat = dyad.var, var1 = "friend", var2 = "cowork", var_cond = "advice")
 ```
