@@ -34,7 +34,47 @@ this function is currently implemented to only test goodness of fit of models sp
 \emph{X} independent of \emph{Y}, or \emph{X} independent of \emph{Y} given \emph{Z}.
 }
 \examples{
-examples to be added
+# Data editing and creation of dyad variables:
+data(lawdata)
+adj.advice <- lawdata[[1]]
+adj.friend <- lawdata[[2]]
+adj.cowork <-lawdata[[3]]
+df.att <- lawdata[[4]]
+att.var <-
+data.frame(
+ status   = df.att$status-1,
+ gender   = df.att$gender,
+ office   = df.att$office-1,
+ years    = ifelse(df.att$years<=3,0,
+            ifelse(df.att$years<=13,1,2)),
+ age  = ifelse(df.att$age<=35,0,
+        ifelse(df.att$age<=45,1,2)),
+ practice = df.att$practice,
+ lawschool= df.att$lawschool-1)
+dyad.status    <- get_dyad_var(att.var$status, type = 'att')
+dyad.gender    <- get_dyad_var(att.var$gender, type = 'att')
+dyad.office    <- get_dyad_var(att.var$office, type = 'att')
+dyad.years     <- get_dyad_var(att.var$years, type = 'att')
+dyad.age       <- get_dyad_var(att.var$age, type = 'att')
+dyad.practice  <- get_dyad_var(att.var$practice, type = 'att')
+dyad.lawschool <- get_dyad_var(att.var$lawschool, type = 'att')
+dyad.cwk    <- get_dyad_var(adj.cowork, type = 'tie')
+dyad.adv    <- get_dyad_var(adj.advice, type = 'tie')
+dyad.frn    <- get_dyad_var(adj.friend, type = 'tie')
+dyad.var <-
+data.frame(cbind(status    = dyad.status$var,
+                 gender    = dyad.gender$var,
+                 office    = dyad.office$var,
+                 years     = dyad.years$var,
+                 age       = dyad.age$var,
+                 practice  = dyad.practice$var,
+                 lawschool = dyad.lawschool$var,
+                 cowork    = dyad.cwk$var,
+                 advice    = dyad.adv$var,
+                 friend    = dyad.frn$var)
+                 )
+# To test whether friend is independent of cowork given advice:
+div_gof(dat = dyad.var, var1 = "friend", var2 = "cowork", var_cond = "advice")
 }
 \references{
 Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data.
