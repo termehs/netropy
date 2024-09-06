@@ -429,7 +429,7 @@ div_gof(dat = dyad.var, var1 = "friend", var2 = "cowork", var_cond = "advice")
 ```
 
 Not specifying argument `var_cond` would instead test
-`friend`$\bot$`cowork` with any conditioning.
+`friend`$\bot$`cowork` without any conditioning.
 
 ## References
 
