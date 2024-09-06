@@ -112,7 +112,7 @@ These vertex variables can be transformed into dyad variables by using
 the function `get_dyad_var()`. Observed node attributes in the dataframe
 `att_var` are then transformed into pairs of individual attributes. For
 example, `status` with binary outcomes is transformed into dyads having
-4 possible outcomes (0,0), (0,1), (1,0), (1,1):
+4 possible outcomes $(0,0), (0,1), (1,0), (1,1)$:
 
 ``` r
 dyad.status    <- get_dyad_var(att.var$status, type = 'att')
@@ -352,8 +352,8 @@ of variables in a given dataframe are used to predict a third variable
 from the same dataframe. The variable to be predicted and the dataframe
 in which this variable also is part of is given as input arguments, and
 the output is an upper triangular matrix giving the expected conditional
-entropies of pairs of row and column variables (denoted *X* and *Y*) of
-the matrix, i.e. *EH(Z\|X,Y)* where *Z* is the variable to be predicted.
+entropies of pairs of row and column variables (denoted $X$ and $Y$) of
+the matrix, i.e. *EH(Z\|X,Y)* where $Z$ is the variable to be predicted.
 The diagonal gives *EH(Z\|X)* , that is when only one variable as a
 predictor. Note that `NA`’s are in the row and column representing the
 variable being predicted.
@@ -390,8 +390,8 @@ prediction_power('status', dyad.var)
 
 For better readability, the powers of different predictors can be
 conveniently compared by using prediction plots that display a color
-matrix with rows for *X* and columns for *Y* with darker colors in the
-cells when we have higher prediction power for *Z*. This is shown for
+matrix with rows for $X$ and columns for $Y$ with darker colors in the
+cells when we have higher prediction power for $Z$. This is shown for
 the prediction of `status`:
 
 <img src="man/figures/predplot-status.png" align="center"/>
@@ -408,6 +408,29 @@ More details and examples of expected conditional entropies and
 prediction power are given in the vignette “prediction power based on
 expected conditional entropies”.
 
+## Divergence Tests of Goodness of Fit
+
+Occurring cliques in association graphs represent connected components
+of dependent variables, and by comparing the graphs for different
+thresholds, specific structural models of multivariate dependence can be
+suggested and tested. The function allows such hypothesis tests for
+pairwise independence of $X$ and $Y$: $X \bot Y$, and pairwise
+independence conditional a third variable $Z$: $X\bot Y|Z$.
+
+To test `friend`$\bot$`cowork`$|$`advice`, that is whether dyad variable
+`friend` is independent of `cowork` given `advice` we use the function
+as shown below:
+
+``` r
+div_gof(dat = dyad.var, var1 = "friend", var2 = "cowork", var_cond = "advice")
+#> the specified model of conditional independence cannot be rejected
+#>      D df(D)
+#> 1 0.94    12
+```
+
+Not specifying argument `var_cond` would instead test
+`friend`$\bot$`cowork` with any conditioning.
+
 ## References
 
 Parts of the theoretical background is provided in the package
@@ -417,6 +440,3 @@ vignettes, but for more details, consult the following literature:
 > network data. *Bulletin of Sociological Methodology/Bulletin de
 > Méthodologie Sociologique*, 129(1), 45-63.
 > [link](https://doi.org/10.1177%2F0759106315615511)
-
-> Nowicki, K., Shafie, T., & Frank, O. (Forthcoming 2022). *Statistical
-> Entropy Analysis of Network Data*.

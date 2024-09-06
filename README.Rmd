@@ -168,6 +168,15 @@ Obviously, the darkest color is obtained when the variable to be predicted is in
 
 More details and examples of expected conditional entropies and prediction power  are given in the vignette "prediction power based on expected conditional entropies". 
 
+## Divergence Tests of Goodness of Fit
+Occurring cliques in association graphs represent connected components of dependent variables, and by comparing the graphs for different thresholds, specific structural models of multivariate dependence can be suggested and tested. The function allows such hypothesis tests for pairwise independence of $X$ and $Y$: $X \bot Y$, and pairwise independence conditional a third variable $Z$: $X\bot Y|Z$.
+
+To test `friend`$\bot$`cowork`$|$`advice`, that is whether dyad variable `friend` is independent of `cowork` given `advice` we use the function as shown below:
+```{r eval=TRUE}
+div_gof(dat = dyad.var, var1 = "friend", var2 = "cowork", var_cond = "advice")
+```
+Not specifying argument `var_cond` would instead test `friend`$\bot$`cowork` with any conditioning.
+
 ## References
 
 Parts of the theoretical background is provided in the package vignettes, but for more details, consult the following literature:
@@ -175,4 +184,3 @@ Parts of the theoretical background is provided in the package vignettes, but fo
 > Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data.
 *Bulletin of Sociological Methodology/Bulletin de Méthodologie Sociologique*, 129(1), 45-63. [link](https://doi.org/10.1177%2F0759106315615511)
 
->  Nowicki, K., Shafie, T., & Frank, O. (Forthcoming 2022). *Statistical Entropy Analysis of Network Data*.
