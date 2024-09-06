@@ -14,7 +14,7 @@ Imports:
     ggraph,
     ggplot2,
     igraph
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 Language: en-US
 Depends: 
     R (>= 3.6)

@@ -29,14 +29,14 @@
 #'   \item{adjacency matrix for cowork (undirected)}
 #'   \item{dataframe with the following attributes on each lawyer:}
 #' \itemize{
-#' \item{\code{senior}} {seniority (ranked from most to least senior)}
-#' \item{\code{status}} {1=partner; 2=associate}
-#' \item{\code{gender}} {1=man; 2=woman}
-#' \item{\code{office}} {1=Boston; 2=Hartford; 3=Providence}
-#' \item{\code{years}} {years with the firm}
-#' \item{\code{age}} {age of attorney}
-#' \item{\code{practice}} {1=litigation; 2=corporate}
-#' \item{\code{lawschool}} {1=harvard/yale; 2=ucon; 3= other}
+#' \item{`senior`: seniority (ranked from most to least senior)}
+#' \item{`status`:   1=partner; 2=associate}
+#' \item{`gender`: 1=man; 2=woman}
+#' \item{`office`: 1=Boston; 2=Hartford; 3=Providence}
+#' \item{`years`: years with the firm}
+#' \item{`age`: age of attorney}
+#' \item{`practice`: 1=litigation; 2=corporate}
+#' \item{`lawschool`: 1=harvard/yale; 2=ucon; 3= other}
 #'
 #'}
 #'Note: the first 36 out of 71 respondents are the partners in the firm.
