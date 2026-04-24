@@ -1,3 +1,7 @@
+# netropy 0.3.0
+
+* Implemented tetravariate entropy function
+
 # netropy 0.2.0
 
 * New function for testing divergence tests of goodness of fit and its vignette added

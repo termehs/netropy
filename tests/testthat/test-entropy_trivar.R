@@ -15,5 +15,5 @@ test_that("trivariate entropy works", {
 
   H.tri <- entropy_trivar(df.att.ed)
   result <- c(2.745, 2.63, 2.897, 2.67, 3.123, 2.995, 3.194, 3.032, 3.448, 3.079)
-  expect_identical(H.tri[["H(V1,V2,V3)"]][1:10],result)
+  expect_identical(H.tri[["H(X,Y,Z)"]][1:10], result)
 })

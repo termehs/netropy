@@ -25,7 +25,8 @@
 #' The expected conditional joint entropy is computed as
 #' \deqn{EJ(X,Y|Z,U) = H(X,Z,U) + H(Y,Z,U) - H(Z,U) - H(X,Y,Z,U).}
 #' This quantity measures deviation from conditional independence of the form
-#' \emph{X \perp Y | Z,U}. Smaller values indicate weaker conditional dependence.
+#' \eqn{X \perp Y \,\vert\, Z, U}{X is independent of Y given Z, U}.
+#' Smaller values indicate weaker conditional dependence.
 #' @author Termeh Shafie
 #' @seealso \code{\link{entropy_trivar}}, \code{\link{entropy_bivar}},
 #' \code{\link{prediction_power}}
@@ -55,14 +56,13 @@
 #' )
 #'
 #' # compute tetravariate entropy quantities for five selected variables
-#' tetravariate_entropy(
+#' entropy_tetravar(
 #'   dat = att_var[, c("gender", "years", "age", "office", "practice")]
 #' )
 #'
 #' @export
 
 entropy_tetravar <- function(dat, dec = 2) {
-
   entropy_emp <- function(x) {
     tab <- table(x)
     p <- as.vector(tab) / sum(tab)
@@ -71,15 +71,34 @@ entropy_tetravar <- function(dat, dec = 2) {
   }
 
   vars <- colnames(dat)
-  out <- list()
+  n_out <- choose(length(vars), 4) * 6
+
+  cache <- new.env(hash = TRUE, parent = emptyenv())
+  H <- function(cols) {
+    key <- paste(sort(cols), collapse = "\r")
+    val <- cache[[key]]
+    if (is.null(val)) {
+      val <- entropy_emp(dat[cols])
+      cache[[key]] <- val
+    }
+    val
+  }
+
+  X <- character(n_out)
+  Y <- character(n_out)
+  Z <- character(n_out)
+  U <- character(n_out)
+  H_XYZU <- numeric(n_out)
+  EH_U_XYZ <- numeric(n_out)
+  EH_Z_XYU <- numeric(n_out)
+  EJ_XY_ZU <- numeric(n_out)
+
   k <- 1
-
-  for (quad in combn(vars, 4, simplify = FALSE)) {
-
-    xy_pairs <- combn(quad, 2, simplify = FALSE)
+  for (quad in utils::combn(vars, 4, simplify = FALSE)) {
+    h_xyzu <- H(quad)
+    xy_pairs <- utils::combn(quad, 2, simplify = FALSE)
 
     for (xy in xy_pairs) {
-
       zu <- setdiff(quad, xy)
 
       x <- xy[1]
@@ -87,31 +106,34 @@ entropy_tetravar <- function(dat, dec = 2) {
       z <- zu[1]
       u <- zu[2]
 
-      h_xyzu <- entropy_emp(dat[c(x, y, z, u)])
-      h_xyz  <- entropy_emp(dat[c(x, y, z)])
-      h_xyu  <- entropy_emp(dat[c(x, y, u)])
-      h_xzu  <- entropy_emp(dat[c(x, z, u)])
-      h_yzu  <- entropy_emp(dat[c(y, z, u)])
-      h_zu   <- entropy_emp(dat[c(z, u)])
+      h_xyz <- H(c(x, y, z))
+      h_xyu <- H(c(x, y, u))
+      h_xzu <- H(c(x, z, u))
+      h_yzu <- H(c(y, z, u))
+      h_zu <- H(c(z, u))
 
-      out[[k]] <- data.frame(
-        X = x,
-        Y = y,
-        Z = z,
-        U = u,
-        H_XYZU = h_xyzu,
-        EH_U_XYZ = h_xyzu - h_xyz,
-        EH_Z_XYU = h_xyzu - h_xyu,
-        EJ_XY_ZU = h_xzu + h_yzu - h_zu - h_xyzu
-      )
+      X[k] <- x
+      Y[k] <- y
+      Z[k] <- z
+      U[k] <- u
+      H_XYZU[k] <- h_xyzu
+      EH_U_XYZ[k] <- h_xyzu - h_xyz
+      EH_Z_XYU[k] <- h_xyzu - h_xyu
+      EJ_XY_ZU[k] <- h_xzu + h_yzu - h_zu - h_xyzu
 
       k <- k + 1
     }
   }
 
-  res <- do.call(rbind, out)
-  res[, 5:8] <- round(res[, 5:8], dec)
-  rownames(res) <- NULL
-
-  res
+  data.frame(
+    X = X,
+    Y = Y,
+    Z = Z,
+    U = U,
+    H_XYZU = round(H_XYZU, dec),
+    EH_U_XYZ = round(EH_U_XYZ, dec),
+    EH_Z_XYU = round(EH_Z_XYU, dec),
+    EJ_XY_ZU = round(EJ_XY_ZU, dec),
+    stringsAsFactors = FALSE
+  )
 }

@@ -49,42 +49,40 @@ entropy_trivar <- function(dat) {
   varname_new <- sprintf("V%d", seq_len(ncol(dat)))
   names(dat) <- varname_new
 
-  h3 <- data.frame(
-    X = character(),
-    Y = character(),
-    Z = character(),
-    `H(X,Y,Z)` = numeric(),
-    check.names = FALSE
-  )
+  p <- ncol(dat)
+  n <- nrow(dat)
+  log2_n <- log2(n)
+  n_out <- choose(p, 3)
+
+  X <- character(n_out)
+  Y <- character(n_out)
+  Z <- character(n_out)
+  H <- numeric(n_out)
 
   k <- 0
-
-  for (x in seq_len(ncol(dat) - 2)) {
-    for (y in (x + 1):(ncol(dat) - 1)) {
-      for (z in (y + 1):ncol(dat)) {
+  for (x in seq_len(p - 2)) {
+    for (y in (x + 1):(p - 1)) {
+      for (z in (y + 1):p) {
         k <- k + 1
 
-        frq <- table(dat[, x], dat[, y], dat[, z])
-        frq_os <- as.data.frame(frq)
+        frq <- as.vector(table(dat[, x], dat[, y], dat[, z]))
+        pos <- frq[frq > 0]
+        h_tmp <- log2_n - sum(pos * log2(pos)) / n
 
-        h_pos <- ifelse(
-          frq_os$Freq > 0,
-          frq_os$Freq * log2(frq_os$Freq),
-          0
-        )
-
-        h_tmp <- log2(nrow(dat)) -
-          (1 / nrow(dat)) * sum(h_pos)
-
-        h3[k, ] <- list(
-          varname_orig[x],
-          varname_orig[y],
-          varname_orig[z],
-          round(h_tmp, 3)
-        )
+        X[k] <- varname_orig[x]
+        Y[k] <- varname_orig[y]
+        Z[k] <- varname_orig[z]
+        H[k] <- round(h_tmp, 3)
       }
     }
   }
 
-  h3
+  data.frame(
+    X = X,
+    Y = Y,
+    Z = Z,
+    `H(X,Y,Z)` = H,
+    check.names = FALSE,
+    stringsAsFactors = FALSE
+  )
 }

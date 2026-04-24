@@ -4,84 +4,151 @@
 \alias{div_gof}
 \title{Divergence Tests of Goodness of Fit}
 \usage{
-div_gof(dat, var1, var2, var_cond = NULL)
+div_gof(
+  dat,
+  var_uniform = NULL,
+  var1 = NULL,
+  var2 = NULL,
+  var_cond = NULL,
+  model_full = NULL,
+  model_reduced = NULL,
+  alpha = 0.05,
+  dec = 3,
+  use_approx_cv = TRUE
+)
 }
 \arguments{
 \item{dat}{dataframe with rows as observations and columns as variables.
-Variables must all be observed or transformed categorical with finite range spaces.}
+Variables must be categorical with finite range spaces.}
 
-\item{var1}{variable name as character in \code{dat} specified to be independent to
-those specified in \code{var2} under \emph{p0}}
+\item{var_uniform}{character name of a variable in \code{dat} to test for uniformity.}
 
-\item{var2}{variable name as character in \code{dat} specified to be independent to
-those specified in \code{var1}}
+\item{var1}{character name of the first variable.}
 
-\item{var_cond}{character of variable name in \code{dat} to condition the independence specification on,
-must be different variables than those specified in \code{var1} and \code{var2}).
-Default = empty (no conditioning).}
+\item{var2}{character name of the second variable.}
+
+\item{var_cond}{optional character vector of conditioning variables.}
+
+\item{model_full}{list containing \code{D} and \code{df} for the full model.}
+
+\item{model_reduced}{list containing \code{D} and \code{df} for the reduced model.}
+
+\item{alpha}{significance level. Default is 0.05.}
+
+\item{dec}{number of decimals for rounding. Default is 3.}
+
+\item{use_approx_cv}{logical; if \code{TRUE}, uses the approximate critical value
+\code{df + sqrt(8 * df)}. If \code{FALSE}, uses the chi-square quantile.}
 }
 \value{
-Message indicating whether the hypothesis with the specified independence model
-can be rejected or not on approximately 5\% level of significance.
-\item{summary}{Dataframe including the value of the divergence \emph{D} and its degrees of freedom}
+Dataframe with test type, divergence \emph{D}, chi-square statistic,
+degrees of freedom, critical value, and decision.
 }
 \description{
-Tests of various hypothetical structural models \emph{p0} against
-the general model \emph{p} which is estimated using empirical data.
+Performs divergence-based goodness-of-fit tests for discrete data,
+including tests of uniformity, pairwise independence, conditional independence,
+and nested model comparisons.
 }
 \details{
-this function is currently implemented to only test goodness of fit of models specified as
-\emph{X} independent of \emph{Y}, or \emph{X} independent of \emph{Y} given \emph{Z}.
+The function implements four types of tests:
+
+\strong{1. Uniformity}
+\deqn{D = \log r_X - H(X)}
+
+\strong{2. Pairwise Independence}
+\deqn{D = H(X) + H(Y) - H(X,Y)}
+
+\strong{3. Conditional Independence}
+\deqn{D = H(X,Z) + H(Y,Z) - H(Z) - H(X,Y,Z)}
+
+where \emph{Z} may also represent a vector of conditioning variables.
+
+\strong{4. Nested Model Comparison}
+\deqn{D = D_{reduced} - D_{full}}
+
+The test statistic is
+\deqn{2nD\log(2),}
+since entropies are computed using base 2 logarithms.
+
+Smaller divergence values indicate better model fit.
 }
 \examples{
-# Data editing and creation of dyad variables:
 data(lawdata)
-adj.advice <- lawdata[[1]]
-adj.friend <- lawdata[[2]]
-adj.cowork <-lawdata[[3]]
-df.att <- lawdata[[4]]
-att.var <-
-data.frame(
- status   = df.att$status-1,
- gender   = df.att$gender,
- office   = df.att$office-1,
- years    = ifelse(df.att$years<=3,0,
-            ifelse(df.att$years<=13,1,2)),
- age  = ifelse(df.att$age<=35,0,
-        ifelse(df.att$age<=45,1,2)),
- practice = df.att$practice,
- lawschool= df.att$lawschool-1)
-dyad.status    <- get_dyad_var(att.var$status, type = 'att')
-dyad.gender    <- get_dyad_var(att.var$gender, type = 'att')
-dyad.office    <- get_dyad_var(att.var$office, type = 'att')
-dyad.years     <- get_dyad_var(att.var$years, type = 'att')
-dyad.age       <- get_dyad_var(att.var$age, type = 'att')
-dyad.practice  <- get_dyad_var(att.var$practice, type = 'att')
-dyad.lawschool <- get_dyad_var(att.var$lawschool, type = 'att')
-dyad.cwk    <- get_dyad_var(adj.cowork, type = 'tie')
-dyad.adv    <- get_dyad_var(adj.advice, type = 'tie')
-dyad.frn    <- get_dyad_var(adj.friend, type = 'tie')
-dyad.var <-
-data.frame(cbind(status    = dyad.status$var,
-                 gender    = dyad.gender$var,
-                 office    = dyad.office$var,
-                 years     = dyad.years$var,
-                 age       = dyad.age$var,
-                 practice  = dyad.practice$var,
-                 lawschool = dyad.lawschool$var,
-                 cowork    = dyad.cwk$var,
-                 advice    = dyad.adv$var,
-                 friend    = dyad.frn$var)
-                 )
-# To test whether friend is independent of cowork given advice:
-div_gof(dat = dyad.var, var1 = "friend", var2 = "cowork", var_cond = "advice")
+df_att <- lawdata[[4]]
+
+att_var <- data.frame(
+  status    = df_att$status - 1,
+  gender    = df_att$gender,
+  office    = df_att$office - 1,
+  years     = ifelse(df_att$years <= 3, 0,
+                ifelse(df_att$years <= 13, 1, 2)),
+  age       = ifelse(df_att$age <= 35, 0,
+                ifelse(df_att$age <= 45, 1, 2)),
+  practice  = df_att$practice,
+  lawschool = df_att$lawschool - 1
+)
+
+## 1. Test uniformity
+div_gof(att_var, var_uniform = "gender")
+
+## 2. Test pairwise independence
+div_gof(att_var, var1 = "status", var2 = "gender")
+
+## 3. Test conditional independence
+
+## (a) Conditional independence given a single variable
+div_gof(att_var,
+        var1 = "status",
+        var2 = "gender",
+        var_cond = "years")
+
+## (b) Conditional independence given multiple variables
+div_gof(att_var,
+        var1 = "status",
+        var2 = "gender",
+        var_cond = c("years", "age"))
+
+## 4. Nested model comparison
+## Compare reduced models against the saturated empirical model.
+## The saturated model has divergence D = 0 and df = 0.
+m_full <- list(D = 0, df = 0)
+
+## (a) Pairwise independence model
+m_reduced <- div_gof(att_var,
+                    var1 = "status",
+                    var2 = "gender")
+
+div_gof(att_var,
+        model_full = m_full,
+        model_reduced = list(D = m_reduced$D, df = m_reduced$df))
+
+## (b) Conditional independence model
+m_reduced <- div_gof(att_var,
+                    var1 = "status",
+                    var2 = "gender",
+                    var_cond = "years")
+
+div_gof(att_var,
+        model_full = m_full,
+        model_reduced = list(D = m_reduced$D, df = m_reduced$df))
+
+## 5. Nested comparison against the saturated empirical model
+m_full <- list(D = 0, df = 0)
+
+m_reduced <- div_gof(att_var,
+                    var1 = "status",
+                    var2 = "gender")
+
+div_gof(att_var,
+        model_full = m_full,
+        model_reduced = list(D = m_reduced$D, df = m_reduced$df))
 }
 \references{
 Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data.
 \emph{Bulletin of Sociological Methodology/Bulletin de Méthodologie Sociologique}, 129(1), 45-63.
 }
 \seealso{
-\code{\link{joint_entropy}},   \code{\link{assoc_graph}},  \code{\link{entropy_trivar}}
+\code{\link{joint_entropy}}, \code{\link{entropy_trivar}}
 }
 \author{
 Termeh Shafie

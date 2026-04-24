@@ -144,7 +144,7 @@ div_gof <- function(dat,
     crit_val <- if (use_approx_cv) {
       df_chi2 + sqrt(8 * df_chi2)
     } else {
-      qchisq(1 - alpha, df = df_chi2)
+      stats::qchisq(1 - alpha, df = df_chi2)
     }
 
     decision <- if (chi2_stat > crit_val) {

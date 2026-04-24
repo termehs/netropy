@@ -63,9 +63,9 @@ prediction_power <- function(var, dat) {
     H3 <- entropy_trivar(dat)
 
 
-    H3$V1 <- as.numeric(gsub("V", "", H3$V1))
-    H3$V2 <- as.numeric(gsub("V", "", H3$V2))
-    H3$V3 <- as.numeric(gsub("V", "", H3$V3))
+    H3$X <- as.numeric(gsub("V", "", H3$X))
+    H3$Y <- as.numeric(gsub("V", "", H3$Y))
+    H3$Z <- as.numeric(gsub("V", "", H3$Z))
 
     H3 <- as.matrix(H3)
     dimE <- max(H3[, 1:3])

@@ -135,7 +135,7 @@ As seen,  `senior` has been flagged as a redundant variable which is not surpris
 entropy_bivar(att.var)
 ```
 ## Example: trivariate entropies
-Trivariate entropies can be computed using the function `entropy_trivar()` which returns a dataframe with the first three columns representing possible triples of variables `V1`,`V2`, and `V3` from the dataframe in question, and their entropies `H(V1,V2,V3)` as the fourth column. We illustrated this on the dataframe `dyad.var`:
+Trivariate entropies can be computed using the function `entropy_trivar()` which returns a dataframe with the first three columns `X`, `Y`, and `Z` giving the variable names for each triple from the dataframe in question, and their entropies `H(X,Y,Z)` as the fourth column. We illustrated this on the dataframe `dyad.var`:
 ```{r triv_ent, eval=TRUE, include=TRUE, results ='markup'}
 entropy_trivar(dyad.var)
 ```

@@ -48,6 +48,7 @@
 #'
 #' # visualize prediction power
 #' make_pred_plot(pred_mat, "Prediction Power for Status")
+#' @importFrom ggplot2 .data
 #' @export
 
 make_pred_plot <- function(mat,
@@ -60,10 +61,10 @@ make_pred_plot <- function(mat,
 
   df <- df[!is.na(df$EH), ]
 
-  ggplot2::ggplot(df, ggplot2::aes(x = Y, y = X, fill = EH)) +
+  ggplot2::ggplot(df, ggplot2::aes(x = .data$Y, y = .data$X, fill = .data$EH)) +
     ggplot2::geom_tile(color = "white") +
     ggplot2::geom_text(
-      ggplot2::aes(label = round(EH, 2)),
+      ggplot2::aes(label = round(.data$EH, 2)),
       size = text_size
     ) +
     ggplot2::scale_fill_gradient(

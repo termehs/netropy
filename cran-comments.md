@@ -1,10 +1,6 @@
-# Update 0.1.0 to 0.2.0
+# Update 0.2.0 to 0.3.0
 
-New function for testing divergence tests of goodness of fit and its vignette added
-
-## Test environments
-
-* local R installation, R 4.3.2
+* New tetravariate entropy function
 
 ## R CMD check results
 
