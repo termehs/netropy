@@ -8,70 +8,147 @@ vignette: >
 ---
 
 ```{r, include = FALSE}
-knitr::opts_chunk$set(out.width = "100%",
-  cache = FALSE
-)
+knitr::opts_chunk$set(out.width = "100%", cache = FALSE)
 ```
-Occurring cliques in association graphs represent connected components of dependent variables, and by comparing the graphs for different thresholds, specific structural models of multivariate dependence can be suggested and tested. The function `div_gof()` allows such hypothesis tests for pairwise independence of $X$ and $Y$: $X \bot Y$, and pairwise independence conditional a third variable $Z$: $X\bot Y|Z$.
+
+
+Association graphs can be used to suggest structural models of multivariate dependence. The function `div_gof()` provides divergence-based goodness-of-fit tests for several such hypotheses, including uniformity, pairwise independence, conditional independence, and nested model comparisons.
 
 ```{r load_library, eval=TRUE}
 library(netropy)
 ```
 
 ## Example: 
-For the running example using
+We use the law firm network data included in the package.
+
 ```{r load_data, eval=TRUE, include=FALSE}
-data(lawdata) 
-adj.advice <- lawdata[[1]]
-adj.friend <- lawdata[[2]]
-adj.cowork <-lawdata[[3]]
-df.att <- lawdata[[4]]
+data(lawdata)
+adj_advice <- lawdata[[1]]
+adj_friend <- lawdata[[2]]
+adj_cowork <- lawdata[[3]]
+df_att <- lawdata[[4]]
 ```
+We first edit the node attributes and transform them into dyad variables.
 ```{r edit_data, eval=TRUE, include=FALSE, results ='hide'}
-att.var <-
-  data.frame(
-    status   = df.att$status-1,
-    gender   = df.att$gender,
-    office   = df.att$office-1,
-    years    = ifelse(df.att$years<=3,0,
-                      ifelse(df.att$years<=13,1,2)),
-    age      = ifelse(df.att$age<=35,0,
-                      ifelse(df.att$age<=45,1,2)),
-    practice = df.att$practice,
-    lawschool= df.att$lawschool-1
-    )
-dyad.status    <- get_dyad_var(att.var$status, type = 'att')
-dyad.gender    <- get_dyad_var(att.var$gender, type = 'att')
-dyad.office    <- get_dyad_var(att.var$office, type = 'att')
-dyad.years     <- get_dyad_var(att.var$years, type = 'att')
-dyad.age       <- get_dyad_var(att.var$age, type = 'att')
-dyad.practice  <- get_dyad_var(att.var$practice, type = 'att')
-dyad.lawschool <- get_dyad_var(att.var$lawschool, type = 'att')
-dyad.cwk    <- get_dyad_var(adj.cowork, type = 'tie')
-dyad.adv    <- get_dyad_var(adj.advice, type = 'tie')
-dyad.frn    <- get_dyad_var(adj.friend, type = 'tie')
-dyad.var <-
-  data.frame(cbind(status    = dyad.status$var,
-                  gender    = dyad.gender$var,
-                  office    = dyad.office$var,
-                  years     = dyad.years$var,
-                  age       = dyad.age$var,
-                  practice  = dyad.practice$var,
-                  lawschool = dyad.lawschool$var,
-                  cowork    = dyad.cwk$var,
-                  advice    = dyad.adv$var,
-                  friend    = dyad.frn$var)
-                  )
-```
-```{r show_data, eval=TRUE, include=TRUE, results ='markup'}
-head(dyad.var)
+att_var <- data.frame(
+  status    = df_att$status - 1,
+  gender    = df_att$gender,
+  office    = df_att$office - 1,
+  years     = ifelse(df_att$years <= 3, 0,
+                ifelse(df_att$years <= 13, 1, 2)),
+  age       = ifelse(df_att$age <= 35, 0,
+                ifelse(df_att$age <= 45, 1, 2)),
+  practice  = df_att$practice,
+  lawschool = df_att$lawschool - 1
+)
+
+dyad_status    <- get_dyad_var(att_var$status, type = "att")
+dyad_gender    <- get_dyad_var(att_var$gender, type = "att")
+dyad_office    <- get_dyad_var(att_var$office, type = "att")
+dyad_years     <- get_dyad_var(att_var$years, type = "att")
+dyad_age       <- get_dyad_var(att_var$age, type = "att")
+dyad_practice  <- get_dyad_var(att_var$practice, type = "att")
+dyad_lawschool <- get_dyad_var(att_var$lawschool, type = "att")
+
+dyad_cwk <- get_dyad_var(adj_cowork, type = "tie")
+dyad_adv <- get_dyad_var(adj_advice, type = "tie")
+dyad_frn <- get_dyad_var(adj_friend, type = "tie")
+
+dyad_var <- data.frame(
+  status    = dyad_status$var,
+  gender    = dyad_gender$var,
+  office    = dyad_office$var,
+  years     = dyad_years$var,
+  age       = dyad_age$var,
+  practice  = dyad_practice$var,
+  lawschool = dyad_lawschool$var,
+  cowork    = dyad_cwk$var,
+  advice    = dyad_adv$var,
+  friend    = dyad_frn$var
+)
 ```
 
-To test `friend`$\bot$ `cowork`$|$`advice`, that is whether dyad variable `friend` is independent of `cowork` given `advice` we use the function as shown below:
-```{r eval=TRUE}
-div_gof(dat = dyad.var, var1 = "friend", var2 = "cowork", var_cond = "advice")
+The first rows of the dyad-level data are:
+```{r show_data, eval=TRUE, include=TRUE}
+head(dyad_var)
 ```
-Not specifying argument `var_cond` would instead test `friend`$\bot$`cowork` without any conditioning.
+
+### Conditional Independence
+A model of substantive interest is whether friendship and co-working are conditionally independent given advice:
+
+$$
+\texttt{friend} \perp \texttt{cowork} \mid \texttt{advice}.
+$$
+
+This can be tested by specifying `var_cond`:
+```{r cond_ind}
+div_gof(
+  dat = dyad_var,
+  var1 = "friend",
+  var2 = "cowork",
+  var_cond = "advice"
+)
+```
+
+### Pairwise Indpendence
+If `var_cond` is omitted, `div_gof()` tests ordinary pairwise independence:
+
+$$
+\texttt{friend} \perp \texttt{cowork}.
+$$
+```{r pair_ind}
+div_gof(
+  dat = dyad_var,
+  var1 = "friend",
+  var2 = "cowork"
+)
+```
+
+### Uniformity
+
+The function can also test whether a single variable is uniformly distributed across its observed categories. This is specified using `var_uniform`:
+```{r unif}
+div_gof(
+  dat = dyad_var,
+  var_uniform = "friend"
+)
+```
+
+### Nested Model Comparison
+Reduced models can also be compared to the saturated empirical model. The saturated model is represented by divergence `D = 0` and degrees of freedom `df = 0`.
+
+```{r nest_ind1}
+m_full <- list(D = 0, df = 0)
+
+m_reduced <- div_gof(
+  dat = dyad_var,
+  var1 = "friend",
+  var2 = "cowork"
+)
+
+div_gof(
+  dat = dyad_var,
+  model_full = m_full,
+  model_reduced = list(D = m_reduced$D, df = m_reduced$df)
+)
+```
+Similarly, we can compare a conditional independence model to the saturated empirical model:
+
+```{r nest_ind2}
+m_reduced <- div_gof(
+  dat = dyad_var,
+  var1 = "friend",
+  var2 = "cowork",
+  var_cond = "advice"
+)
+
+div_gof(
+  dat = dyad_var,
+  model_full = m_full,
+  model_reduced = list(D = m_reduced$D, df = m_reduced$df)
+)
+```
+
 
 ## References
 > Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data.
