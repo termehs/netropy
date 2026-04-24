@@ -229,17 +229,17 @@ fourth column. We illustrated this on the dataframe `dyad.var`:
 ``` r
 H3 <- entropy_trivar(dyad.var)
 head(H3, 10) # view first 10 rows of dataframe
-#>        V1     V2        V3 H(V1,V2,V3)
-#> 1  status gender    office       4.938
-#> 2  status gender     years       4.609
-#> 3  status gender       age       5.129
-#> 4  status gender  practice       4.810
-#> 5  status gender lawschool       5.664
-#> 6  status gender    cowork       3.464
-#> 7  status gender    advice       4.048
-#> 8  status gender    friend       3.685
-#> 9  status office     years       5.321
-#> 10 status office       age       5.721
+#>         X      Y         Z H(X,Y,Z)
+#> 1  status gender    office    4.938
+#> 2  status gender     years    4.609
+#> 3  status gender       age    5.129
+#> 4  status gender  practice    4.810
+#> 5  status gender lawschool    5.664
+#> 6  status gender    cowork    3.464
+#> 7  status gender    advice    4.048
+#> 8  status gender    friend    3.685
+#> 9  status office     years    5.321
+#> 10 status office       age    5.721
 ```
 
 ## Joint Entropy and Association Graphs
@@ -358,12 +358,13 @@ The diagonal gives *EH(Z\|X)* , that is when only one variable as a
 predictor. Note that `NA`’s are in the row and column representing the
 variable being predicted.
 
-Assume we are interested in predicting variable `status` (that is
+Assume we are interested in predicting the variable `status` (that is,
 whether a lawyer in the data set is an associate or partner). This is
-done by running the following syntax
+done by computing the prediction power matrix:
 
 ``` r
-prediction_power('status', dyad.var)
+pred_status <- prediction_power("status", dyad.var)
+pred_status
 #>           status gender office years   age practice lawschool cowork advice
 #> status        NA     NA     NA    NA    NA       NA        NA     NA     NA
 #> gender        NA  1.375  1.180 0.670 0.855    1.304     1.225  1.306  1.263
@@ -388,13 +389,17 @@ prediction_power('status', dyad.var)
 #> friend     3.408
 ```
 
-For better readability, the powers of different predictors can be
-conveniently compared by using prediction plots that display a color
-matrix with rows for $X$ and columns for $Y$ with darker colors in the
-cells when we have higher prediction power for $Z$. This is shown for
-the prediction of `status`:
+For better readability, the predictive strengths of different variables
+can be compared using a heatmap representation. The plot displays a
+color-coded matrix with rows corresponding to $X$ and columns to $Y$,
+where darker cells indicate higher predictive power (i.e., lower
+prediction uncertainty for `status`:
 
-<img src="man/figures/predplot-status.png" align="center"/>
+``` r
+make_pred_plot(pred_status, "Prediction Power for Status")
+```
+
+<img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
 
 Obviously, the darkest color is obtained when the variable to be
 predicted is included among the predictors, and the cells exhibit
@@ -414,22 +419,67 @@ Occurring cliques in association graphs represent connected components
 of dependent variables, and by comparing the graphs for different
 thresholds, specific structural models of multivariate dependence can be
 suggested and tested. The function `div_gof()` allows such hypothesis
-tests for pairwise independence of $X$ and $Y$: $X \bot Y$, and pairwise
-independence conditional a third variable $Z$: $X\bot Y|Z$.
+tests.
 
-To test `friend`$\bot$ `cowork`$|$`advice`, that is whether dyad
-variable `friend` is independent of `cowork` given `advice` we use the
-function as shown below:
+The function `div_gof()` provides a formal way to test whether
+simplified dependence structures suggested by the association graph are
+consistent with the observed data.
+
+### Example 1: Conditional Independence
+
+From the association graph above, we observed that the variables
+`friend`, `cowork`, and `advice` form a connected component. This
+suggests the model
+
+$$\text{friend} \perp \text{cowork} \mid \text{advice},$$
+
+meaning that any dependence between friendship and co-working may be
+explained by the advice relation.
+
+This can be tested as follows:
 
 ``` r
-div_gof(dat = dyad.var, var1 = "friend", var2 = "cowork", var_cond = "advice")
-#> the specified model of conditional independence cannot be rejected
-#>      D df(D)
-#> 1 0.94    12
+div_gof(
+  dat = dyad.var,
+  var1 = "friend",
+  var2 = "cowork",
+  var_cond = "advice"
+)
+#>                                        test     D   chi2 df critical_value
+#> 1 friend independent of cowork given advice 0.003 11.959 12         21.798
+#>        decision
+#> 1 cannot reject
 ```
 
-Not specifying argument `var_cond` would instead test
-`friend`$\bot$`cowork` without any conditioning.
+Since the model is not rejected, this supports the interpretation that
+`advice` explains the association between `friend` and `cowork`.
+
+### Example 2: Pairwise Independence
+
+We can also test whether two variables are independent without
+conditioning. For example,
+
+$$\text{cowork} \perp \text{gender},$$
+
+which was suggested by a joint entropy value close to zero:
+
+``` r
+div_gof(
+  dat = dyad.var,
+  var1 = "cowork",
+  var2 = "gender"
+)
+#>                           test     D   chi2 df critical_value decision
+#> 1 cowork independent of gender 0.005 16.538  3          7.899   reject
+```
+
+Since this model is rejected, it indicates that the two variables are
+statistically indeepndent.
+
+These tests provide a useful bridge between exploratory entropy analysis
+and formal statistical modeling. While association graphs suggest
+candidate structures, divergence-based tests allow us to assess whether
+such simplified models adequately describe the observed data.
 
 ## References
 
