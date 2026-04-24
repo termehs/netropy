@@ -5,7 +5,7 @@
 #' contain expected conditional entropies \emph{EH(Z|X,Y)}.
 #' @param title character string giving the plot title.
 #' @param low color for low expected conditional entropy values. Default is
-#' \code{"steelblue"}.
+#' \code{"azure4"}.
 #' @param high color for high expected conditional entropy values. Default is
 #' \code{"white"}.
 #' @param text_size numeric value controlling the size of the cell labels.

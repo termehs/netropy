@@ -1,0 +1,85 @@
+---
+title: "Prediction Power Heatmaps"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Prediction Power Heatmaps}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(out.width = "100%", cache = FALSE)
+```
+
+The function `make_pred_plot()` visualizes the output from `prediction_power()` as a heatmap. Each cell shows an expected conditional entropy value, where lower values indicate stronger prediction power. Diagonal entries correspond to prediction using a single predictor, while off-diagonal entries correspond to prediction using pairs of predictors.
+
+```{r load-lib}
+library(netropy)
+```
+
+We first edit the node attributes so that all variables have finite categorical range spaces. The variables years and age are discretized into three categories.
+
+```{r data-edit}
+df_att <- lawdata[[4]]
+att_var <- data.frame(
+  status    = df_att$status - 1,
+  gender    = df_att$gender,
+  office    = df_att$office - 1,
+  years     = ifelse(df_att$years <= 3, 0,
+                ifelse(df_att$years <= 13, 1, 2)),
+  age       = ifelse(df_att$age <= 35, 0,
+                ifelse(df_att$age <= 45, 1, 2)),
+  practice  = df_att$practice,
+  lawschool = df_att$lawschool - 1
+)
+```
+The first rows of the edited attribute data are:
+
+```{r}
+head(att_var)
+```
+
+## Prediction Power
+Assume we are interested in predicting `status`, which indicates whether a lawyer is an associate or a partner. We first compute the prediction power matrix:
+
+```{r pred-pow}
+pred_status <- prediction_power("status", att_var)
+pred_status
+```
+
+### Heatmap Visualization
+The matrix can be visualized using `make_pred_plot()`:
+
+```{r pred-plot, fig.height=7, fig.width=8}
+make_pred_plot(pred_status, "Prediction Power for Status")
+```
+
+Darker cells indicate lower expected conditional entropy and therefore stronger prediction power. The diagonal entries show prediction based on one variable, while the off-diagonal entries show prediction based on pairs of variables.
+
+### Changing Plot Colors
+The colors can be adjusted using the `low` and `high` arguments. For example:
+```{r col-change, fig.height=7, fig.width=8}
+make_pred_plot(
+  pred_status,
+  "Prediction Power for Status",
+  low = "steelblue",
+  high = "white"
+)
+```
+
+### Changing Text Size
+The size of the cell labels can be controlled with `text_size`:
+```{r text-change, fig.height=7, fig.width=8}
+make_pred_plot(
+  pred_status,
+  "Prediction Power for Status",
+  text_size = 6
+)
+```
+
+
+## References
+> Frank, O., & Shafie, T. (2016). Multivariate entropy analysis of network data.
+*Bulletin of Sociological Methodology/Bulletin de Méthodologie Sociologique*, 129(1), 45-63. [link](https://doi.org/10.1177%2F0759106315615511)
+
+
