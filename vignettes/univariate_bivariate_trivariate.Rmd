@@ -38,7 +38,29 @@ $$ H(X,Y) \leq H(X,Y,Z) \leq H(X,Z) + H(Y,Z) - H(Z). $$
 
 The results on bivariate and trivariate entropies are directly linked to [prediction power and expected conditional entropies](prediction_power.html).
 
-Examples of computing univariate, bivariate and trivariate entropies are given in the following. 
+
+Tetravariate entropies extend the same idea to quadruples of variables. For four variables $X$, $Y$, $Z$, and $U$, the tetravariate entropy is denoted by
+
+$$
+H(X,Y,Z,U).
+$$
+
+The function `entropy_tetravar()` computes tetravariate entropy quantities for all quadruples of variables in a dataframe. In addition to $H(X,Y,Z,U)$, it returns expected conditional entropies and expected conditional joint entropies, such as
+
+$$
+EH(U \mid X,Y,Z) = H(X,Y,Z,U) - H(X,Y,Z),
+$$
+
+and
+
+$$
+EJ(X,Y \mid Z,U) = H(X,Z,U) + H(Y,Z,U) - H(Z,U) - H(X,Y,Z,U).
+$$
+
+These quantities are useful for studying prediction uncertainty and conditional dependence among four variables.
+
+
+Examples of computing univariate, bivariate, trivariate and tetravariate entropies are given in the following. 
 
 ________________________________________________________________________________
 
@@ -141,28 +163,7 @@ entropy_trivar(dyad.var)
 ```
 
 ## Example: tetravariate entropies
-
-Tetravariate entropies extend the same idea to quadruples of variables. For four variables $X$, $Y$, $Z$, and $U$, the tetravariate entropy is denoted by
-
-$$
-H(X,Y,Z,U).
-$$
-
-The function `entropy_tetravar()` computes tetravariate entropy quantities for all quadruples of variables in a dataframe. In addition to $H(X,Y,Z,U)$, it returns expected conditional entropies and expected conditional joint entropies, such as
-
-$$
-EH(U \mid X,Y,Z) = H(X,Y,Z,U) - H(X,Y,Z),
-$$
-
-and
-
-$$
-EJ(X,Y \mid Z,U) = H(X,Z,U) + H(Y,Z,U) - H(Z,U) - H(X,Y,Z,U).
-$$
-
-These quantities are useful for studying prediction uncertainty and conditional dependence among four variables.
-
-For illustration, we compute tetravariate entropy quantities for five selected dyad variables:
+To compute tetravariate entropy quantities for five selected dyad variables, we use:
 
 ```{r tetrav_ent, eval=TRUE, include=TRUE, results='markup'}
 entropy_tetravar(
